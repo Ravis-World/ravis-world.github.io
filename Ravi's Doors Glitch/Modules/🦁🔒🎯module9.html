@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Module 66 - The Two Doors and Two Guards</title>
+        <style>
+            html { background-color: black; }
+            .module {
+                margin: 20px auto;
+                padding: 20px;
+                border: 3px solid orange;
+                border-radius: 10px;
+                background-color: #222;
+                color: white;
+                font-family: Arial, sans-serif;
+                width: 90%;
+                max-width: 600px;
+            }
+            .module h1 {
+                font-size: 24px;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            #riddle {
+                font-size: 18px;
+                line-height: 1.6;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            .module div {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            #answer {
+                font-size: 18px;
+                padding: 10px;
+                width: 60%;
+                margin-bottom: 20px;
+                border: 2px solid #ccc;
+                border-radius: 5px;
+                background-color: #333;
+                color: white;
+            }
+            #submitAnswer {
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                cursor: pointer;
+                border-radius: 5px;
+                font-size: 18px;
+            }
+            #submitAnswer:hover {
+                background-color: #45a049;
+            }
+            @media (max-width: 768px) {
+                .module { width: 95%; padding: 15px; }
+                #riddle { font-size: 16px; }
+                #answer { width: 80%; font-size: 16px; }
+                #submitAnswer { font-size: 16px; }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="module">
+            <h1>65. The Two Doors and Two Guards</h1>
+            <div>
+                <p id="riddle">
+                    You find yourself in a room with two doors.<br>
+                    One door leads to freedom, the other leads to certain doom.<br>
+                    In front of each door stands a guard. One guard always tells the truth, the other always lies.<br>
+                    You do not know which guard is which.<br>
+                    You may ask only **one** question to **one** of the guards.<br>
+                    What question do you ask to ensure you choose the door to freedom?
+                </p>
+                <input type="text" id="answer" placeholder="Enter your question">
+                <button id="submitAnswer">Submit</button>
+            </div>
+        </div>
+        <script>
+            document.getElementById("submitAnswer").addEventListener("click", function () {
+                var userAnswer = document.getElementById("answer").value.trim().toLowerCase();
+                
+                // List of valid correct responses
+                var validAnswers = [
+                    "if i were to ask the other guard which door leads to freedom, what would they say?",
+                    "what would the other guard say is the door to freedom?",
+                    "if i asked the other guard which door leads to freedom, what would they point to?"
+                ];
+
+                if (validAnswers.some(answer => userAnswer.includes(answer))) {
+                    alert("Correct! You choose the correct door to freedom, and move to the next module.");
+                    window.location.href = "🧩🌪️💣module10.html";
+                } else {
+                    window.location.href = "../☠️💣🔚gameover.html";
+                }
+            });
+        </script>
+    </body>
+</html>

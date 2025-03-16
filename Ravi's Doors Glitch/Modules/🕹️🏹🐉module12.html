@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Module 68 - Shut the Box</title>
+        <style>
+            body {
+                background-color: black;
+                color: white;
+                font-family: Arial, sans-serif;
+                text-align: center;
+                padding: 50px;
+            }
+
+            #box {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+
+            .tile {
+                font-size: 24px;
+                background-color: #444;
+                padding: 10px 15px;
+                border-radius: 5px;
+                cursor: pointer;
+                user-select: none;
+                position: relative;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .closed {
+                background-color: #222;
+                text-decoration: line-through;
+                cursor: not-allowed;
+            }
+
+            button {
+                font-size: 18px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                cursor: pointer;
+                border-radius: 5px;
+            }
+
+            button:hover {
+                background-color: #45a049;
+            }
+
+            #game-over {
+                display: none;
+                color: red;
+                font-size: 24px;
+                margin-top: 20px;
+            }
+
+            #play-again {
+                display: none;
+                margin-top: 20px;
+                background-color: #f44336;
+            }
+
+            #play-again:hover {
+                background-color: #d32f2f;
+            }
+
+            #grey-box {
+                background-color: #6d6d6d;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>69. Shut the Box - <abbr title="You can't fail, only restart here. This is still not a checkpoint.">No Fail</abbr></h1>
+        <p>Roll the dice and close matching tiles.</p>
+
+        <div id="box">
+            <div class="tile" data-value="1">1</div>
+            <div class="tile" data-value="2">2</div>
+            <div class="tile" data-value="3">3</div>
+            <div class="tile" data-value="4">4</div>
+            <div class="tile" data-value="5">5</div>
+            <div class="tile" data-value="6">6</div>
+            <div class="tile" data-value="7">7</div>
+            <div class="tile" data-value="8">8</div>
+            <div class="tile" data-value="9">9</div>
+        </div>
+
+        <button onclick="rollDice()">Roll Dice</button>
+        <p id="roll-result"></p>
+
+        <p id="game-over">You failed! No valid moves left.</p>
+        <button id="play-again" onclick="restartGame()">Play Again</button>
+
+        <p id="grey-box">
+            Hey, it's me. Thanks for saving me. Here's an answer key full of answers to the next 6 modules:<br><br>
+            1/9 sin(4 x) + C<br>
+            4/17<br>
+            7<br>
+            51<br>
+            7<br>
+            16<br>
+            <br>
+            Here's the deal. I sacrifice myself to Door, so you can make a run for it. Please give my regards to everyone.<br>
+            -Grey Box
+        </p>
+
+        <script>
+            let rollTotal = 0;
+            let selectedTiles = [];
+
+            function rollDice() {
+                const die1 = Math.floor(Math.random() * 6) + 1;
+                const die2 = Math.floor(Math.random() * 6) + 1;
+                rollTotal = die1 + die2;
+                document.getElementById('roll-result').innerText = `You rolled: ${die1} + ${die2} = ${rollTotal}`;
+                selectedTiles = [];
+                document.querySelectorAll('.tile').forEach(tile => tile.classList.remove('selected'));
+
+                if (!canMakeMove(rollTotal)) {
+                    document.getElementById('game-over').style.display = 'block';
+                    document.getElementById('play-again').style.display = 'inline-block';
+                }
+            }
+
+            document.querySelectorAll('.tile').forEach(tile => {
+                tile.addEventListener('click', function () {
+                    if (!this.classList.contains('closed')) {
+                        const value = parseInt(this.getAttribute('data-value'));
+                        if (selectedTiles.includes(this)) {
+                            selectedTiles = selectedTiles.filter(t => t !== this);
+                            this.classList.remove('selected');
+                        } else {
+                            selectedTiles.push(this);
+                            this.classList.add('selected');
+                        }
+
+                        const selectedSum = selectedTiles.reduce((sum, t) => sum + parseInt(t.getAttribute('data-value')), 0);
+                        if (selectedSum === rollTotal) {
+                            selectedTiles.forEach(t => t.classList.add('closed'));
+                            rollTotal = 0;
+                            document.getElementById('roll-result').innerText = "Choose your next roll!";
+                            selectedTiles = [];
+                            // Check if all tiles are closed (win condition)
+                            if (document.querySelectorAll('.tile:not(.closed)').length === 0) {
+                                alert("Congrats! You move to the next module.");
+                                window.location.href = "🎮🛡️👾module13.html"; // Redirect to the next module
+                                return;
+                            }
+                        } else {
+                            document.getElementById('roll-result').innerText = `Remaining total: ${rollTotal - selectedSum}`;
+                        }
+                    }
+                });
+            });
+
+            function canMakeMove(total) {
+                let tiles = Array.from(document.querySelectorAll('.tile:not(.closed)'))
+                    .map(tile => parseInt(tile.getAttribute('data-value')));
+                
+                return canSumBeMade(tiles, total);
+            }
+
+            function canSumBeMade(arr, target) {
+                if (target === 0) return true;
+                if (target < 0 || arr.length === 0) return false;
+                return canSumBeMade(arr.slice(1), target) || canSumBeMade(arr.slice(1), target - arr[0]);
+            }
+
+            function restartGame() {
+                document.querySelectorAll('.tile').forEach(tile => tile.classList.remove('closed', 'selected'));
+                document.getElementById('game-over').style.display = 'none';
+                document.getElementById('play-again').style.display = 'none';
+                document.getElementById('roll-result').innerText = "";
+                rollTotal = 0;
+                selectedTiles = [];
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Module 63 - Math Puzzle</title>
+        <style>
+            html {background-color: black;}
+            .module {
+                margin: 20px auto;
+                padding: 20px;
+                border: 3px solid orange;
+                border-radius: 10px;
+                background-color: #222;
+                color: white;
+                font-family: Arial, sans-serif;
+                width: 90%;
+                max-width: 600px;
+            }
+            .module h1 {
+                font-size: 24px;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            #question {
+                font-size: 22px;
+                line-height: 1.6;
+                display: block;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+            .module div {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            #answer {
+                font-size: 18px;
+                padding: 10px;
+                width: 60%;
+                margin-bottom: 20px;
+                border: 2px solid #ccc;
+                border-radius: 5px;
+                background-color: #333;
+                color: white;
+            }
+            #submitAnswer {
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                cursor: pointer;
+                border-radius: 5px;
+                font-size: 18px;
+            }
+            #submitAnswer:hover {
+                background-color: #45a049;
+            }
+            @media (max-width: 768px) {
+                .module {
+                    width: 95%;
+                    padding: 15px;
+                }
+                #question {
+                    font-size: 20px;
+                }
+                #answer {
+                    width: 80%;
+                    font-size: 16px;
+                }
+                #submitAnswer {
+                    font-size: 16px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="module">
+            <h1>63. Math Puzzle 2</h1>
+            <div>
+                <p id="question"></p>
+                <p>Answer to 2 decimal places.</p>
+                <input type="text" id="answer" placeholder="Enter your answer">
+                <button id="submitAnswer">Submit</button>
+            </div>
+        </div>
+        <script>
+            function supergoldenRatio() {
+                const sqrt93 = Math.sqrt(93);
+                const part1 = (29 + 3 * sqrt93) / 2;
+                const part2 = (29 - 3 * sqrt93) / 2;
+                const cubeRoot1 = Math.cbrt(part1);
+                const cubeRoot2 = Math.cbrt(part2);
+                return (1 + cubeRoot1 + cubeRoot2) / 3;
+            }
+
+            var constants = {
+                e: 'e',
+                pi: 'π',
+                tau: 'τ',
+                phi: 'φ',
+                psi: 'ψ',
+                sigma: 'σ'
+            };
+
+            function getConstantSymbol(num) {
+                switch (num) {
+                    case constants.e: return Math.E;
+                    case constants.pi: return Math.PI;
+                    case constants.tau: return 2 * Math.PI;
+                    case constants.phi: return (1 + Math.sqrt(5)) / 2;
+                    case constants.psi: return supergoldenRatio();
+                    case constants.sigma: return 1 + Math.sqrt(2);
+                    default: return num;
+                }
+            }
+
+            function generateRandomMathQuestion() {
+                var numbers = [
+                    Math.floor(Math.random() * 10),
+                    Math.floor(Math.random() * 10),
+                    constants.e,
+                    constants.pi,
+                    constants.tau,
+                    constants.phi,
+                    constants.psi,
+                    constants.sigma
+                ];
+                var operations = ['+', '-', '*', '/', '^', 'sqrt'];
+
+                var randomOp1 = operations[Math.floor(Math.random() * operations.length)];
+                var randomOp2 = operations[Math.floor(Math.random() * operations.length)];
+
+                var num1 = numbers[Math.floor(Math.random() * numbers.length)];
+                var num2 = numbers[Math.floor(Math.random() * numbers.length)];
+                var num3 = numbers[Math.floor(Math.random() * numbers.length)];
+
+                var question = '';
+                var result = 0;
+
+                switch (randomOp1) {
+                    case '+':
+                        question = `${num1} + ${num2}`;
+                        result = getConstantSymbol(num1) + getConstantSymbol(num2);
+                        break;
+                    case '-':
+                        question = `${num1} - ${num2}`;
+                        result = getConstantSymbol(num1) - getConstantSymbol(num2);
+                        break;
+                    case '*':
+                        question = `${num1} × ${num2}`;
+                        result = getConstantSymbol(num1) * getConstantSymbol(num2);
+                        break;
+                    case '/':
+                        question = `${num1} ÷ ${num2}`;
+                        result = getConstantSymbol(num1) / getConstantSymbol(num2);
+                        break;
+                    case '^':
+                        question = `${num1}<sup>${num2}</sup>`;
+                        result = Math.pow(getConstantSymbol(num1), getConstantSymbol(num2));
+                        break;
+                    case 'sqrt':
+                        question = `${num1}√${num2}`;
+                        result = Math.sqrt(getConstantSymbol(num2));
+                        break;
+                }
+
+                // Add the second operation
+                switch (randomOp2) {
+                    case '+':
+                        question += ` + ${num3}`;
+                        result += getConstantSymbol(num3);
+                        break;
+                    case '-':
+                        question += ` - ${num3}`;
+                        result -= getConstantSymbol(num3);
+                        break;
+                    case '*':
+                        question += ` × ${num3}`;
+                        result *= getConstantSymbol(num3);
+                        break;
+                    case '/':
+                        question += ` ÷ ${num3}`;
+                        result /= getConstantSymbol(num3);
+                        break;
+                    case '^':
+                        question = `(${question})<sup>${num3}</sup>`;
+                        result = Math.pow(result, getConstantSymbol(num3));
+                        break;
+                    case 'sqrt':
+                        question = `(${question})√${num3}`;
+                        result = Math.sqrt(result);
+                        break;
+                }
+
+                question += ` =`;
+
+                document.getElementById('question').innerHTML = question;
+                return result;
+            }
+
+            var correctAnswer = generateRandomMathQuestion();
+
+            document.getElementById('submitAnswer').addEventListener('click', function () {
+                var userAnswer = parseFloat(document.getElementById('answer').value).toFixed(2);
+                if (userAnswer == correctAnswer.toFixed(2)) {
+                    alert("Correct! The module is complete!");
+                    window.location.href = "🦠🌈🎲module7.html";
+                } else {
+                    window.location.href = "../☠️💣🔚gameover.html";
+                }
+            });
+        </script>
+    </body>
+</html>

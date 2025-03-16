@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 76 - Bomb Defusal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        html { 
+            background-color: black; 
+            color: white;
+            font-family: 'Orbitron', sans-serif; 
+            text-align: center; 
+        }
+
+        .module {
+            margin: 30px auto;
+            padding: 30px;
+            border: 5px solid red;
+            border-radius: 15px;
+            background: linear-gradient(180deg, #222, #111);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0px 0px 15px red;
+        }
+
+        h1 { color: red; text-shadow: 0px 0px 10px red; }
+
+        #timer {
+            font-size: 40px;
+            color: red;
+            background: black;
+            display: inline-block;
+            padding: 10px 20px;
+            border: 3px solid red;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px red;
+        }
+
+        .bomb-ui {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Wires */
+        .wire {
+            width: 100px;
+            height: 15px;
+            border-radius: 50px;
+            margin: 10px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 15px;
+            font-weight: bold;
+            color: white;
+            transition: all 0.2s ease;
+        }
+        
+        #wire1 { background: red; box-shadow: 0px 0px 5px red; }
+        #wire2 { background: blue; box-shadow: 0px 0px 5px blue; }
+        #wire3 { background: yellow; box-shadow: 0px 0px 5px yellow; color: black;}
+
+        .wire:active {
+            transform: scale(0.9);
+            opacity: 0.7;
+        }
+
+        /* Switches */
+        .switch-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .switch {
+            width: 50px;
+            height: 25px;
+            border-radius: 15px;
+            background: #444;
+            border: 2px solid #888;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0px 0px 5px cyan;
+        }
+
+        .switch::before {
+            content: "";
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            transform: translateY(-50%);
+            transition: all 0.3s ease;
+        }
+
+        .switch.active {
+            background: lime;
+            border-color: green;
+        }
+
+        .switch.active::before {
+            left: 25px;
+            background: black;
+        }
+
+        /* Buttons */
+        .button {
+            background: gray;
+            color: white;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 18px;
+            border: 3px solid black;
+            border-radius: 5px;
+            box-shadow: 0px 3px 5px #000;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .button:active {
+            transform: translateY(3px);
+            box-shadow: none;
+        }
+
+        #message {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: yellow;
+            text-shadow: 0px 0px 5px yellow;
+        }
+
+        @media (max-width: 768px) {
+            .wire { width: 80px; }
+            .switch { width: 40px; height: 20px; }
+            .button { font-size: 16px; padding: 8px 16px; }
+            #timer { font-size: 30px; padding: 8px 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="module">
+        <h1>76. Bomb Defusal</h1>
+        <p id="instruction">Follow the correct sequence to defuse the bomb!</p>
+        <p id="timer">Time Left: 60s</p>
+
+        <div class="bomb-ui">
+            <div class="wire-container">
+                <div class="wire" id="wire1">Wire 1</div>
+                <div class="wire" id="wire2">Wire 2</div>
+                <div class="wire" id="wire3">Wire 3</div>
+            </div>
+
+            <div class="switch-container">
+                <div class="switch" id="switch1"></div>
+                <div class="switch" id="switch2"></div>
+            </div>
+
+            <div class="button-container">
+                <button class="button" id="button1">1</button>
+                <button class="button" id="button2">2</button>
+                <button class="button" id="button3">3</button>
+                <button class="button" id="button4">4</button>
+            </div>
+        </div>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        let timeLeft = 60;
+        let sequence = [];
+        let userInput = [];
+
+        function startTimer() {
+            let timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById("timer").innerText = "Time Left: " + timeLeft + "s";
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    gameOver("&#x1f4a5; BOOM! Time ran out!");
+                }
+            }, 1000);
+        }
+
+        function gameOver(msg) {
+            document.getElementById("message").innerText = msg;
+            document.getElementById("message").style.color = "red";
+            setTimeout(() => {
+                window.location.href = "../☠️💣🔚gameover.html";
+            }, 2000);
+        }
+
+        function bombDefused() {
+            document.getElementById("message").innerText = "&#x2705; Success! Bomb Defused!";
+            document.getElementById("message").style.color = "lime";
+            setTimeout(() => {
+                window.location.href = "../🏆🥇🎉success.html";
+            }, 2000);
+        }
+
+        function generateSequence() {
+            let actions = ["wire1", "wire2", "wire3", "switch1", "switch2", "button1", "button2", "button3", "button4"];
+            sequence = [];
+            while (sequence.length < 4) {
+                let action = actions[Math.floor(Math.random() * actions.length)];
+                if (!sequence.includes(action)) sequence.push(action);
+            }
+            document.getElementById("instruction").innerText = "Defuse Order: " + sequence.join(" → ");
+        }
+
+        function handleAction(action) {
+            if (sequence[userInput.length] === action) {
+                userInput.push(action);
+                if (userInput.length === sequence.length) {
+                    bombDefused();
+                }
+            } else {
+                gameOver("&#x1f4a5; BOOM! Wrong move!");
+            }
+        }
+
+        document.querySelectorAll(".wire, .switch, .button").forEach(btn => {
+            btn.addEventListener("click", function() {
+                handleAction(this.id);
+                if (this.classList.contains("switch")) this.classList.toggle("active");
+            });
+        });
+
+        generateSequence();
+        startTimer();
+    </script>
+</body>
+</html>

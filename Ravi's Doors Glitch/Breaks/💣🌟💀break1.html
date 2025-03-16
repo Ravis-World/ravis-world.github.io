@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <title>Break 1 - Magic 8-Ball</title> 
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #111;
+                color: white;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .module {
+                margin: 20px auto;
+                padding: 20px;
+                border: 3px solid orange;
+                border-radius: 10px;
+                background-color: #222;
+                width: 90%;
+                max-width: 600px;
+                box-shadow: 0px 0px 10px rgba(255, 165, 0, 0.5);
+            }
+
+            canvas {
+                display: block;
+                margin: auto;
+            }
+
+            button {
+                margin: 10px;
+                padding: 10px 20px;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+                border: 2px solid orange;
+                border-radius: 5px;
+                background-color: #444;
+                color: white;
+                transition: background-color 0.3s, transform 0.1s;
+            }
+
+            button:hover {
+                background-color: orange;
+                color: black;
+            }
+
+            button:active {
+                transform: scale(0.95);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="module">
+            <h1>Break 1 - Magic 8-Ball</h1>
+            <p>Ask a yes/no question and click the 8-Ball for an answer!</p>
+
+            <canvas id="mycanvas"></canvas> 
+
+            <br>
+
+            <button onclick="goToNextModule()">Next Module</button>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/processing.js/1.4.8/processing.min.js"></script> 
+        <script>
+            var programCode = function(processingInstance) {
+                with (processingInstance) {
+                    size(400, 400); 
+                    frameRate(30);
+                    noLoop();
+
+                    var drawBall = function() {
+                        background(255);
+                        fill(0, 0, 0);
+                        ellipse(200, 200, 375, 375);
+                        
+                        fill(60, 0, 255);
+                        triangle(200, 120, 290, 280, 110, 280);
+                        
+                        var answers = [
+                            "It is certain", 
+                            "It is decidedly so", 
+                            "Without a doubt", 
+                            "Yes, definitely", 
+                            "You may rely on it", 
+                            "As I see it, yes", 
+                            "Most likely", 
+                            "Outlook good", 
+                            "Yes", 
+                            "Signs point to yes", 
+                            "Reply hazy, try again", 
+                            "Ask again later", 
+                            "Better not tell you now", 
+                            "Cannot predict now", 
+                            "Concentrate and ask again", 
+                            "Don't count on it", 
+                            "My reply is no", 
+                            "My sources say no", 
+                            "Outlook not so good", 
+                            "Very doubtful"
+                        ];
+                        
+                        var answerIndex = floor(random(0, 20));
+                        var response = answers[answerIndex];
+
+                        fill(255, 255, 255);
+                        textSize(18);
+                        textAlign(CENTER, CENTER);
+                        text(response, 200, 210);
+                    };
+
+                    drawBall();
+
+                    mousePressed = function() {
+                        drawBall();
+                    };
+                }
+            };
+
+            var canvas = document.getElementById("mycanvas"); 
+            var processingInstance = new Processing(canvas, programCode);
+
+            function goToNextModule() {
+                window.location.href = "../Modules/🍀💫🦋module5.html";
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Module 68 - CAPTCHA</title>
+        <style>
+            body {
+                background-color: black;
+                color: white;
+                font-family: Arial, sans-serif;
+                text-align: center;
+                padding: 50px;
+            }
+
+            #captcha-box {
+                background-color: #222;
+                padding: 20px;
+                border-radius: 10px;
+                display: inline-block;
+            }
+
+            input {
+                padding: 5px;
+                font-size: 16px;
+            }
+
+            button {
+                font-size: 16px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                cursor: pointer;
+                border-radius: 5px;
+            }
+
+            button:hover {
+                background-color: #45a049;
+            }
+
+            .captcha-image {
+                width: 100px;
+                height: 50px;
+                margin-bottom: 10px;
+            }
+
+            .captcha-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 100px);
+                gap: 10px;
+                justify-content: center;
+            }
+
+            .captcha-grid img {
+                width: 100px;
+                height: 100px;
+                cursor: pointer;
+                border: 2px solid transparent;
+            }
+
+            .captcha-grid img.selected {
+                border-color: #4CAF50;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Module 68 - CAPTCHA</h1>
+        <p>Prove you're not a bot. Solve this to continue:</p>
+
+        <div id="captcha-box">
+            <p>Select all squares with a cat:</p>
+            <div class="captcha-grid">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1200px-Cat_August_2010-4.jpg" alt="Cat" onclick="toggleSelection(this, 'cat')">
+                <img src="https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg" alt="Dog" onclick="toggleSelection(this, 'dog')">
+                <img src="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_3x2.jpg" alt="Cat" onclick="toggleSelection(this, 'cat')">
+                <img src="https://cdn.britannica.com/10/250610-050-BC5CCDAF/Zebra-finch-Taeniopygia-guttata-bird.jpg" alt="Bird" onclick="toggleSelection(this, 'bird')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Cat_November_2010-1a.jpg/220px-Cat_November_2010-1a.jpg" alt="Cat" onclick="toggleSelection(this, 'cat')">
+                <img src="https://cdn.britannica.com/79/232779-050-6B0411D7/German-Shepherd-dog-Alsatian.jpg" alt="Dog" onclick="toggleSelection(this, 'dog')">
+            </div>
+            <button onclick="checkCaptcha()">Submit</button>
+        </div>
+
+        <p id="result"></p>
+
+        <script>
+            let selectedImages = [];
+
+            function toggleSelection(img, type) {
+                if (img.classList.contains('selected')) {
+                    img.classList.remove('selected');
+                    selectedImages = selectedImages.filter(item => item !== type);
+                } else {
+                    img.classList.add('selected');
+                    selectedImages.push(type);
+                }
+            }
+
+            function checkCaptcha() {
+                const correctSelections = selectedImages.filter(item => item === 'cat').length;
+                if (correctSelections === 3 && selectedImages.length === 3) {
+                    alert("Correct! You move to the next module.");
+                    window.location.href = "🕹️🏹🐉module12.html";
+                } else {
+                    window.location.href = "../☠️💣🔚gameover.html";
+                }
+            }
+        </script>
+    </body>
+</html>

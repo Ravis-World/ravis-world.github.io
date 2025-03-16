@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Game Over</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: black;
+                color: white;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+            }
+
+            h1 {
+                font-size: 3rem;
+                color: red;
+                margin-top: 50px;
+            }
+
+            .game-over-content {
+                margin: 20px auto;
+                padding: 20px;
+                border: 3px solid red;
+                border-radius: 10px;
+                background-color: #222;
+                width: 90%;
+                max-width: 600px;
+            }
+
+            .viscous-description {
+                margin-top: 20px;
+                font-size: 1.2rem;
+                font-style: italic;
+                color: #ffdd00;
+            }
+
+            .restart-button {
+                padding: 15px 30px;
+                margin-top: 20px;
+                font-size: 18px;
+                background-color: red;
+                color: white;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+            }
+
+            .restart-button:hover {
+                background-color: darkred;
+            }
+        </style>
+        <script>
+            const liquids = [
+                "green slime",
+                "sticky tar",
+                "thick mud",
+                "sweet honey",
+                "molasses",
+                "chewing gum",
+                "tree sap",
+                "resin",
+                "stinging alien goo"
+            ];
+
+            function randomLiquid() {
+                const randomIndex = Math.floor(Math.random() * liquids.length);
+                return liquids[randomIndex];
+            }
+
+            window.onload = function () {
+                const liquidElement = document.getElementById('liquid-description');
+                liquidElement.textContent = randomLiquid();
+            };
+
+            function restartGame() {
+                // Redirect to the main game or start screen
+                window.location.href = 'index.html';
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Game Over</h1>
+        <div class="game-over-content">
+            <p>
+                The bomb has exploded, releasing&nbsp;
+                <p id="liquid-description" class="viscous-description"></p>
+                &nbsp;into the room. Raviolo and his team are now stuck in this substance forever.
+            </p>
+            <button class="restart-button" onclick="restartGame()">Try Again</button>
+        </div>
+    </body>
+</html>

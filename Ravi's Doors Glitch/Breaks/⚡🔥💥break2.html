@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Break 2: Anomaly Detected</title>
+        <style>
+            body {
+                background-color: black;
+                color: white;
+                font-family: Arial, sans-serif;
+                text-align: center;
+                padding: 50px;
+            }
+
+            #warning {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            #crash-message {
+                font-size: 18px;
+                margin-bottom: 40px;
+            }
+
+            #reload-message {
+                font-size: 20px;
+                color: yellow;
+                display: none;
+            }
+
+            #proceed {
+                font-size: 18px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                cursor: pointer;
+                border-radius: 5px;
+                display: none;
+            }
+
+            #proceed:hover {
+                background-color: #45a049;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="warning">Anomaly detected. Your browser is unstable. Preparing for system crash...</div>
+        <div id="crash-message"><p>Wait... something's wrong. The page will crash soon.</p></div>
+        <div id="reload-message"><p>Anomaly neutralized. Previous session crashed. Please reload this tab however you can...</p></div>
+        <button id="proceed">Proceed to the Next Module</button>
+
+        <script>
+            // Check if the page crashed before
+            if (localStorage.getItem("crashOccurred") === "true") {
+                document.getElementById('warning').style.display = 'none';
+                document.getElementById('crash-message').style.display = 'none';
+                document.getElementById('reload-message').innerHTML = "<p>Anomaly neutralised. Proceed when ready.</p>";
+                document.getElementById('reload-message').style.display = 'block';
+                document.getElementById('proceed').style.display = 'inline-block';
+
+                // Reset crash flag so it doesn't show next time
+                localStorage.removeItem("crashOccurred");
+            } else {
+                // Show the first reload message before the crash
+                setTimeout(function() {
+                    document.getElementById('reload-message').style.display = 'block';
+
+                    // Delay for 1.5 seconds before crashing
+                    setTimeout(function() {
+                        localStorage.setItem("crashOccurred", "true"); // Mark crash for reload detection
+
+                        // Trigger crash
+                        window.location.href = "https://ravis-world.github.io/404.html"; // Redirect to a 404 page
+                    }, 1500);
+                }, 3000);
+            }
+
+            // When the user clicks "Proceed," take them to the next module
+            document.getElementById('proceed').addEventListener('click', function () {
+                window.location.href = "../Modules/⚔️💎🎮module11.html"; // It's module 68.
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Module 59 - Simon Game</title>
+        <link href='https://fonts.googleapis.com/css?family=Noto Sans Arabic' rel='stylesheet'>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: black;
+                color: white;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+            }
+
+            button {font-family: "Noto Sans Arabic";}
+
+            .module {
+                margin: 20px auto;
+                padding: 20px;
+                border: 3px solid orange;
+                border-radius: 10px;
+                background-color: #222;
+                width: 90%;
+                max-width: 600px;
+            }
+
+            .buttons-container {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 15px;
+                margin-top: 20px;
+            }
+
+            .button {
+                width: 80px;
+                height: 80px;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+                font-size: 40px;
+                font-weight: bold;
+                color: black;
+                transition: background-color 0.3s, box-shadow 0.3s;
+            }
+
+            .red { background-color: red; }
+            .blue { background-color: blue; color: white; }
+            .yellow { background-color: yellow; }
+            .green { background-color: green; }
+            .purple { background-color: purple; color: white;}
+            .orange { background-color: orange; }
+            .pink { background-color: pink; }
+            .teal { background-color: teal; }
+
+            .button.active {
+                box-shadow: 0 0 20px white;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="module">
+            <h1>59. Simon Game</h1>
+            <p>Repeat the sequence shown to defuse the module!</p>
+
+            <div class="buttons-container" id="buttonsContainer">
+                <button class="button red" data-symbol="ا">ا</button>
+                <button class="button blue" data-symbol="ب">ب</button>
+                <button class="button yellow" data-symbol="ت">ت</button>
+                <button class="button green" data-symbol="ث">ث</button>
+                <button class="button purple" data-symbol="ج">ج</button>
+                <button class="button orange" data-symbol="ح">ح</button>
+                <button class="button pink" data-symbol="خ">خ</button>
+                <button class="button teal" data-symbol="د">د</button>
+            </div>
+
+            <button id="startButton">Start</button>
+        </div>
+
+        <script>
+            const buttons = document.querySelectorAll('.button');
+            const startButton = document.getElementById('startButton');
+            let sequence = [];
+            let userSequence = [];
+            let level = 0;
+
+            function playSequence() {
+                let delay = 500;
+                sequence.forEach((symbol, index) => {
+                    setTimeout(() => {
+                        const button = document.querySelector(`.button[data-symbol="${symbol}"]`);
+                        button.classList.add('active');
+                        setTimeout(() => button.classList.remove('active'), 500);
+                    }, delay * (index + 1));
+                });
+            }
+
+            function generateNextStep() {
+                const symbols = Array.from(buttons).map(button => button.dataset.symbol);
+                const nextSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+                sequence.push(nextSymbol);
+            }
+
+            function checkUserInput() {
+                for (let i = 0; i < userSequence.length; i++) {
+                    if (userSequence[i] !== sequence[i]) {
+                        window.location.href = '../☠️💣🔚gameover.html';
+                        return;
+                    }
+                }
+                if (userSequence.length === sequence.length) {
+                    level++;
+                    userSequence = [];
+                    setTimeout(() => {
+                        alert(`Level ${level} complete!`);
+                        if (level >= 5) {
+                            window.location.href = "🐉⚡🌋module3.html";
+                        } else {
+                            generateNextStep();
+                            playSequence();
+                        }
+                    }, 1000);
+                }
+            }
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const symbol = button.dataset.symbol;
+                    userSequence.push(symbol);
+                    button.classList.add('active');
+                    setTimeout(() => button.classList.remove('active'), 300);
+                    checkUserInput();
+                });
+            });
+
+            startButton.addEventListener('click', () => {
+                sequence = [];
+                userSequence = [];
+                level = 0;
+                generateNextStep();
+                playSequence();
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Module 75 - Arithmetic</title>
+        <style>
+            html { background-color: black; }
+            .module {
+                margin: 20px auto;
+                padding: 20px;
+                border: 3px solid orange;
+                border-radius: 10px;
+                background-color: #222;
+                color: white;
+                font-family: Arial, sans-serif;
+                width: 90%;
+                max-width: 600px;
+            }
+            .module h1 {
+                font-size: 24px;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            #mathExpression {
+                font-size: 28px;
+                font-weight: bold;
+                line-height: 1.6;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            .module div {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            #answer {
+                font-size: 20px;
+                padding: 10px;
+                width: 60%;
+                margin-bottom: 20px;
+                border: 2px solid #ccc;
+                border-radius: 5px;
+                background-color: #333;
+                color: white;
+                text-align: center;
+            }
+            #submitAnswer {
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                padding: 12px 24px;
+                cursor: pointer;
+                border-radius: 5px;
+                font-size: 20px;
+            }
+            #submitAnswer:hover {
+                background-color: #45a049;
+            }
+            @media (max-width: 768px) {
+                .module { width: 95%; padding: 15px; }
+                #mathExpression { font-size: 24px; }
+                #answer { width: 80%; font-size: 18px; }
+                #submitAnswer { font-size: 18px; }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="module">
+            <h1>75. Arithmetic</h1>
+            <div>
+                <p id="mathExpression">
+                    <!-- Placeholder for dynamic content -->
+                </p>
+                <input type="text" id="answer" placeholder="Enter your answer">
+                <button id="submitAnswer">Submit</button>
+            </div>
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+                var isIOSWebView = /(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test(navigator.userAgent);
+                var mathExpression = document.getElementById("mathExpression");
+
+                if (isSafari || isIOSWebView) {
+                    mathExpression.innerHTML = `
+                        <math xmlns="http://www.w3.org/TR/2014/REC-MathML3-20140410/">
+                            <mo>&lfloor;</mo>
+                            <msqrt>
+                                <mn>81</mn>
+                            </msqrt>
+                            <mo>+</mo>
+                            <msup>
+                                <mn>2</mn>
+                                <mn>3</mn>
+                            </msup>
+                            <mo>&times;</mo>
+                            <mfenced>
+                                <mn>10</mn>
+                                <mo>-</mo>
+                                <mn>&tau;</mn>
+                            </mfenced>
+                            <mo>&divide;</mo>
+                            <mn>4</mn>
+                            <mo>&rfloor;</mo>
+                        </math>
+                    `;
+                } else {
+                    mathExpression.innerHTML = `
+                        <math xmlns="http://www.w3.org/TR/2014/REC-MathML3-20140410/">
+                            <mo>&lfloor;</mo>
+                            <msqrt>
+                                <mn>81</mn>
+                            </msqrt>
+                            <mo>+</mo>
+                            <msup>
+                                <mn>2</mn>
+                                <mn>3</mn>
+                            </msup>
+                            <mo>&times;</mo>
+                            <mo>(</mo>
+                            <mn>10</mn>
+                            <mo>-</mo>
+                            <mi>&tau;</mi>
+                            <mo>)</mo>
+                            <mo>&divide;</mo>
+                            <mn>4</mn>
+                            <mo>&rfloor;</mo>
+                        </math>
+                    `;
+                }
+            });
+
+            document.getElementById("submitAnswer").addEventListener("click", function () {
+                var userAnswer = document.getElementById("answer").value.trim();
+
+                const result = 16;
+                
+                var correctAnswer = result;
+                
+                if (parseInt(userAnswer) === correctAnswer) {
+                    alert("Correct! You move to the next module.");
+                    window.location.href = "🎮💻🔓module19.html";
+                } else {
+                    window.location.href = "../☠️💣🔚gameover.html";
+                }
+            });
+        </script>
+    </body>
+</html>

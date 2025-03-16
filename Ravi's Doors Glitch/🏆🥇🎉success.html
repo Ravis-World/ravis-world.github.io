@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Success - Bomb Defusal</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: black;
+                color: white;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+            }
+
+            h1 {
+                font-size: 3rem;
+                color: green;
+                margin-top: 50px;
+            }
+
+            .success-content {
+                margin: 20px auto;
+                padding: 20px;
+                border: 3px solid green;
+                border-radius: 10px;
+                background-color: #222;
+                width: 90%;
+                max-width: 600px;
+            }
+
+            .story-description {
+                margin-top: 20px;
+                font-size: 1.2rem;
+                color: #ffdd00;
+            }
+
+            .play-again-button {
+                padding: 15px 30px;
+                margin-top: 20px;
+                font-size: 18px;
+                background-color: green;
+                color: white;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+            }
+
+            .play-again-button:hover {
+                background-color: darkgreen;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Success! The Bomb is Defused!</h1>
+        <div class="success-content">
+            <p class="story-description">
+                After successfully defusing the bomb, Raviolo and his team uncover the truth:<br> 
+                Door had been hacked again, this time by her long-lost friend, Bruno Ryūnosuke Ó Ciardha, aka Dr. Γ.<br>
+                He stole dangerous goo from distant planet Vorvathis to trap Raviolo and his team in a deadly experiment.<br>
+                The goo is able to mutate its host, turning them into a creature with the goal of spreading infection.
+            </p>
+            <p class="story-description">
+                Furious, Door wants to team up with Raviolo to defeat Dr. Γ before the infection spreads further.
+            </p>
+            <p class="story-description">This is the end of the chapter. Check back in a while for more chapters.</p>
+            <button class="play-again-button" onclick="playAgain()">Play Again</button>
+        </div>
+
+        <script>
+            function playAgain() {
+                // Redirect to the next chapter
+                window.location.href = 'index.html';
+            }
+        </script>
+    </body>
+</html>

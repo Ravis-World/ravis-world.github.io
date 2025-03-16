@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Module 60 - Wire Logic 2.0</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: black;
+                color: white;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+            }
+
+            .module {
+                margin: 20px auto;
+                padding: 20px;
+                border: 3px solid orange;
+                border-radius: 10px;
+                background-color: #222;
+                width: 90%;
+                max-width: 600px;
+            }
+
+            .wires-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 20px;
+            }
+
+            .wire {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 10%; 
+                height: 150px;
+                margin: 0 5px;
+                border-radius: 5px;
+                cursor: pointer;
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+                position: relative; 
+            }
+
+            .wire.red { background-color: red; }
+            .wire.blue { background-color: blue; }
+            .wire.yellow { background-color: yellow; }
+            .wire.green { background-color: green; }
+            .wire.black { background-color: black; }
+            .wire.white { background-color: white; }
+            .wire.purple { background-color: purple; }
+            .wire.orange { background-color: orange; }
+            .wire.pink { background-color: pink; }
+            .wire.brown { background-color: brown; }
+
+            .wire.red::after {
+                content: "\25B2"; 
+                font-size: 40px;
+                position: absolute;
+                bottom: 50px;
+            }
+            .wire.blue::after {
+                content: "\25A0"; 
+                font-size: 40px;
+                position: absolute;
+                bottom: 50px;
+            }
+            .wire.yellow::after {
+                content: "\23FA"; 
+                color: black;
+                font-size: 40px;
+                position: absolute;
+                bottom: 50px;
+            }
+            .wire.green::after {
+                content: "\2666"; 
+                font-size: 40px;
+                position: absolute;
+                bottom: 50px;
+            }
+            .wire.black::after {
+                content: "\00D7"; 
+                font-size: 40px;
+                position: absolute;
+                bottom: 50px;
+            }
+            .wire.white::after {
+                content: "\3147"; 
+                color: black;
+                font-size: 40px;
+                position: absolute;
+                bottom: 50px;
+            }
+            .wire.purple::after {
+                content: "\2605"; 
+                font-size: 40px;
+                position: absolute;
+                bottom: 50px;
+            }
+            .wire.orange::after {
+                content: "\0480"; 
+                color: black;
+                font-size: 40px;
+                position: absolute;
+                bottom: 50px;
+            }
+            .wire.pink::after {
+                content: "\2665"; 
+                color: black;
+                font-size: 40px;
+                position: absolute;
+                bottom: 50px;
+            }
+            .wire.brown::after {
+                content: "\2B23"; 
+                font-size: 40px;
+                position: absolute;
+                bottom: 50px;
+            }
+
+            .wire:hover {
+                transform: scale(1.1);
+                box-shadow: 0 0 10px orange;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="module">
+            <h2>60. Wire Logic 2.0</h2>
+            <p>The bomb has 10 wires. Use the following rules to decide which wire to cut:</p>
+            <ul>
+                <li>If the first wire is &times; black, cut it.</li>
+                <li>If there are 2 &#x480; orange wires and the last wire is &#x3147; white, cut the second wire.</li>
+                <li>If if the first 4 wires start with "&#x25B2; Red, &#x25A0; Blue, &diamondsuit; Green, and &#x23FA; Yellow" in that order, cut the last wire.</li>
+                <li>Otherwise, cut the sixth wire.</li>
+            </ul>
+            <div class="wires-container" id="wiresContainer"></div>
+        </div>
+
+        <script>
+            const wireColors = ["red", "blue", "yellow", "green", "black", "white", "purple", "orange", "pink", "brown"];
+
+            function generateWires() {
+            const wires = [];
+            for (let i = 0; i < 10; i++) {
+                const randomIndex = Math.floor(Math.random() * wireColors.length);
+                wires.push(wireColors[randomIndex]);
+            }
+            return wires;
+            }
+
+            const shuffledWires = generateWires(); 
+
+            const wiresContainer = document.getElementById("wiresContainer");
+
+            shuffledWires.forEach((wire) => {
+            const wireDiv = document.createElement("div");
+            wireDiv.className = `wire ${wire}`;
+            wireDiv.onclick = () => checkWire(wire); 
+            wiresContainer.appendChild(wireDiv);
+            });
+
+            function determineCorrectWire(wires) {
+            const firstWireColor = wires[0];
+            const lastWireColor = wires[wires.length - 1];
+            const orangeCount = wires.filter(color => color === "orange").length;
+
+            if (firstWireColor === "black") {
+                return wires[0]; 
+            } else if (orangeCount === 2 && lastWireColor === "white") {
+                return wires[1]; 
+            } else if (wires.slice(0, 4).join("") === "redbluegreenyellow") { 
+                return wires[wires.length - 1]; 
+            } else {
+                return wires[5]; 
+            }
+            }
+
+            const correctWire = determineCorrectWire(shuffledWires);
+
+            function checkWire(wire) {
+                if (wire === correctWire) {
+                    alert("Correct! The module is complete!");
+                    window.location.href = "🌸🍀🦄module4.html";
+                } else {
+                    window.location.href = "../☠️💣🔚gameover.html";
+                }
+            }
+        </script>
+    </body>
+</html>
