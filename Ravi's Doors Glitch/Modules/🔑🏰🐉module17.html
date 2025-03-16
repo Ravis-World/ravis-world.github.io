@@ -102,9 +102,7 @@
             document.getElementById("submitAnswer").addEventListener("click", function () {
                 var userAnswer = document.getElementById("answer").value.trim();
                 
-                var correctAnswer = 7; 
-                
-                if (parseInt(userAnswer) === 7) {
+                if (userAnswer === 7) {
                     alert("Correct! You move to the next module.");
                     window.location.href = "🔥🌋⚡module18.html";
                 } else {
