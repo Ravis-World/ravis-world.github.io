@@ -6,6 +6,66 @@
         <title>Module 62 - Math Puzzle</title>
         <style>
             html {background-color: black;}
+            .calculator {
+                width: 300px;
+                background-color: #fff;
+                border-radius: 15px;
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                margin: auto;
+            }
+            .display {
+                width: 100%;
+                height: 50px;
+                text-align: right;
+                font-size: 1.5rem;
+                padding: 10px;
+                margin-bottom: 20px;
+                border: none;
+                background-color: #ffeb3b;
+                border-radius: 8px;
+                color: #333;
+            }
+            .buttons {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+            }
+            .button {
+                background-color: #03a9f4;
+                border: none;
+                font-size: 1.5rem;
+                padding: 20px;
+                cursor: pointer;
+                border-radius: 10px;
+                transition: background-color 0.3s, transform 0.2s;
+                color: white;
+            }
+            .button:hover {
+                background-color: #0288d1;
+                transform: scale(1.1);
+            }
+            .button:active {
+                transform: scale(0.95);
+            }
+            .button.clear {
+                background-color: #ff5722;
+            }
+            .button.clear:hover {
+                background-color: #e64a19;
+            }
+            .button.equal {
+                background-color: #8bc34a;
+            }
+            .button.equal:hover {
+                background-color: #689f38;
+            }
+            .button.operator {
+                background-color: #ff9800;
+            }
+            .button.operator:hover {
+                background-color: #f57c00;
+            }
             /* General styling for the entire module */
             .module {
                 margin: 20px auto;
@@ -104,9 +164,44 @@
             <h1>62. Math Puzzle 1</h1>
             <div>
                 <p id="question"></p>
-                <p>Answer to 2 decimal places.</p>
+                <p>Answer to 2 decimal places. Use the calculator if necessary</p>
                 <input type="text" id="answer" placeholder="Enter your answer">
                 <button id="submitAnswer">Submit</button>
+            </div>
+        </div>
+        <div class="calculator">
+            <p>Calculator</p>
+            <input type="text" id="display" class="display" disabled>
+            <div class="buttons">
+                <button class="button clear" onclick="clearDisplay()">C</button>
+                <button class="button operator" onclick="appendOperation('/')">/</button>
+                <button class="button operator" onclick="appendOperation('*')">*</button>
+                <button class="button operator" onclick="appendOperation('-')">-</button>
+
+                <button class="button operator" onclick="appendOperation('+')">+</button>
+                <button class="button operator" onclick="appendOperation('^')">^</button>
+                <button class="button operator" onclick="appendOperation('sqrt')">√</button>
+                <button class="button equal" onclick="calculate()">=</button>
+
+                <button class="button" onclick="appendNumber('6')">6</button>
+                <button class="button" onclick="appendNumber('7')">7</button>
+                <button class="button" onclick="appendNumber('8')">8</button>
+                <button class="button" onclick="appendNumber('9')">9</button>
+
+                <button class="button" onclick="appendNumber('2')">2</button>
+                <button class="button" onclick="appendNumber('3')">3</button>
+                <button class="button" onclick="appendNumber('4')">4</button>
+                <button class="button" onclick="appendNumber('5')">5</button>
+                
+                <button class="button" onclick="appendNumber('1')">1</button>
+                <button class="button" onclick="appendNumber('0')">0</button>
+                
+                <button class="button" onclick="appendNumber(Math.E)">e</button>
+                <button class="button" onclick="appendNumber(Math.PI)">&pi;</button>
+                <button class="button" onclick="appendNumber(tau)">&tau;</button>
+                <button class="button" onclick="appendNumber(phi)">&phi;</button>
+                <button class="button" onclick="appendNumber(supergoldenRatio())">&psi;</button>
+                <button class="button" onclick="appendNumber(sigma)">&sigma;</button>
             </div>
         </div>
         <script>
@@ -137,6 +232,76 @@
                 sigma: 'σ'
             };
 
+            let tau = 2 * Math.PI;
+            let phi = (1 + Math.sqrt(5)) / 2;
+            let sigma = 1 + Math.sqrt(2);
+
+            let currentInput = '';
+            let currentOperation = '';
+            let previousInput = '';
+
+            function appendNumber(number) { 
+                currentInput += number;
+                document.getElementById('display').value = `${previousInput} ${currentOperation} ${currentInput}`;
+            }
+
+            function appendOperation(operation) {
+                if (currentInput === '') return;
+                if (previousInput !== '') {
+                    calculate(); 
+                }
+                currentOperation = operation;
+                previousInput = currentInput;
+                currentInput = '';
+                document.getElementById('display').value = `${previousInput} ${currentOperation}`;
+            }
+
+            function calculate() {
+                if (previousInput === '' || currentInput === '') return;
+                let result;
+                let prev = parseFloat(previousInput);
+                let current = parseFloat(currentInput);
+
+                switch (currentOperation) {
+                    case '+':
+                        result = prev + current;
+                        break;
+                    case '-':
+                        result = prev - current;
+                        break;
+                    case '*':
+                        result = prev * current;
+                        break;
+                    case '/':
+                        if (current === 0) {
+                            alert("Cannot divide by zero");
+                            return;
+                        }
+                        result = prev / current;
+                        break;
+                    case '^':
+                        result = Math.pow(prev, current);
+                        break;
+                    case 'sqrt':
+                        result = Math.pow(prev, 1 / current);
+                        break;
+                    default:
+                        return;
+                }
+
+                currentInput = result.toString();
+                currentOperation = '';
+                previousInput = '';
+                document.getElementById('display').value = currentInput;
+            }
+
+            function clearDisplay() {
+                currentInput = '';
+                previousInput = '';
+                currentOperation = '';
+                document.getElementById('display').value = '';
+            } 
+
             function generateRandomMathQuestion() {
                 // Randomize the numbers and operations
                 var numbers = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), constants.e, constants.pi, constants.tau, constants.phi, constants.sigma];
@@ -156,13 +321,13 @@
                         case constants.pi:
                             return Math.PI;
                         case constants.tau:
-                            return 2 * Math.PI;  // Tau is 2π
+                            return tau;  // Tau is 2π
                         case constants.phi:
-                            return (1 + Math.sqrt(5)) / 2; // Golden ratio
+                            return phi; // Golden ratio
                         case constants.psi:
                             return supergoldenRatio(); // Supergolden ratio
                         case constants.sigma:
-                            return 1 + Math.sqrt(2); // Silver ratio
+                            return sigma; // Silver ratio
                         default:
                             return num;  // Return the number itself if it's not a constant
                     }
