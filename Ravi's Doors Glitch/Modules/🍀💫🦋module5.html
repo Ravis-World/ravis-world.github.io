@@ -164,7 +164,7 @@
             <h1>62. Math Puzzle 1</h1>
             <div>
                 <p id="question"></p>
-                <p>Answer to 2 decimal places. Use the calculator if necessary</p>
+                <p>Answer to 2 decimal places. Use the calculator if necessary. If you divide by 0, type "undefined".</p>
                 <input type="text" id="answer" placeholder="Enter your answer">
                 <button id="submitAnswer">Submit</button>
             </div>
@@ -349,6 +349,10 @@
                         break;
                     case '/':
                         question = `${num1} / ${num2} =`;
+                        if (getConstantSymbol(num2) === 0) {
+                            result = "undefined";
+                            break;
+                        }
                         result = getConstantSymbol(num1) / getConstantSymbol(num2);
                         break;
                     case '^':

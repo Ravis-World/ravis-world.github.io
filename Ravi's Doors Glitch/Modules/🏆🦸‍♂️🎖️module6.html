@@ -79,27 +79,36 @@
             <h1>63. Math Puzzle 2</h1>
             <div>
                 <p id="question"></p>
-                <p>Answer to 2 decimal places.</p>
+                <p>Answer to 2 decimal places. Use the new <a href="../calculator.html" target="_blank">calculator.</a></p>
                 <input type="text" id="answer" placeholder="Enter your answer">
                 <button id="submitAnswer">Submit</button>
             </div>
         </div>
         <script>
-            function supergoldenRatio() {
-                const sqrt93 = Math.sqrt(93);
-                const part1 = (29 + 3 * sqrt93) / 2;
-                const part2 = (29 - 3 * sqrt93) / 2;
-                const cubeRoot1 = Math.cbrt(part1);
-                const cubeRoot2 = Math.cbrt(part2);
-                return (1 + cubeRoot1 + cubeRoot2) / 3;
+            function eulerMascheroniSeries(n) {
+                if (n <= 0) {
+                    return "Iterations must be a positive integer.";
+                }
+
+                let gamma = 0;
+                for (let k = 1; k <= n; k++) {
+                    let sum = 0;
+                    for (let j = 1; j <= k; j++) {
+                        sum += 1 / j;
+                    }
+                    gamma += 1/k * (sum - Math.log(k));
+                }
+                return gamma;
             }
+
+            const EULER_MASCHERONI_SERIES = eulerMascheroniSeries(1000);
 
             var constants = {
                 e: 'e',
                 pi: 'π',
                 tau: 'τ',
                 phi: 'φ',
-                psi: 'ψ',
+                gamma: 'γ',
                 sigma: 'σ'
             };
 
@@ -109,7 +118,7 @@
                     case constants.pi: return Math.PI;
                     case constants.tau: return 2 * Math.PI;
                     case constants.phi: return (1 + Math.sqrt(5)) / 2;
-                    case constants.psi: return supergoldenRatio();
+                    case constants.gamma: return EULER_MASCHERONI_SERIES;
                     case constants.sigma: return 1 + Math.sqrt(2);
                     default: return num;
                 }
@@ -153,6 +162,9 @@
                         break;
                     case '/':
                         question = `${num1} ÷ ${num2}`;
+                        if (num2 == 0) {
+                            return generateRandomMathQuestion();
+                        }
                         result = getConstantSymbol(num1) / getConstantSymbol(num2);
                         break;
                     case '^':
@@ -181,6 +193,9 @@
                         break;
                     case '/':
                         question += ` ÷ ${num3}`;
+                        if (num3 == 0) {
+                            return generateRandomMathQuestion();
+                        }
                         result /= getConstantSymbol(num3);
                         break;
                     case '^':
