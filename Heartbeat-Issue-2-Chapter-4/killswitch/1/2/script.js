@@ -1,9 +1,9 @@
 function checkAnswer() {
-    const answer = parseFloat(document.getElementById("answer").value.trim());
-    const correctAnswer = Math.pow(8, 1 / 8); // Calculate 8^(1/8)
+    const answer = document.getElementById("answer").value.trim();
+    const correctAnswer = "8^(1/8)"; // The correct answer as a string
 
-    // Compare the user's answer with the correct answer, allowing for small rounding errors
-    if (Math.abs(answer - correctAnswer) < 0.0001) {
+    // Compare the user's answer with the correct answer as text
+    if (answer === correctAnswer) {
         window.location.href = "3/readme.html";
     } else {
         alert("Incorrect answer. Try again!");
