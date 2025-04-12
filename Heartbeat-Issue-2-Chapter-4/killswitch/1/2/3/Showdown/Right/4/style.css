@@ -1,0 +1,19 @@
+* {
+    background-color: darkslateblue;
+    color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+#banned {background: repeating-linear-gradient(
+    45deg,
+    #000000,
+    #ff0000 10px,
+    #000000 10px,
+    #ff0000 20px
+  );}
+#redacted {background: repeating-linear-gradient(
+    45deg,
+    #000000,
+    #00f7ff 10px,
+    #000000 10px,
+    #00f7ff 20px
+  );}

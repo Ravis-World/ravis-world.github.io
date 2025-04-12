@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    	<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Riddle 3</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script>
+            
+        </script>
+	</head>
+	<body>
+        <h1>
+            Solve for x where x is a positive real number.<br>
+            Hint: The answer is structured as "
+            <math>
+                <msup>
+                  <mn>a</mn>
+                  <mrow>
+                    <mfrac>
+                      <mn>b</mn>
+                      <mn>a</mn>
+                    </mfrac>
+                  </mrow>
+                </msup>
+              </math>
+            " or "a^(b/a)". Type it in "file_locker.bat".
+        </h1>
+        <math id="question">
+            <mrow>
+                <msup>
+                    <mi>x</mi>
+                    <mrow>
+                        <mi>x</mi>
+                        <mn>8</mn>
+                    </mrow>
+                </msup>
+                <mo>=</mo>
+                <mn>8</mn>
+            </mrow>
+        </math>
+        <p>Enter your answer:</p>
+        <input type="text" id="answer" placeholder="Enter your answer">
+        <button onclick="checkAnswer()">Submit</button>
+    </body>
+</html>

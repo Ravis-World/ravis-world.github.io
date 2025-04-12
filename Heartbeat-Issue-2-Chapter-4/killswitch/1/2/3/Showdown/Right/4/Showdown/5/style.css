@@ -1,0 +1,12 @@
+* {
+    background-color: darkslateblue;
+    color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+#glitch {background: repeating-linear-gradient(
+    45deg,
+    #447fff67,
+    #5fb3b685 10px,
+    #ff3b3bbe 10px,
+    #cafdff 20px
+  );}
