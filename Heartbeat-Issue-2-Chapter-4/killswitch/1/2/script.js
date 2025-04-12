@@ -4,7 +4,7 @@ function checkAnswer() {
 
     // Compare the user's answer with the correct answer, allowing for small rounding errors
     if (Math.abs(answer - correctAnswer) < 0.0001) {
-        window.location.href = "./3/readme.html";
+        window.location.href = "./4/readme.html";
     } else {
         alert("Incorrect answer. Try again!");
     }
