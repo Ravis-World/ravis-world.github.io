@@ -1,0 +1,38 @@
+#bar {
+    position: relative;
+    width: 80%;
+    height: 40px;
+    background-color: #ccc;
+    margin: 30px auto;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#target {
+    position: absolute;
+    left: 40%;
+    width: 20%;
+    height: 100%;
+    background-color: #a5d6a7;
+}
+
+#marker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 100%;
+    background-color: #e53935;
+}
+
+#message {
+    font-size: 1.4em;
+    margin-top: 20px;
+}
+
+button {
+    margin-top: 30px;
+    font-size: 1.2em;
+    padding: 10px 20px;
+    cursor: pointer;
+}

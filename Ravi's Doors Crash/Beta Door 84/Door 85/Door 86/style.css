@@ -1,0 +1,31 @@
+.cages {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 30px;
+}
+
+.cage {
+  font-size: 80px;
+  background-color: #eee;
+  padding: 40px;
+  border-radius: 12px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.2s;
+}
+
+.cage.revealed {
+  cursor: default;
+  pointer-events: none;
+  transform: scale(1.05);
+}
+
+#resultMsg {
+  margin-top: 30px;
+  font-size: 20px;
+}
+
+.hidden {
+  display: none;
+}

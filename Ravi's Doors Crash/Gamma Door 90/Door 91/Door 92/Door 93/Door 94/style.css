@@ -1,0 +1,51 @@
+#progress-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.segment {
+    width: 60px;
+    height: 30px;
+    margin: 0 5px;
+    background: #ccc;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.segment.completed {
+    background: #4caf50;
+}
+
+.segment.error {
+    background: #ff5722;
+}
+
+#minigame {
+    margin-top: 40px;
+}
+
+#zone {
+    width: 70px;
+    height: 70px;
+    background: lightgreen;
+    border-radius: 50%;
+    margin: 20px auto;
+    position: relative;
+}
+
+#circle {
+    width: 60px;
+    height: 60px;
+    background: crimson;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    transition: transform 0.05s linear;
+}
+
+.hidden {
+    display: none;
+}

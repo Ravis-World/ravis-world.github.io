@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Step 10: Start the Machine</title>
+        <link rel="stylesheet" href="../../../../universal-style.css">
+        <link rel="stylesheet" href="style.css">
+        <script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="script.js" defer></script>
+    </head>
+    <body>
+        <h1>
+            Door 93: Start the Machine<br>
+            CR &gamma;
+        </h1>
+        <p>
+            Enter the correct code to enable the machine.<br>
+            Use the symbols from the puzzle to form a code.<br>
+            Click the symbols in the correct order to input the code.<br>
+            Here's a hint: The code does not include the microscope, and there are no duplicates.<br>
+    </p>
+
+        <div class="puzzle">
+            <button class="symbol" data-symbol="⚗️">⚗️</button>
+            <button class="symbol" data-symbol="🧪">🧪</button>
+            <button class="symbol" data-symbol="💡">💡</button>
+            <button class="symbol" data-symbol="🔬">🔬</button>
+        </div>
+
+        <p id="statusMsg" style="text-align: center;"></p>
+
+        <button id="nextBtn" style="display:none;">Next Step</button>
+    </body>
+</html>

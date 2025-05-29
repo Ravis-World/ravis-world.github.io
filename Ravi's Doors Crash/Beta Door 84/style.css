@@ -1,0 +1,45 @@
+#rock {
+    width: 200px;
+    height: 200px;
+    background: url('rock.png') center/cover no-repeat;
+    margin: 20px auto;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+#rock:active {
+    transform: scale(0.95);
+}
+
+#progress {
+    margin-top: 20px;
+    height: 25px;
+    width: 80%;
+    max-width: 400px;
+    border: 2px solid silver;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+#progress-bar {
+    background-color: silver;
+    height: 100%;
+    width: 0%;
+}
+
+#status {
+    margin-top: 20px;
+    font-size: 1.2em;
+}
+
+#nextBtn {
+    margin-top: 30px;
+    padding: 10px 20px;
+    font-size: 1em;
+    background: silver;
+    color: #111;
+    border: none;
+    cursor: pointer;
+    display: none;
+}

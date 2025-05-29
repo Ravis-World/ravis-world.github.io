@@ -1,0 +1,46 @@
+.instruction {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+.container-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  gap: 15px;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+.container {
+  font-size: 2.5rem;
+  padding: 20px;
+  background-color: #004d60;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.container:hover {
+  background-color: #007a8c;
+}
+
+.status {
+  margin-top: 20px;
+  font-size: 1.1rem;
+}
+
+#nextStep {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #00bcd4;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#nextStep:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}

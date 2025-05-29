@@ -1,0 +1,23 @@
+.puzzle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+}
+
+.symbol {
+    font-size: 2em;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+#startBtn {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}

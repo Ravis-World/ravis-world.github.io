@@ -1,0 +1,33 @@
+video {
+    /* center the video but do not show it yet */
+    display: none;
+    margin-left: auto;
+    margin-right: auto;
+    /* make the video responsive */
+    max-width: 100%;
+    height: auto;
+    /* add a border */
+    border: 2px solid #000;
+}
+#video, #continue, .video-section {
+    display: none;
+}
+.video-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 30px auto;
+    width: 100%;
+    max-width: 700px;
+}
+.video-section video,
+.video-section iframe {
+    display: none;
+    margin: 20px 0;
+    max-width: 100%;
+    border: 2px solid #000;
+}
+.video-section .video-buttons {
+    margin-top: 10px;
+}

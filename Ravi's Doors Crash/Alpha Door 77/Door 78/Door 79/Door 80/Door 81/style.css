@@ -1,0 +1,56 @@
+#grid {
+    display: grid;
+    grid-template-columns: repeat(5, 60px);
+    grid-template-rows: repeat(5, 60px);
+    gap: 8px;
+    margin: 20px 0;
+    justify-content: center;
+}
+
+.cell {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #ffdd00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #222;
+    font-weight: bold;
+    font-size: 1.3rem;
+    user-select: none;
+    color: #555;
+}
+
+.door {
+    background: #ffdd00;
+    color: black;
+    box-shadow: 0 0 10px #ffdd00;
+}
+
+#status {
+    margin: 15px 0;
+    font-size: 1.1rem;
+}
+
+button {
+    padding: 10px 20px;
+    background: #ffdd00;
+    border: none;
+    color: black;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 5px;
+    user-select: none;
+    transition: background-color 0.3s ease;
+    margin: auto;
+}
+
+button:hover:not(:disabled) {
+    background: #ffaa00;
+}
+
+button:disabled {
+    background: #555;
+    cursor: not-allowed;
+}

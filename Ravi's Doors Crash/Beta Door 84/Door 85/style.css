@@ -1,0 +1,17 @@
+.utensils {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 30px;
+}
+
+.utensil {
+  font-size: 60px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.utensil.cleaned {
+  filter: grayscale(100%) brightness(1.5);
+  transform: scale(1.1);
+}

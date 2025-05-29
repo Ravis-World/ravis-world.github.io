@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dr. &Eta;'s Base</title>
+        <link rel="stylesheet" href="../../../../../../../../universal-style.css">
+        <link rel="stylesheet" href="style.css">
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
+        <script src="script.js" defer></script>
+    </head>
+    <body>
+        <h1>
+            Break 1<br>
+            Dr. &Eta;'s Base
+        </h1>
+        <p>
+            Raviolo and the team have reached Dr. &Eta;'s base.<br>
+            "So, this is your base, Heleena?" Raviolo asks.<br>
+            "Yes, it is," Heleena replies.<br>
+            "I have been working on a new project here. It's the cure for the virus that has been plaguing the world."<br>
+            "That's great news!" Raviolo exclaims. "How does it work?"<br>
+            Heleena pulls out a video cassette tape and puts it into a VCR emulator.<br>
+            "This is a video of the experiment I conducted to create the cure. It shows how the virus was created and how it can be cured."
+        </p>
+        <button onclick="watchVideo()">Watch video.</button>
+        <div class="video-section" style="display:none;">
+            <p>You are able to watch the video in 3 different options</p>
+            <div id="video-buttons" class="video-buttons" style="display:none;">
+                <button onclick="showMp4()">Watch MP4</button>
+                <button onclick="showYoutube()">Watch YouTube</button>
+                <button onclick="showText()">Read Text</button>
+            </div>
+            <video id="main-video" controls>
+                <source src="The Vorvathis Anomaly Explained.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <iframe
+                id="yt-frame"
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/r4ngjRhBbko?si=cZtubVnZA5g3fkn8"
+                title="YouTube video player"
+                frameborder="0"
+                allow="
+                    accelerometer;
+                    autoplay;
+                    clipboard-write;
+                    encrypted-media;
+                    gyroscope;
+                    picture-in-picture;
+                    web-share
+                "
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+            ></iframe>
+            <p id="video-text" style="display:none;">
+                Hi, I'm Heleena Lengyel, and this is an overview of the Vorvathis Anomaly, and the cure.<br>
+                This virus is a special goo that transforms its host into a zombie.<br>
+                To make the cure, I used silver, a part of a pig's brain, and heavy water.<br>
+                If we can distribute this virus to the entire world, we can save it.
+            </p>
+            <p class="continue">
+                "This is amazing!" Raviolo says. "But how do we know it will work?"<br>
+                "I have tested it on myself and it worked," Heleena replies. "I am now immune to the virus."<br>
+                "That's great! But what about the rest of the world?"<br>
+                "I have created a machine that can replicate the cure and distribute it to everyone."<br>
+                "That's incredible! How does it work?"<br>
+                "The machine uses a special formula that I created to replicate the cure. It can produce enough cure for the entire world in just a few days."<br>
+                Heleena talked about this cure for a while, and then she said, "I have a plan to distribute the cure to the entire world. I will need your help to do it."<br>
+                "Of course, I'm in!" Raviolo replies eagerly.<br>
+                "Great, I've already started working on the machine. It will be ready in a few hours."<br>
+                "That's amazing! I can't wait to see it in action."<br>
+                "Me too," Heleena says with a smile. "Let's get to work."<br>
+                "Here is a manual for the machine and how to make the virus," Heleena says, handing Raviolo a manual. "It will help you understand what is happening."<br>
+                "Thank you, Heleena. I will read it carefully," Raviolo replies before questioning "Is it possible that we are currently in the real world, instead of Dora's world? The game still progresses in doors."<br>
+                "I don't know, but I think we are in the real world," Heleena replies. "I have been working on this project for a long time, and I have never seen anything like it."<br>
+                The rest of the team sigh in relief, as they are also out of the simulation and in the real world; all by Door's actions.<br>
+                "I hope you're right," Raviolo says, feeling a sense of hope for the first time in a long time.<br>
+                "I am," Heleena replies confidently. "We will save the world together."<br>
+            </p>
+            <button class="continue" onclick="startBetaLevels()">Continue</button>
+        </div>
+    </body>
+</html>
