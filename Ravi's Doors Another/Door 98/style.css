@@ -1,0 +1,16 @@
+.appleText {
+    color: red; /* Red */
+    font-weight: bold;
+}
+.orangeText {
+    color: orange; /* Orange */
+    font-style: bold;
+}
+.strawberryText {
+    color: pink; /* Pink */
+    font-style: bold;
+}
+.bananaText {
+    color: yellow; /* Yellow */
+    font-style: bold;
+}

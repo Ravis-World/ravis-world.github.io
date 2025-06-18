@@ -1,0 +1,34 @@
+@font-face {
+    font-family: 'Avian';
+    src: url('AvineV2-Regular.ttf') format('truetype');
+}
+
+#language-box {
+    width: 100%;
+    overflow: hidden;
+    height: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    /* Remove solid background */
+    background-color: unset;
+    /* Add diagonal stripes using linear-gradient */
+    background-image: repeating-linear-gradient(135deg,
+            green,
+            /* First purple */
+            green 20px,
+            lime 20px,
+            /* Second purple */
+            lime 40px);
+    color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+#language-text {
+    position: relative;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    white-space: nowrap;
+    font-size: 2em;
+    padding: 0 10px;
+}

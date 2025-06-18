@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap');
+
+body {
+    background-color: black;
+    color: white;
+    font-family: "Red Hat Display", "Noto Sans", sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    /* Remove solid background */
+    background-color: unset;
+    /* Add diagonal stripes using linear-gradient */
+    background-image: repeating-linear-gradient(135deg,
+            darkslateblue,
+            /* First purple */
+            darkslateblue 20px,
+            #8e24aa 20px,
+            /* Second purple */
+            #8e24aa 40px);
+    color: white;
+}
+
+p {
+    text-align: justify;
+}
+
+button {
+    display: inline-block;
+    margin: 20px 10px 0 10px;
+    border: 2px solid #000;
+    padding: 10px 24px;
+    max-width: 100%;
+    background: #8e24aa;
+    color: #fff;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+button:hover {
+    background: #5e1673;
+    color: #ffe;
+}
+
+@keyframes buttonClick {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.92); }
+    100% { transform: scale(1); }
+}
+
+button:active {
+    animation: buttonClick 0.18s cubic-bezier(.4,0,.2,1);
+}
+
+.objective {
+    background-color: yellow;
+    color: black;
+    font-weight: bold;
+    border: 2px solid #111;
+}
+
+/* Add this to align the doors side by side and center them */
+.door {
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 220px;
+    margin: 20px 30px;
+    background: #222;
+    border: 4px solid #8e24aa;
+    border-radius: 12px;
+    vertical-align: top;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    font-size: 4rem;
+    color: white;
+    text-align: center;
+}
+
+footer {
+  background-color: #222;
+  color: #ccc;
+  padding: 15px;
+  font-size: 0.9em;
+  text-align: center;
+  border-top: 1px solid #444;
+}
+
+.copyleft {
+  display: inline-block; /* Ensures the rotated element takes up space */
+  transform: rotate(180deg); /* Rotates the element by 180 degrees */
+}

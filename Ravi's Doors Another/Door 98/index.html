@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Door 98</title>
+        <link rel="stylesheet" href="../universal-style.css">
+        <link rel="stylesheet" href="style.css">
+        <script src="../universal-script.js" defer></script>
+        <script src="script.js" defer></script>
+    </head>
+    <body>
+        <h1>Door 98</h1>
+        <p>
+            Raviolo and his team had triumphed over the mechanical gauntlet of Door 97, their unity and precision proving instrumental.<br>
+            Now, how are they going to handle the next intersection? Oh, right. Pick a door.
+        </p>
+        <div class="door">1</div>
+        <div class="door">2</div>
+        <div class="door">3</div>
+        <div class="door">4</div>
+        <hr>
+        <button id="door1">Open Door 1</button>
+        <button id="door2">Open Door 2</button>
+        <button id="door3">Open Door 3</button>
+        <button id="door4">Open Door 4</button>
+        <div id="failure" style="display: none;">
+            <hr>
+            <p>
+                <strong>Failure:</strong> You know the drill by now.
+            </p>
+            <button onclick="reload()">Try Again</button>
+        </div>
+        <div id="success" style="display: none;">
+            <hr>
+            <p>
+                <strong>Success:</strong>
+                After passing the 4-door hallway, the next trial brought an unsettling twist—an ominous test of survival: choosing the right fruit to eat. The team now found themselves standing before a table laden with an array of
+                <strong class="appleText">apples</strong>,
+                <strong class="orangeText">oranges</strong>,
+                <strong class="strawberryText">strawberries</strong>, and
+                <strong class="bananaText">bananas</strong>.<br>
+                Each fruit looked tantalisingly fresh, almost glistening under the dim light of the room. Yet the stakes were unnervingly high, as they knew that consuming a wrong fruit would lead to fatal consequences.<br>
+                The challenge presented a cryptic clue, scribbled onto a parchment hanging at the edge of the table: "To nourish the soul is to embrace the truth of the hue." The team debated the meaning of these enigmatic words, trying to decipher whether they hinted at colour, flavour, or something deeper.<br>
+                As deliberations continued, tension mounted. Each team member knew their decision had to be precise—there was no margin for error.<br>
+                To add to the complexity, there was a limited number of fruits available, seven of each type—one for each member of the group. They worked methodically, analysing every detail of the fruits, searching for irregularities, hidden markings, or any clue Dr. Γ might have embedded.<br>
+                Meanwhile, the air in the room grew heavier, as though time itself were pressing down on them.<br>
+                It was Raviolo who noticed something peculiar. Upon closer inspection, he observed subtle differences in the sheen of certain fruits under the flickering light. Could it be the answer? The team decided to take a calculated risk, each selecting their fruit based on a collective hypothesis born of their scrutiny and the cryptic clue.
+            </p>
+            <div id="fruit-challenge">
+                <h3>Fruit Challenge</h3>
+                <button id="fruit1">Apple</button>
+                <button id="fruit2">Orange</button>
+                <button id="fruit3">Strawberry</button>
+                <button id="fruit4">Banana</button>
+                <div id="fruit-failure" style="display:none;">
+                    <div style="color: tomato; margin-top: 10px;">
+                        Wrong fruit! The team faces dire consequences...
+                    </div>
+                    <button id="fruit-try-again">Try Again</button>
+                </div>
+                <div id="fruit-success" style="display:none;" >
+                    <div style="color: lightgreen; margin-top: 10px;">
+                        Correct! The team chose wisely and survived.
+                    </div>
+                    <p>
+                        As they bit into their choices, a tense silence enveloped the room. Seconds felt like hours as they waited for any sign that the fruits might be tainted. Relief swept over the group as it became clear their deductions had been correct. The correct fruit had been chosen, and the door to the next challenge creaked open, revealing the path forward.<br>
+                        Raviolo and his team, though momentarily relieved, understood that this victory only brought them closer to Dr. Γ’s final, and undoubtedly most formidable, trial.
+                    </p>
+                    <a href="../Door 99/index.html">
+                        <button>Proceed to Door 99</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
