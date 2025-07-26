@@ -1,183 +1,212 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Calculator</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            display: flex;
-            flex-direction: column; /* Stack elements vertically */
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
+	<meta charset="UTF-8">
+	<title>Dropdown Calculator</title>
+	<style>
+		body {
+			font-family: sans-serif;
+			padding: 20px;
+			max-width: 300px;
+			margin: auto;
+		}
 
-        h1 {
-            text-align: center;
-            margin: 5px 0; /* Add some spacing between the headings */
-        }
+		select,
+		button {
+			width: 100%;
+			padding: 8px;
+			margin: 10px 0;
+		}
 
-        #calculator {
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 5px;
-            background-color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+		#result {
+			margin-top: 20px;
+			font-weight: bold;
+		}
+	</style>
+	<script type="text/javascript" defer>
+		const EULERGAMMA = 0.5772156649;
+		function constantValue(value) {
+			switch (value) {
+				case "pi": return Math.PI;
+				case "e": return Math.E;
+				case "phi": return (1 + Math.sqrt(5)) / 2;
+				case "tau": return Math.PI * 2;
+				case "sigma": return 1 + Math.sqrt(2); // silver ratio
+				case "gamma": return EULERGAMMA; // Euler–Mascheroni constant
+				default: return parseFloat(value);
+			}
+		}
 
-        input[type="text"] {
-            width: 250px;
-            margin-bottom: 10px;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
+		function applyOp(a, op, b) {
+			switch (op) {
+				case '+': return a + b;
+				case '-': return a - b;
+				case '*': return a * b;
+				case '/': return b === 0 ? '÷0 = undefined' : a / b;
+				case '^': return Math.pow(a, b);
+				case '√': return b === 0 ? 'root 0 = undefined' : Math.pow(a, 1 / b);
+				default: return NaN;
+			}
+		}
 
-        button {
-            width: 50px;
-            height: 30px;
-            margin: 2px;
-            background-color: #e0e0e0;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
+		function calculate() {
+			const n1 = constantValue(document.getElementById('num1').value);
+			const op1 = document.getElementById('op1').value;
+			const n2 = constantValue(document.getElementById('num2').value);
+			const op2 = document.getElementById('op2').value;
+			const n3 = constantValue(document.getElementById('num3').value);
+			const brackets = document.getElementById('brackets').value;
 
-        #result {
-            margin-top: 10px;
-            font-weight: bold;
-        }
-    </style>
+			let result;
+
+			try {
+				if (brackets === "left") {
+					const left = applyOp(n1, op1, n2);
+					if (typeof left === 'string') throw left;
+					result = applyOp(left, op2, n3);
+				} else if (brackets === "right") {
+					const right = applyOp(n2, op2, n3);
+					if (typeof right === 'string') throw right;
+					result = applyOp(n1, op1, right);
+				} else {
+					const precedence = { '+': 1, '-': 1, '*': 2, '/': 2, '^': 3, '√': 3 };
+					if (precedence[op2] > precedence[op1]) {
+						const temp = applyOp(n2, op2, n3);
+						if (typeof temp === 'string') throw temp;
+						result = applyOp(n1, op1, temp);
+					} else {
+						const temp = applyOp(n1, op1, n2);
+						if (typeof temp === 'string') throw temp;
+						result = applyOp(temp, op2, n3);
+					}
+				}
+
+				if (!isFinite(result)) throw 'Result is not finite';
+
+				// Apply rounding mode after final result calculation
+				const mode = document.getElementById('mode').value;
+				if (mode === 'floor') result = Math.floor(result);
+				else if (mode === 'ceil') result = Math.ceil(result);
+
+			} catch (e) {
+				result = 'Error: ' + e;
+			}
+
+			document.getElementById('result').textContent = 'Result: ' + result;
+		}
+	</script>
 </head>
+
 <body>
-    <h1>
-        When working nth roots, the formula is nth_root(2nd number, 1st number).<br>
-        For example, to find the square root of 9, you would type nth_root(9, 2).
-        Full example: 6 * nth_root(9, 2) = 18
-    </h1>
-    <hr>
-    <div id="calculator">
-        <input type="text" id="expression" placeholder="Enter expression">
-        <br>
-        <button onclick="appendToExpression('7')">7</button>
-        <button onclick="appendToExpression('8')">8</button>
-        <button onclick="appendToExpression('9')">9</button>
-        <button onclick="appendToExpression('+')">+</button><br>
-        <button onclick="appendToExpression('4')">4</button>
-        <button onclick="appendToExpression('5')">5</button>
-        <button onclick="appendToExpression('6')">6</button>
-        <button onclick="appendToExpression('-')">-</button><br>
-        <button onclick="appendToExpression('1')">1</button>
-        <button onclick="appendToExpression('2')">2</button>
-        <button onclick="appendToExpression('3')">3</button>
-        <button onclick="appendToExpression('*')">*</button><br>
-        <button onclick="appendToExpression('0')">0</button>
-        <button onclick="appendToExpression('.')">.</button>
-        <button onclick="calculate()">=</button>
-        <button onclick="appendToExpression('/')">/</button><br>
-        <button onclick="appendToExpression('^')">^</button>
-        <button onclick="appendToExpression('nth_root(')">√</button>
-        <button onclick="appendToExpression('(')">(</button>
-        <button onclick="appendToExpression(')')">)</button><br>
-        <button onclick="appendToExpression(',')">,</button>
-        <button onclick="appendToExpression('pi')">π</button>
-        <button onclick="appendToExpression('e')">e</button>
-        <button onclick="appendToExpression('phi')">φ</button><br>
-        <button onclick="appendToExpression('tau')">τ</button>
-        <button onclick="appendToExpression('sigma')">σ</button>
-        <button onclick="appendToExpression('gamma')">γ</button>
-        <button onclick="clearExpression()">C</button>
 
-        <div id="result"></div>
-    </div>
+	<h2>Calculator</h2>
 
-    <script>
-        let expression = "";
-        const resultDiv = document.getElementById("result");
-        const expressionInput = document.getElementById("expression");
+	<!-- First Number -->
+	<label for="num1">First Number:</label>
+	<select id="num1">
+		<option value="0">0</option>
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
+		<option value="6">6</option>
+		<option value="7">7</option>
+		<option value="8">8</option>
+		<option value="9">9</option>
+		<option value="pi">π</option>
+		<option value="e">e</option>
+		<option value="phi">φ</option>
+		<option value="tau">τ</option>
+		<option value="sigma">σ</option>
+		<option value="gamma">γ</option>
+	</select>
 
-        function eulerMascheroniSeries(n) {
-            if (n <= 0) {
-                return "Iterations must be a positive integer.";
-            }
+	<!-- First Operator -->
+	<label for="op1">First Operator:</label>
+	<select id="op1">
+		<option value="+">Add (+)</option>
+		<option value="-">Subtract (-)</option>
+		<option value="*">Multiply (*)</option>
+		<option value="/">Divide (÷)</option>
+		<option value="^">Exponentiate (^)</option>
+		<option value="√">nth Root (√)</option>
+	</select>
 
-            let gamma = 0;
-            for (let k = 1; k <= n; k++) {
-                let sum = 0;
-                for (let j = 1; j <= k; j++) {
-                    sum += 1 / j;
-                }
-                gamma += 1/k * (sum - Math.log(k));
-            }
-            return gamma;
-        }
+	<!-- Second Number -->
+	<label for="num2">Second Number:</label>
+	<select id="num2">
+		<option value="0">0</option>
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
+		<option value="6">6</option>
+		<option value="7">7</option>
+		<option value="8">8</option>
+		<option value="9">9</option>
+		<option value="pi">π</option>
+		<option value="e">e</option>
+		<option value="phi">φ</option>
+		<option value="tau">τ</option>
+		<option value="sigma">σ</option>
+		<option value="gamma">γ</option>
+	</select>
 
-        const EULER_MASCHERONI_SERIES = eulerMascheroniSeries(1000);
+	<!-- Second Operator -->
+	<label for="op2">Second Operator:</label>
+	<select id="op2">
+		<option value="+">Add (+)</option>
+		<option value="-">Subtract (-)</option>
+		<option value="*">Multiply (*)</option>
+		<option value="/">Divide (÷)</option>
+		<option value="^">Exponentiate (^)</option>
+		<option value="√">nth Root (√)</option>
+	</select>
 
-        function appendToExpression(value) {
-            expression += value;
-            expressionInput.value = expression;
-        }
+	<!-- Third Number -->
+	<label for="num3">Third Number:</label>
+	<select id="num3">
+		<option value="0">0</option>
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
+		<option value="6">6</option>
+		<option value="7">7</option>
+		<option value="8">8</option>
+		<option value="9">9</option>
+		<option value="pi">π</option>
+		<option value="e">e</option>
+		<option value="phi">φ</option>
+		<option value="tau">τ</option>
+		<option value="sigma">σ</option>
+		<option value="gamma">γ</option>
+	</select>
 
-        function clearExpression() {
-            expression = "";
-            expressionInput.value = "";
-            resultDiv.innerText = "";
-        }
+	<label for="brackets">Brackets:</label>
+	<select id="brackets">
+		<option value="none">None</option>
+		<option value="left">(n1 op1 n2) op2 n3</option>
+		<option value="right">n1 op1 (n2 op2 n3)</option>
+	</select>
 
-        function calculate() {
-            try {
-                const result = evalMathExpression(expression);
-                resultDiv.innerText = "= " + result;
-            } catch (error) {
-                resultDiv.innerText = "Error: " + error.message;
-            }
-        }
+	<label for="mode">Result Mode:</label>
+	<select id="mode">
+		<option value="none">None</option>
+		<option value="floor">Floor</option>
+		<option value="ceil">Ceil</option>
+	</select>
 
-        function evalMathExpression(expr) {
-            const constants = {
-                'pi': Math.PI,
-                'e': Math.E,
-                'phi': (1 + Math.sqrt(5)) / 2,
-                'tau': 2 * Math.PI,
-                'sigma': 1 + Math.sqrt(2),
-                'gamma': EULER_MASCHERONI_SERIES
-            };
+	<!-- Calculate Button -->
+	<button onclick="calculate()">Calculate</button>
 
-            function nth_root(base, root) {
-                if (base < 0 && root % 2 === 0) {
-                    throw new Error("Cannot take even root of negative number.");
-                }
-                return Math.pow(base, 1 / root);
-            }
+	<!-- Result -->
+	<div id="result">Result: </div>
 
-            function parseExpression(expr) {
-                expr = expr.replace(/\s+/g, '');
-                for (const constName in constants) {
-                    expr = expr.replace(constName, constants[constName]);
-                }
-
-                if (expr.includes('nth_root(')) {
-                    const start = expr.indexOf('nth_root(') + 9;
-                    const end = expr.indexOf(')', start);
-                    if (end === -1) {
-                        throw new Error("Invalid nth_root syntax.");
-                    }
-                    const args = expr.substring(start, end).split(',');
-                    if (args.length !== 2) {
-                        throw new Error("Invalid nth_root arguments.");
-                    }
-                    const base = parseExpression(args[0]);
-                    const root = parseExpression(args[1]);
-                    const result = nth_root(base, root);
-                    return parseExpression(expr.replace(expr.substring(expr.indexOf('nth_root('), end + 1), result));
-                }
-                return eval(expr);
-            }
-            return parseExpression(expr);
-        }
-    </script>
 </body>
+
 </html>

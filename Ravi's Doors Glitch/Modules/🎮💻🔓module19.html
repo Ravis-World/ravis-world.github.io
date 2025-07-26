@@ -185,7 +185,7 @@
                 document.getElementById("timer").innerText = "Time Left: " + timeLeft + "s";
                 if (timeLeft <= 0) {
                     clearInterval(timer);
-                    gameOver("&#x1f4a5; BOOM! Time ran out!");
+                    gameOver("❌ BOOM! Time ran out!");
                 }
             }, 1000);
         }
@@ -199,7 +199,7 @@
         }
 
         function bombDefused() {
-            document.getElementById("message").innerText = "&#x2705; Success! Bomb Defused!";
+            document.getElementById("message").innerText = "✅ Success! Bomb Defused!";
             document.getElementById("message").style.color = "lime";
             setTimeout(() => {
                 window.location.href = "../🏆🥇🎉success.html";
@@ -223,7 +223,7 @@
                     bombDefused();
                 }
             } else {
-                gameOver("&#x1f4a5; BOOM! Wrong move!");
+                gameOver("❌ BOOM! Wrong move!");
             }
         }
 
