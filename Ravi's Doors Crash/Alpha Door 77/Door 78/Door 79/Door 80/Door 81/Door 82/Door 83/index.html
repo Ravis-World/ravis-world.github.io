@@ -25,15 +25,24 @@
             <span class="objective">Objective</span>: Get out of the room before the monster attacks.<br>
             <span class="objective">Controls</span>: Use the arrow keys or the buttons on mobile to move around.
             <!-- Start Button -->
-            <button id="startBtn">Start Game</button>
-            <!-- Mobile Controls -->
-            <div id="mobile-controls" style="display:none; margin: 10px 0;">
-                <button class="ctrl-btn" data-dir="up">▲</button><br>
-                <button class="ctrl-btn" data-dir="left">◀</button>
-                <button class="ctrl-btn" data-dir="down">▼</button>
-                <button class="ctrl-btn" data-dir="right">▶</button>
+            <div id="start-container">
+                <button id="startBtn">▶ Start Game</button>
             </div>
-            <canvas id="gameCanvas" width="600" height="400" style="display:none;"></canvas>
+
+            <div id="mobile-controls">
+                <div class="dpad-row dpad-up">
+                    <button class="ctrl-btn" data-dir="up">▲</button>
+                </div>
+                <div class="dpad-row">
+                    <button class="ctrl-btn" data-dir="left">◀</button>
+                    <button class="ctrl-btn" data-dir="down">▼</button>
+                    <button class="ctrl-btn" data-dir="right">▶</button>
+                </div>
+            </div>
+
+
+            <!-- Game Canvas -->
+            <canvas id="gameCanvas" width="600" height="400"></canvas>
         </p>
     </body>
 </html>
