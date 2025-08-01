@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Keypad</title>
+        <link rel="stylesheet" href="./../../../../global/style.css">
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js" defer></script>
+    </head>
+    <body>
+        <div class="content">
+            <h1>Keypad</h1>
+            <p>
+            The birds head to the keypad; its structure holding it in place very poorly.<br>
+            Chuck: “I think this thing's held together with tape and regret…”<br>
+            Matilda: “Careful. Touch the wrong key, and we might short-circuit something.”<br>
+            Red examines the keypad. “We need a code. Let’s look around for clues.”<br>
+            </p>
+
+            <!-- Clue box or visual -->
+            <div class="clue-box" style="text-align: center;">
+            <p>
+                <strong>Clues found on nearby wall:</strong><br>
+                <ol>
+                    <li>Position of Arabic letter <a href="https://en.wikipedia.org/wiki/Shin_(letter)#Arabic_sh%C4%ABn">Šīn</a></li>
+                    <li>Šīn's <a href="https://en.wikipedia.org/wiki/Abjad_numerals">place value</a> in common abjad order</li>
+                    <li>The number of moons orbiting Earth between
+                        <time datetime="2024-09-29">the nine and twentieth day of September, on the third year of King Charles III</time> to <time datetime="2024-11-25">the five and twentieth day of November, on the third year of King Charles III</time>.
+                    </li>
+                </ol>
+            </p>
+            </div>
+
+            <p>
+                Red: "Yikes, HOW OLD is Creeper Jack for him to write clue 3 like that‽ Do we need to bust out the web search‽"<br>
+                Chuck: You don't need to! Clue 3 clearly says "Number of moons orbiting Earth between 29/9/24 and 25/11/24". Thank me later.<br>
+                Blue: There are 2 moons orbiting the Earth at that time.<br>
+                Use the keypad or your keyboard's number pad, <code>c</code> and <code>&crarr;Enter</code> keys.
+            </p>
+
+            <!-- Optional user interaction -->
+            <div class="keypad-wrapper">
+                <div id="keypad-display">______</div>
+                <div class="keypad-grid">
+                    <button onclick="pressKey('1')">1</button>
+                    <button onclick="pressKey('2')">2</button>
+                    <button onclick="pressKey('3')">3</button>
+                    <button onclick="pressKey('4')">4</button>
+                    <button onclick="pressKey('5')">5</button>
+                    <button onclick="pressKey('6')">6</button>
+                    <button onclick="pressKey('7')">7</button>
+                    <button onclick="pressKey('8')">8</button>
+                    <button onclick="pressKey('9')">9</button>
+                    <button onclick="clearKeypad()">C</button>
+                    <button onclick="pressKey('0')">0</button>
+                    <button onclick="submitCode()">&crarr;</button>
+                </div>
+                <p id="resultMessage"></p>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,31 @@
+@font-face {
+    font-family: Avian;
+    src: url('AvineV2-Regular.ttf') format('truetype');
+}
+
+#avian {
+    font-family: Avian, sans-serif;
+}
+
+.conversation {
+    list-style: none;
+    padding: 0;
+}
+
+.conversation li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.user-message {
+    background-color: #2e6b00;
+    text-align: right;
+    margin-left: 20%;
+}
+
+.other-message {
+    background-color: #6d6d6d;
+    text-align: left;
+    margin-right: 20%;
+}

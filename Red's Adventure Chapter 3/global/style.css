@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP');
+
+body {
+	font-family: 'Noto Sans', sans-serif;
+	line-height: 1.6;
+	margin: 20px;
+	position: relative;
+	background-color: black;
+	color: white;
+	text-align: justify;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-align: center;
+}
+
+h1 {
+	background-color: green;
+}
+
+h2, h3, h4, h5, h6 {
+	font-family: Orbitron;
+}
+
+p {
+	text-align: justify;
+}
+
+/* General button styles */
+button {
+    color: #333333; /* Changed to a dark grey for better contrast */
+    background: #34d93c; /* A vibrant green */
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 18px; /* Increased font size for better readability */
+    font-weight: bold; /* Make the text bolder */
+    padding: 15px 30px; /* Generous padding for a comfortable click area */
+    border: none; /* Remove default border */
+    border-radius: 8px; /* Slightly rounded corners */
+    cursor: pointer; /* Indicate it's clickable */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    letter-spacing: 1px; /* Slightly increased letter spacing for readability */
+    outline: none; /* Remove outline on focus */
+}
+
+/* Button hover state */
+button:hover {
+    background: #5cfc3c; /* Lighter green on hover */
+    transform: translateY(-2px); /* Lift the button slightly */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* More pronounced shadow on hover */
+}
+
+/* Button active state (when clicked) */
+button:active {
+    transform: translateY(0); /* Bring button back down */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Smaller shadow on click */
+    background: #28b630; /* Slightly darker green on active */
+}
+
+/* Container for buttons to center them and add spacing, including single buttons */
+.buttons {
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /* Center buttons horizontally */
+    gap: 20px; /* Space between buttons */
+    margin-top: 30px; /* Add some space above the button group */
+    width: 100%; /* Ensure it takes full width to center effectively */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+a:link {
+  color: lightgreen;
+}
+
+a:visited {
+  color: lightskyblue;
+}
+
+a:hover {
+  color: rgb(91, 244, 255);
+  text-decoration: underline;
+}
+
+a:active {
+  color: blue;
+}
+
+/* Ensure responsiveness for smaller screens */
+@media (max-width: 600px) {
+    .buttons {
+        flex-direction: column; /* Stack buttons vertically on small screens */
+        align-items: center; /* Center stacked buttons */
+    }
+
+    button {
+        width: 80%; /* Make buttons wider on small screens for easier tapping */
+        max-width: 300px; /* Limit max width */
+    }
+}

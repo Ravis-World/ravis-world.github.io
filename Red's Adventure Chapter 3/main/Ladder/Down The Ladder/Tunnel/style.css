@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Ogham&display=swap');
+.ogham-stack {
+    font-family: 'Noto Sans Ogham', sans-serif;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    font-size: 2em;
+    gap: 0;
+    line-height: 1;
+    height: auto;
+    width: fit-content;
+    margin: 2em auto;
+    padding: 1em;
+    border-radius: 8px;
+}
+
+.ogham-stack span {
+    display: inline-block; 
+    transform: rotate(270deg);
+    margin: -0.25em 0;
+    padding: 0;
+    line-height: 1;
+}
+
+.terminal-box {
+  background: #111;
+  color: white;
+  border: 2px solid #0f0;
+  border-radius: 8px;
+  padding: 2em;
+  max-width: 400px;
+  margin: 2em auto;
+  text-align: center;
+  box-shadow: 0 0 20px #0f0;
+  font-family: 'Courier New', monospace;
+}
+
+.terminal-box input {
+  background: #000;
+  color: #0f0;
+  border: 1px solid #0f0;
+  padding: 0.5em;
+  font-size: 1.2em;
+  width: 80%;
+  margin-top: 1em;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.terminal-box input:focus {
+  border-color: #0ff;
+  box-shadow: 0 0 8px #0ff;
+}
+
+.terminal-box button {
+  background: #000;
+  color: #0f0;
+  border: 1px solid #0f0;
+  padding: 0.5em 1em;
+  font-size: 1.1em;
+  margin-top: 1em;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.terminal-box button:hover {
+  background: #0f0;
+  color: #000;
+}
+
+#resultMessage {
+  margin-top: 1em;
+  font-weight: bold;
+  opacity: 1;
+  transition: opacity 1s ease;
+}

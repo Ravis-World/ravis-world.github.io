@@ -1,0 +1,14 @@
+.paralysis {
+    animation: pulse 1s infinite alternate;
+    color: #ff5555;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.4;
+    }
+}

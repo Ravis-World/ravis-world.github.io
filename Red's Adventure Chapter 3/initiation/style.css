@@ -1,0 +1,42 @@
+body {
+    line-height: 1.6;
+    margin: 20px;
+}
+
+.content-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px; /* Space between text and letter */
+}
+
+.story-text {
+    flex: 1;
+    min-width: 300px;
+}
+
+.letter {
+    text-align: left;
+}
+
+div[lang="ja"] {
+    font-family: 'Noto Sans JP', sans-serif;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    height: 100vh;
+    white-space: nowrap;
+}
+
+#direction-change {
+    text-align: right;
+}
+
+#word-wrap {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+#after-click {
+    visibility: hidden;
+    margin-top: 40px;
+}

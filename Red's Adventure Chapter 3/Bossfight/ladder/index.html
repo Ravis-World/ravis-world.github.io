@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Bossfight - Creeper Jack</title>
+        <link rel="stylesheet" href="./../../global/style.css">
+        <link rel="stylesheet" href="./../style.css">
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <h1>Bossfight: Creeper Jack</h1>
+        <p>Roll two 20-sided dice and try to beat Creeper Jack!<br>
+        You must roll **more than 20 or more than Jack's total**. A total of 20 is a loss unless you scored higher. Ties are **losses**, no matter what.</p>
+
+        <div class="dice" id="playerRolls">🟥 You: 🎲 🎲</div>
+        <div class="dice" id="jackRolls">🟩 Creeper Jack: 🎲 🎲</div>
+
+        <button onclick="rollDice()">Roll Dice</button>
+        <div id="result" class="result hidden"></div>
+    </body>
+</html>

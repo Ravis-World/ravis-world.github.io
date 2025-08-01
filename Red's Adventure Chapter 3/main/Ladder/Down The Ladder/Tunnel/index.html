@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tunnel</title>
+        <link rel="stylesheet" href="./../../../../global/style.css">
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js" defer></script>
+    </head>
+    <body>
+        <div class="content">
+            <h1>Tunnel</h1>
+            <p>
+                The birds proceed down a narrow tunnel carved with ancient symbols. The markings run in a continuous line — but unlike modern scripts, they flow <strong>bottom to top</strong>.<br><br>
+
+                Chuck pauses, his eyes scanning rapidly. “Wait... I recognise this! It’s <a href='https://en.wikipedia.org/wiki/Ogham' target='_blank'>Ogham</a> — old Irish script.”<br><br>
+
+                Matilda raises a brow. “How do you even know that?”<br>
+                Chuck: “I read fast. Like, <em>really</em> fast.”<br><br>
+
+                The symbols appear below, carved into the tunnel wall:
+            </p>
+            <br>
+            <br>
+            <br> <!--Why all these line breaks? Because I don't want the Ogham to get in the way-->
+
+            <div class="ogham-stack">
+                <span>᚛ᚐᚔᚅᚋᚆᚔ᚜᚛ᚑᚚᚐᚏ᚜᚛ᚃᚓᚖᚂ᚜</span>
+            </div>
+
+            <br>
+            <br>
+            <br>
+            <p>
+                After a moment, Chuck translates: <strong>“animal. job. meat.”</strong><br>
+                <br>
+                Red frowns. “That’s… unsettlingly vague.”<br>
+                Bomb: “Maybe it’s a menu?”<br>
+                Blue gulps. “Are we the meat?”<br>
+                Up across the birds see a computer lock. They have to enter the passcode based on those three words. Maybe they point to something that is related.
+            </p>
+            <div class="terminal-box">
+                <label for="password">🔐 Access Keyword:</label><br>
+                <input type="text" id="password" placeholder="Enter keyword" autocomplete="off">
+                <button onclick="checkPassword()">Unlock</button>
+                <p id="resultMessage">Awaiting Response</p>
+            </div>
+        </div>
+    </body>
+</html>
