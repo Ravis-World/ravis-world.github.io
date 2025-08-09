@@ -20,8 +20,7 @@ function showImage(idx) {
     $imgEl.attr('alt', images[idx].alt);
     // Reset object-position
     $imgEl.css('object-position', '');
-    // If it's the last image, shift image content to the left
-    if (idx === images.length - 1) {
+    if (idx === images.length - 2) {
         $imgEl.css('object-position', '50% center'); // Adjust as needed
     }
 }
