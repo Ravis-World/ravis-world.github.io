@@ -4,3 +4,9 @@
 .next {
     text-align: center;
 }
+.ai-disclosure {
+    font-size: 0.8em;
+    color: #777;
+    margin-top: -10px; /* Pull it slightly closer to the image */
+    margin-bottom: 20px;
+}
