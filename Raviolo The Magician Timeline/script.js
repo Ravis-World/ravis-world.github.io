@@ -87,9 +87,16 @@ const timelineEvents = [
     {
         id: 13,
         content: "🐉 ouroVoros",
-        date: "July 2031",
+        date: "July 28, 2031",
         description: "Raviolo tries to fight a mechanical dragon with the same intentions as Dr. Γ but with extra steps.",
         link: "https://www.youtube.com/watch?v=tl_qrSGLoV4"
+    },
+    {
+        id: 14,
+        content: "🔬 Colonising Aperture",
+        date: "July 29, 2031",
+        description: "Raviolo wants to colonise Aperture Laboratories.",
+        link: "https://www.youtube.com/watch?v=RnFQF-LxapQ"
     }
 ];
 
