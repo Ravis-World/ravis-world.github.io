@@ -1,3 +1,3 @@
 function startBoss() {
-    window.location.href = "./../../../../../Bossfight/Ladder/index.html"; // link to the actual game
+    window.location.href = "./../../../../../Bossfight/ladder/index.html"; // link to the actual game
 }
