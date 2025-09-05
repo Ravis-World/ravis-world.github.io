@@ -104,7 +104,7 @@ const timelineEvents = [
     {
         id: 12,
         content: "🕵️ The Enemy Within",
-        date: "June 2031",
+        date: "June 3, 2031",
         description: "5 suspects are accused of being a part of a shooting; only one is a true enemy.",
         links: [
             { label: "YouTube Video", url: "https://www.youtube.com/watch?v=R7oAz3W_oRw" }
@@ -112,6 +112,15 @@ const timelineEvents = [
     },
     {
         id: 13,
+        content: "🕒 The Time Is Now, Ai Akamatsu",
+        date: "June 4, 2031",
+        description: "5 suspects are accused of being a part of a shooting; only one is a true enemy.",
+        links: [
+            { label: "YouTube Video", url: "https://www.youtube.com/watch?v=R7oAz3W_oRw" }
+        ]
+    },
+    {
+        id: 14,
         content: "🐉 ouroVoros",
         date: "July 28, 2031",
         description: "Raviolo tries to fight a mechanical dragon with the same intentions as Dr. Γ but with extra steps.",
@@ -120,7 +129,7 @@ const timelineEvents = [
         ]
     },
     {
-        id: 14,
+        id: 15,
         content: "🔬 Colonising Aperture",
         date: "July 29, 2031",
         description: "Raviolo wants to colonise Aperture Laboratories.",
