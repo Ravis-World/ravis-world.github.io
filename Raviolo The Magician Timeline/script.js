@@ -113,14 +113,25 @@ const timelineEvents = [
     {
         id: 13,
         content: "🕒 The Time Is Now, Ai Akamatsu",
-        date: "June 4, 2031",
-        description: "5 suspects are accused of being a part of a shooting; only one is a true enemy.",
+        date: "June 4-5, 2031",
+        description: "A girl can control time.",
         links: [
-            { label: "YouTube Video", url: "https://www.youtube.com/watch?v=R7oAz3W_oRw" }
+            { label: "itch.io Page", url: "https://ravis-world.itch.io/the-time-is-now-ai-akamatsu" }
         ]
     },
     {
         id: 14,
+        content: "🌊 Undercurrent Of Time",
+        date: `June 5, 2031 - 12:00 AM <dfn><abbr title="Australian Eastern Standard Time">AEST</abbr></dfn>`,
+        description: "A shadow is lost at sea and doesn't know what to do.",
+        links: [
+            { label: "Github Repository", url: "https://github.com/Ravis-World/Undercurrent-of-Time" },
+            { label: "itch.io Page", url: "https://ravis-world.itch.io/undercurrent-of-time" },
+            { label: "Game Jolt Page", url: "https://gamejolt.com/games/undercurrent_of_time/1018258" }
+        ]
+    },
+    {
+        id: 15,
         content: "🐉 ouroVoros",
         date: "July 28, 2031",
         description: "Raviolo tries to fight a mechanical dragon with the same intentions as Dr. Γ but with extra steps.",
@@ -129,7 +140,7 @@ const timelineEvents = [
         ]
     },
     {
-        id: 15,
+        id: 16,
         content: "🔬 Colonising Aperture",
         date: "July 29, 2031",
         description: "Raviolo wants to colonise Aperture Laboratories.",
@@ -139,13 +150,13 @@ const timelineEvents = [
         ]
     },
     {
-        id: 15,
+        id: 17,
         content: "☕ Let's Drink Horror",
         date: "July 30, 2031",
         description: "Dr. Θ tries to kill a person at a bar with a poisonous drink.",
         links: [
             { label: "Github Repository", url: "https://github.com/Ravis-World/Lets-Drink-Horror-Text-Adventure" },
-            { label: "itch.io Page", url: "https://steamcommunity.com/workshop/filedetails/?id=3498058511" },
+            { label: "itch.io Page", url: "https://ravis-world.itch.io/lets-drink-horror" },
             { label: "Game Jolt Page", url: "https://gamejolt.com/games/letsdrinkhorror/1017356" }
         ]
     }
