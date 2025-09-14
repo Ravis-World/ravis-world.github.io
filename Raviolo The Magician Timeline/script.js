@@ -122,7 +122,7 @@ const timelineEvents = [
     {
         id: 14,
         content: "🌊 Undercurrent Of Time",
-        date: `June 5, 2031 - 12:00 AM <dfn><abbr title="Australian Eastern Standard Time">AEST</abbr></dfn>`,
+        date: "June 5, 2031 - 12:00 AM AEST",
         description: "A shadow is lost at sea and doesn't know what to do.",
         links: [
             { label: "Github Repository", url: "https://github.com/Ravis-World/Undercurrent-of-Time" },
