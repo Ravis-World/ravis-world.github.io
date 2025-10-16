@@ -1,0 +1,221 @@
+/* Base Styling for Epiglottal Clicker */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Start from the top */
+    min-height: 100vh;
+}
+
+.game-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 800px; /* Wider container for desktop */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center main content */
+}
+
+.game-title {
+    color: #4CAF50; /* Green theme */
+    margin-bottom: 20px;
+}
+
+/* ADDED: Spacing between major elements */
+.cash-display {
+    margin-bottom: 25px; /* Added margin below cash display */
+    font-size: 1.5rem;
+    font-weight: 600;
+    width: 100%; /* Ensure full width for centering */
+}
+
+/* NEW: Currency Control Styling */
+.currency-control {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    font-weight: normal;
+}
+#currency-selector {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+.cps-display {
+    font-size: 0.8em;
+    color: #666;
+    margin-left: 10px;
+}
+
+.controls-area {
+    margin-bottom: 30px; /* Added margin below controls */
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%; /* For responsive stacking */
+    padding: 0 10px;
+}
+
+.control-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.1s, transform 0.1s;
+    flex: 1; /* Allow buttons to expand */
+    max-width: 150px;
+}
+
+.control-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.control-button.save {
+    background-color: #00bcd4; /* Cyan */
+    color: white;
+}
+
+.control-button.load {
+    background-color: #ffc107; /* Amber */
+    color: #333;
+}
+
+.control-button.reset {
+    background-color: #f44336; /* Red (Caution Color) */
+    color: white;
+}
+
+.epiglottal-button {
+    font-size: 6rem;
+    padding: 20px 40px;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.1s;
+    box-shadow: 0 6px #388E3C; /* Darker green shadow */
+    user-select: none;
+    
+    margin-top: 30px;
+    margin-bottom: 40px; /* Increased margin below the main button */
+}
+
+.epiglottal-button:active {
+    transform: translateY(6px);
+    box-shadow: none;
+}
+
+/* Upgrades Area */
+.upgrades-area {
+    width: 100%;
+    display: grid;
+    /* Default single column on mobile/narrow screens */
+    grid-template-columns: 1fr; 
+    gap: 20px;
+}
+
+.upgrade-section {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    max-height: auto; /* Fixed height for scrolling */
+    overflow-y: auto; /* Independent scrolling */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.upgrade-title {
+    font-size: 1.2rem;
+    color: #3f51b5; /* Indigo */
+    font-weight: bold;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e0e0e0;
+    position: sticky; /* Sticky title for scrollable section */
+    top: 0;
+    background-color: #f9f9f9; /* Match background for sticky effect */
+    z-index: 10;
+}
+
+.upgrade-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #e8eaf6; /* Light Indigo */
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.1s;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.upgrade-button span {
+    font-size: 0.9em;
+    color: #555;
+}
+
+.upgrade-button:not(.disabled):hover {
+    background-color: #c5cae9; /* Slightly darker light Indigo */
+}
+
+.upgrade-button.disabled {
+    background-color: #eeeeee;
+    color: #9e9e9e;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Responsive adjustments */
+@media (min-width: 600px) {
+    .upgrades-area {
+        /* Two columns on wider screens */
+        grid-template-columns: 1fr 1fr;
+    }
+    .controls-area {
+        /* Align controls horizontally */
+        flex-direction: row;
+    }
+}
+
+@media (max-width: 500px) {
+    .controls-area {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .control-button {
+        max-width: none; /* Full width buttons on mobile */
+    }
+    .epiglottal-button {
+        font-size: 5rem;
+        padding: 15px 30px;
+    }
+}
+
+/* ADDED: Music Controls */
+.music-controls {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
