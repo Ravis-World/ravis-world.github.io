@@ -159,6 +159,15 @@ const timelineEvents = [
             { label: "itch.io Page", url: "https://ravis-world.itch.io/lets-drink-horror" },
             { label: "Game Jolt Page", url: "https://gamejolt.com/games/letsdrinkhorror/1017356" }
         ]
+    },
+    {
+        id: 18,
+        content: "🎃 The Halloween Party",
+        date: "October 31, 2031",
+        description: "Yōta and Víðir accidentally turn evil during a Halloween party.",
+        links: [
+            { label: "YouTube Video", url: "https://www.youtube.com/watch?v=jSdlXajoJbY" }
+        ]
     }
 ];
 
