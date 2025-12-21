@@ -162,6 +162,16 @@ const timelineEvents = [
     },
     {
         id: 18,
+        content: "Φ-Anomaly",
+        date: "July 31, 2031 – August 24, 2033",
+        description: "Raviolo fights off a shadow plague. You play as the plague and have no chance of winning.",
+        links: [
+            { label: "Steam Workshop Item", url: "https://steamcommunity.com/sharedfiles/filedetails/?id=3628048840" },
+            { label: "Story Documentation", url: "Φ-Anomaly.pdf" }
+        ],
+    },
+    {
+        id: 19,
         content: "🎃 The Halloween Party",
         date: "October 31, 2031",
         description: "Yōta and Víðir accidentally turn evil during a Halloween party.",
