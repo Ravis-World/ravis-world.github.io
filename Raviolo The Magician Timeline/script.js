@@ -174,7 +174,7 @@ const timelineEvents = [
         id: 19,
         content: "🎃 The Halloween Party",
         date: "October 31, 2031",
-        description: "Yōta and Víðir accidentally turn evil during a Halloween party.",
+        description: "Meanwhile, Yōta and Víðir accidentally turn evil during a Halloween party.",
         links: [
             { label: "YouTube Video", url: "https://www.youtube.com/watch?v=jSdlXajoJbY" }
         ]
