@@ -162,7 +162,7 @@ const timelineEvents = [
     },
     {
         id: 18,
-        content: "Φ-Anomaly",
+        content: "🦠 Φ-Anomaly",
         date: "July 31, 2031 – August 24, 2033",
         description: "Raviolo fights off a shadow plague. You play as the plague and have no chance of winning.",
         links: [
