@@ -1,0 +1,112 @@
+/* General Page Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #181818;
+    color: white;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* Header */
+header {
+    background-color: #222;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: gold;
+}
+
+/* Description Section */
+.description {
+    margin: 20px auto;
+    width: 80%;
+    padding: 20px;
+    background-color: #252525;
+    border-radius: 10px;
+}
+
+/* Section Styling */
+.rank-section {
+    margin: 40px auto;
+    width: 80%;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #252525;
+}
+
+h2 {
+    color: #ffcc00;
+}
+
+/* Boot Containers */
+.boot-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.boot {
+    width: 300px;
+    height: auto;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #333;
+    border: 2px solid #555;
+    transition: transform 0.3s ease;
+}
+
+.boot h3 {
+    color: #ffdd57;
+}
+
+.boot p {
+    font-size: 14px;
+    color: #ccc;
+}
+
+/* Boot Images */
+.boot img {
+    width: 80%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+/* Hover Effect */
+.boot:hover {
+    transform: scale(1.05);
+}
+
+/* Special Boots (Legendary + Manager) */
+.special {
+    background-color: #444;
+    border: 2px solid gold;
+    margin: 40px auto;
+    width: 80%;
+
+}
+
+.special h3 {
+    color: gold;
+}
+
+/* Footer */
+footer {
+    background-color: #111;
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #bbb;
+}
+
+.copyleft {
+    display: inline-block;
+    transform: rotate(180deg);
+}
+.year {
+    display: inline-block;
+}

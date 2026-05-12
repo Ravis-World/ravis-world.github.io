@@ -1,33 +1,427 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>🧙‍♂️ Raviolo the Magician Timeline</title>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-        <link rel="stylesheet" href="style.css">
-        <script type="text/javascript" src="script.js" defer></script>
-    </head>
-    <body>
-        <h1>🧙‍♂️ Raviolo the Magician — Timeline</h1>
-        <div class="timeline-container" id="timelineContainer">
-            <!-- Timeline events will be dynamically inserted here -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧙‍♂️ Raviolo's Connected Multiverse</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --border: #334155;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --accent: #6366f1;
+            /* Story Thread Colors */
+            --thread-facility: #10b981; /* Green */
+            --thread-dr-gamma: #ef4444; /* Red */
+            --thread-time: #f59e0b;     /* Amber */
+            --thread-invisibility: #8b5cf6; /* Purple */
+            --thread-cross: #f472b6;    /* Pink */
+            --thread-ruby: #e0115f;     /* Ruby */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            padding: 3rem 1rem;
+            text-align: center;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 6vw, 3rem);
+            margin: 0;
+            background: linear-gradient(to right, #818cf8, #c084fc);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-dim);
+            margin-top: 0.5rem;
+        }
+
+        /* --- Flowchart Container --- */
+        #flow-canvas {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            padding: 4rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+        }
+
+        /* SVG Overlay for Connections */
+        #connection-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .connection-path {
+            fill: none;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-dasharray: 8;
+            animation: dash 30s linear infinite;
+            opacity: 0.4;
+        }
+
+        @keyframes dash {
+            to { stroke-dashoffset: -1000; }
+        }
+
+        /* --- Flow Nodes --- */
+        .node-row {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 2rem;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .flow-node {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            width: 280px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .flow-node:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+        }
+
+        .node-date {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .flow-node h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+            line-height: 1.3;
+        }
+
+        .node-tag {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 2rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.05);
+            margin-top: 0.5rem;
+        }
+
+        /* --- Thread Themes --- */
+        .tag-facility { color: var(--thread-facility); border: 1px solid var(--thread-facility); }
+        .tag-dr-gamma { color: var(--thread-dr-gamma); border: 1px solid var(--thread-dr-gamma); }
+        .tag-time { color: var(--thread-time); border: 1px solid var(--thread-time); }
+        .tag-invisibility { color: var(--thread-invisibility); border: 1px solid var(--thread-invisibility); }
+        .tag-cross { color: var(--thread-cross); border: 1px solid var(--thread-cross); }
+        .tag-corp { color: #3b82f6; border: 1px solid #3b82f6; }
+        .tag-mystery { color: #ec4899; border: 1px solid #ec4899; }
+        .tag-ruby { color: var(--thread-ruby); border: 1px solid var(--thread-ruby);}
+
+        /* --- Modal Styles --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .modal-links a {
+            color: #fff;
+            background: rgba(99, 102, 241, 0.1);
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            transition: all 0.2s;
+        }
+
+        .modal-links a:hover {
+            background: var(--accent);
+        }
+
+        footer {
+            padding: 4rem 2rem;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+        }
+
+        .copyleft {
+            display: inline-block;
+            transform: rotate(180deg);
+        }
+
+        @media (max-width: 768px) {
+            .node-row { flex-direction: column; align-items: center; }
+            #connection-svg { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Raviolo's Multiverse</h1>
+        <p class="subtitle">An Interconnected Flowchart of Events</p>
+    </header>
+
+    <div id="flow-canvas">
+        <svg id="connection-svg"></svg>
+        <!-- Nodes will be injected here grouped by "era" or "branch" -->
+    </div>
+
+    <div id="eventModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <span id="modalDate" class="node-date"></span>
+            <h2 id="modalTitle"></h2>
+            <p id="modalDescription" style="color: var(--text-dim)"></p>
+            <div id="modalLinks" class="modal-links"></div>
         </div>
-        <!-- Modal Structure -->
-        <div id="eventModal" class="modal-overlay">
-            <div class="modal-content">
-                <span class="modal-close-button">&#x2716;</span>
-                <h2 id="modalTitle"></h2>
-                <p id="modalDescription"></p>
-                <div id="modalLinksContainer" class="modal-links-container">
-                    <!-- Links will be dynamically inserted here -->
-                </div>
-            </div>
-        </div>
-        <footer>
-            <span class="copyleft">©</span>
-            Ravi's World
-            <span id="current-year"></span>
-        </footer>
-    </body>
+    </div>
+
+    <footer>
+        <span class="copyleft">©</span> Ravi's World <span id="year"></span> — All stories connected.
+    </footer>
+
+    <script>
+        const timelineEvents = [
+            { id: 1, content: "🩺 Heartbeat: Prologue", date: "Jan 16, 2017", thread: "facility", description: "Facility comes to life. First encounter with Dr. Κ.", links: [{label: "View Prologue", url: "https://sites.google.com/view/1000-heartbeats/prologue"}], row: 0 },
+            
+            { id: 2, content: "💼 Business Origins", date: "Jan 2029", thread: "corp", description: "Raviolo partners with the Toads to form his corporation.", links: [{label: "YouTube Video", url: "https://www.youtube.com/watch?v=o25wteCGBz4"}], row: 1 },
+            
+            { id: 3, content: "🔴 Red's Adventure", date: "Mar 2029", thread: "corp", description: "Five birds hired by Raviolo to save the Earth's Core.", links: [{label: "Website", url: "https://sites.google.com/view/redsadventure/home"}], row: 1 },
+            
+            { id: 4, content: "🩺 Heartbeat: New Disaster", date: "Jan 2030", thread: "facility", description: "Disaster forces transition to a new facility. The fight against Dr. Κ continues.", links: [{label: "Chapter 8", url: "https://sites.google.com/view/1000-heartbeats/chapter-8"}], row: 2, parentId: 1 },
+            
+            { id: 5, content: "🧙‍♂️ Raviolo The Magician", date: "Feb 2030", thread: "dr-gamma", description: "Raviolo is tasked to defeat Dr. Γ.", links: [{label: "YouTube Video", url: "https://www.youtube.com/watch?v=X0wFGE8PvC4"}], row: 2 },
+            
+            { id: 6, content: "🚪 Ravi's Doors", date: "Feb 28, 2030", thread: "corp", description: "Escaping a gauntlet of 100 doors.", links: [{label: "Website", url: "https://sites.google.com/view/ravis-doors/home"}], row: 2 },
+            
+            { id: 7, content: "🌪️ The Time Tornado", date: "Apr 2030", thread: "time", description: "Paranormal anomaly caused by an invisible man.", links: [{label: "YouTube Video", url: "https://www.youtube.com/watch?v=-FVOavjdWgQ"}], row: 3 },
+            
+            { id: 8, content: "💥 Planet Destruction", date: "Aug 14, 2030", thread: "invisibility", description: "Unknown squad stops Invisibility by destroying the planet he is on.", links: [{label: "YouTube Video", url: "https://www.youtube.com/watch?v=mEpN4drW-8k"}], row: 4, parentId: 7 },
+            
+            { id: 9, content: "🤝 《Ж (Zhe)》 Convergence", date: "Aug 15, 2030", thread: "invisibility", description: "Message received to finish Invisibility's sidekick, Dr. Σ.", links: [{label: "YouTube Video", url: "https://www.youtube.com/watch?v=oLE7nhdyyb4"}], row: 4, parentId: 8 },
+            
+            { id: 10, content: "🐒 The Giant Disaster", date: "Feb 2031", thread: "corp", description: "Raviolo and his team stop a giant monkey.", links: [{label: "YouTube Video", url: "https://www.youtube.com/watch?v=5AwOAuA4xc8"}], row: 5 },
+            
+            { id: 11, content: "🌍 Raviolo: World's End", date: "Mar 2031", thread: "dr-gamma", description: "Dr. Γ returns for a 5-part boss rush.", links: [{label: "YouTube Video", url: "https://www.youtube.com/watch?v=tE0s2gFw2Zw"}], row: 5, parentId: 5 },
+            
+            { id: 12, content: "🕵️ The Enemy Within", date: "Jun 3, 2031", thread: "mystery", description: "A shooting investigation with one true enemy.", links: [{label: "YouTube Video", url: "https://www.youtube.com/watch?v=R7oAz3W_oRw"}], row: 6 },
+            
+            { id: 13, content: "🕒 Ai Akamatsu", date: "Jun 4, 2031", thread: "time", description: "A girl discovers she can control time.", links: [{label: "itch.io", url: "https://ravis-world.itch.io/the-time-is-now-ai-akamatsu"}], row: 6, parentId: 7 },
+            
+            { id: 14, content: "🌊 Undercurrent Of Time", date: "Jun 5, 2031", thread: "time", description: "A shadow lost at sea, confused by time.", links: [{label: "itch.io", url: "https://ravis-world.itch.io/undercurrent-of-time"}], row: 7, parentId: 13 },
+            
+            { id: 15, content: "🐉 ouroVoros", date: "Jul 28, 2031", thread: "dr-gamma", description: "Fighting a mechanical dragon with Dr. Γ's legacy.", links: [{label: "YouTube Video", url: "https://www.youtube.com/watch?v=tl_qrSGLoV4"}], row: 8, parentId: 11 },
+            
+            { id: 16, content: "🔬 Colonising Aperture", date: "Jul 29, 2031", thread: "corp", description: "Expansion into Aperture Laboratories.", links: [{label: "Workshop", url: "https://steamcommunity.com/workshop/filedetails/?id=3498058511"}], row: 8 },
+            
+            { id: 17, content: "☕ Let's Drink Horror", date: "Jul 30, 2031", thread: "mystery", description: "Dr. Θ attempts a poisoning at a bar.", links: [{label: "itch.io", url: "https://ravis-world.itch.io/lets-drink-horror"}], row: 9 },
+
+            { id: 18, content: "🦠 Φ-Anomaly", date: "2031 - 2033", thread: "facility", description: "The Shadow Plague consumes everything.", links: [{label: "Workshop", url: "https://steamcommunity.com/sharedfiles/filedetails/?id=3628048840"}], row: 10, parentId: 4 },
+            
+            { id: 19, content: "🎃 Halloween Party", date: "Oct 31, 2031", thread: "mystery", description: "Yōta and Víðir turn evil during a party.", links: [{label: "YouTube", url: "https://www.youtube.com/watch?v=jSdlXajoJbY"}], row: 10, parentId: 18 },
+
+            { id: 20, content: "♠️ Red or Black?", date: "Oct 2033 - Nov 2033", thread: "cross", description: "Raviolo crashes a death game show.", links: [{label: "TBA", url: "#"}], row: 11 },
+
+            { id: 21, content: "🦸 How To Be Superheroes", date: "Dec 30, 2033 - Feb 25, 2034 (Temporal Reset: Jan 6, 2034)", thread: "mystery", description: "Raviolo teaches kids how to be superheroes.", links: [{label: "TBA", url: "#"}], row: 11 },
+
+            { id: 22, content: "▶️ Button of Activation", date: "Jan 10, 2034 (Before Temporal Reset)", thread: "mystery", description: "Qess. Ω tries to blow up the sun.", links: [{label: "itch.io", url: "https://ravis-world.itch.io/button-of-activation"}], row: 12, parentId: 21 },
+
+            { id: 23, content: "The PAW Patrol Movie", date: "Canon: N/A | Fanon: Nov 2033", thread: "cross", description: "This story is crucial, even though I didn't make it.", links: [{label: "Story", url: "https://pawpatrol.fandom.com/wiki/PAW_Patrol:_The_Movie#Synopsis"}], row: 12 },
+
+            { id: 24, content: "🕶️ Ash Corwin", date: "Feb 2034", thread: "cross", description: "The convergence point. The game show and the movie meet here.", links: [{label: "TBA", url: "#"}], row: 13, parents: [20, 23] },
+
+            { id: 25, content: "💎 Button of Rubies", date: "Mar 1 2034", thread: "ruby", description: "Raviolo chases down a thief.", links: [{label: "TBA", url: "#"}], row: 14 },
+
+            { id: 26, content: "🐣 Raviolo's Dimensional Hunt", date: "Mar 2034", thread: "ruby", description: "Raviolo chases down a thief.", links: [{label: "TBA", url: "#"}], row: 14, parentId: 25 }
+        ];
+
+        const threadColors = {
+            facility: '#10b981',
+            'dr-gamma': '#ef4444',
+            time: '#f59e0b',
+            invisibility: '#8b5cf6',
+            corp: '#3b82f6',
+            mystery: '#ec4899',
+            cross: '#f472b6',
+            ruby: '#e0115f'
+        };
+
+        function renderNodes() {
+            const canvas = document.getElementById('flow-canvas');
+            const rows = {};
+            
+            // Group by row
+            timelineEvents.forEach(ev => {
+                if (!rows[ev.row]) rows[ev.row] = [];
+                rows[ev.row].push(ev);
+            });
+
+            Object.keys(rows).sort((a,b) => parseInt(a)-parseInt(b)).forEach(rowIdx => {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'node-row';
+                
+                rows[rowIdx].forEach(ev => {
+                    const node = document.createElement('div');
+                    node.className = `flow-node`;
+                    node.id = `node-${ev.id}`;
+                    node.innerHTML = `
+                        <span class="node-date">${ev.date}</span>
+                        <h3>${ev.content}</h3>
+                        <span class="node-tag tag-${ev.thread}">${ev.thread.replace('-', ' ')}</span>
+                    `;
+                    node.onclick = () => openModal(ev);
+                    rowDiv.appendChild(node);
+                });
+                canvas.appendChild(rowDiv);
+            });
+
+            // Set footer year
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // Draw connections after DOM renders
+            setTimeout(drawConnections, 100);
+        }
+
+        function drawConnections() {
+            const svg = document.getElementById('connection-svg');
+            const canvasRect = document.getElementById('flow-canvas').getBoundingClientRect();
+            svg.innerHTML = ''; 
+
+            timelineEvents.forEach(ev => {
+                // Handle single parentId or multiple parents array
+                const parentIds = ev.parents ? ev.parents : (ev.parentId ? [ev.parentId] : []);
+                
+                parentIds.forEach(pid => {
+                    const startEl = document.getElementById(`node-${pid}`);
+                    const endEl = document.getElementById(`node-${ev.id}`);
+                    if (!startEl || !endEl) return;
+
+                    const startRect = startEl.getBoundingClientRect();
+                    const endRect = endEl.getBoundingClientRect();
+
+                    const x1 = (startRect.left + startRect.width / 2) - canvasRect.left;
+                    const y1 = (startRect.top + startRect.height / 2) - canvasRect.top;
+                    const x2 = (endRect.left + endRect.width / 2) - canvasRect.left;
+                    const y2 = (endRect.top + endRect.height / 2) - canvasRect.top;
+
+                    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                    const cp1y = y1 + (y2 - y1) / 2;
+                    const cp2y = y1 + (y2 - y1) / 2;
+                    
+                    const d = `M ${x1} ${y1} C ${x1} ${cp1y}, ${x2} ${cp2y}, ${x2} ${y2}`;
+                    
+                    path.setAttribute("d", d);
+                    path.setAttribute("class", "connection-path");
+                    
+                    // Logic to find color: use child's thread color
+                    path.setAttribute("stroke", threadColors[ev.thread] || '#334155');
+                    svg.appendChild(path);
+                });
+            });
+        }
+
+        function openModal(ev) {
+            document.getElementById('modalDate').textContent = ev.date;
+            document.getElementById('modalTitle').textContent = ev.content;
+            document.getElementById('modalDescription').textContent = ev.description;
+            
+            const linksCont = document.getElementById('modalLinks');
+            linksCont.innerHTML = '';
+            ev.links.forEach(l => {
+                const a = document.createElement('a');
+                a.href = l.url;
+                a.target = "_blank";
+                a.textContent = l.label;
+                linksCont.appendChild(a);
+            });
+
+            const modal = document.getElementById('eventModal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('show'), 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('eventModal');
+            modal.classList.remove('show');
+            setTimeout(() => modal.style.display = 'none', 300);
+        }
+
+        window.addEventListener('resize', drawConnections);
+        window.onload = renderNodes;
+    </script>
+</body>
 </html>
