@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ravi's Band | Official Dynamic Space</title>
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+        
+        <!-- 
+        DEVELOPER NOTE: 
+        This project is built using semantic HTML5 and pure Vanilla CSS. 
+        Tailwind CSS has been completely removed.
+        -->
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+
+        <!-- Notification Toast System -->
+        <div id="toast">
+            <span class="toast-indicator"></span>
+            <p id="toast-text">System Active</p>
+        </div>
+
+        <!-- Header Navigation -->
+        <header>
+            <div class="container header-wrap">
+                <div class="logo">
+                    <div class="logo-box">
+                        <svg class="logo-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                        </svg>
+                    </div>
+                    <span class="logo-text">Ravi's Band</span>
+                </div>
+                
+                <nav class="nav-links">
+                    <a href="#about">About</a>
+                    <a href="#team">The Members</a>
+                    <a href="#featured">Featured Artists</a>
+                    <a href="#music">Music</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="ambient-1"></div>
+            <div class="ambient-2"></div>
+            <div id="dynamic-ambient-glow"></div>
+            <div class="grid-bg"></div>
+
+            <div class="hero-content">
+                <div class="badge">
+                    <span class="badge-dot"></span>
+                    <span id="badge-text">Interactive Sonic Space</span>
+                </div>
+
+                <h1 class="hero-title">
+                    <span>We Are</span>
+                    <span class="gradient-text">Ravi's Band</span>
+                </h1>
+
+                <p class="hero-desc">
+                    An indie band formed by the creator of Ravi's World
+                </p>
+
+                <div class="btn-group">
+                    <a href="#about" class="btn btn-primary">Explore Our Universe</a>
+                    <a href="#music" class="btn btn-secondary">Listen Instantly</a>
+                </div>
+            </div>
+
+            <div class="eq-decorator">
+                <span class="eq-bar"></span>
+                <span class="eq-bar"></span>
+                <span class="eq-bar"></span>
+                <span class="eq-bar"></span>
+                <span class="eq-bar"></span>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <div class="about-grid">
+                    <div>
+                        <span class="section-tag">Our Philosophy</span>
+                        <h2 class="section-title">Make Music For Your Entertainment</h2>
+                        <p class="about-text">
+                            Born from a shared vision of magic, Ravi's Band creates highly curated dynamic soundscapes with audio workstations and synthesised and human voices. We do not align with any singular genre; we adapt to the vibe of our workspace.
+                        </p>
+                    </div>
+
+                    <div class="about-features">
+                        <div class="feature-card">
+                            <div class="feature-icon purple">
+                                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                                </svg>
+                            </div>
+                            <h3>Experimental Setup</h3>
+                            <p>Mixing vintage hardware with contemporary spatial audio generators.</p>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon pink">
+                                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                </svg>
+                            </div>
+                            <h3>Sonic Artifacts</h3>
+                            <p>Every track tells an untold narrative of the digital and analog divide.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Team Section (Roster) -->
+        <section id="team" class="team-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">The Collective</span>
+                    <h2 class="section-title">Meet The Band</h2>
+                    <p>Three unique entities crafting independent frequencies. Use VS Code to customize their roles and backstories below!</p>
+                </div>
+
+                <!-- Dynamic Target Roster Container -->
+                <div class="team-grid" id="team-roster-container">
+                    <!-- Javascript will dynamically inject members here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Artists Section -->
+        <section id="featured" class="featured-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Allies & Collaborations</span>
+                    <h2 class="section-title">Featured Guests</h2>
+                    <p>Special talents and artists who have left their marks on our latest releases. Customize this roster array inside the JS configuration!</p>
+                </div>
+
+                <!-- Dynamic Target Featured Guests Container -->
+                <div class="featured-grid" id="featured-roster-container">
+                    <!-- Javascript will dynamically inject featured guests here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Music Section (itch.io Embed) -->
+        <section id="music" class="music-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Latest Launch</span>
+                    <h2 class="section-title">Hear Our Sound</h2>
+                    <p>Stream our latest interactive album and gaming soundtracks directly from our official itch.io page below.</p>
+                </div>
+
+                <div class="itch-embed-wrapper">
+                    <div class="itch-frame-container">
+                        <!-- 
+                            DEVELOPER NOTE:
+                            Replace the placeholder iframe code below with your actual itch.io embed.
+                            To get yours:
+                            1. Go to your album/soundtrack project page on itch.io.
+                            2. Click "Distribute" -> "Embed Game".
+                            3. Customize the dark colors to match #0b0813 and copy/paste the iframe code here!
+                        -->
+                        <iframe frameborder="0" src="https://itch.io/embed/4533590?bg_color=12002d&amp;fg_color=feffff&amp;link_color=eb8fff&amp;border_color=42305d" width="552" height="167"><a href="https://ravis-world.itch.io/hyperclock-ost">HYPERCLOCK OST Vol. 1 by Ravi's World</a></iframe>
+                    </div>
+                    <div class="embed-note">
+                        🪐 <em>Tip: Click play inside the widget above to stream our project directly.</em>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <p><span class="copyleft">&copy;</span> Ravi's Band 2026-<span id="year"></span></p>
+            </div>
+        </footer>
+
+        <!-- JS Logic -->
+        <script src="script.js"></script>
+    </body>
+</html>
