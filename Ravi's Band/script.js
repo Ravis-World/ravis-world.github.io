@@ -14,7 +14,7 @@ const bandMembers = [
         bio: "The leader of the group. Works with Musescore and Soundtrap.",
         theme: "purple",
         tag: "Ravi's World",
-        image: "Images/Ravi.png"
+        image: "https://github.com/Ravis-World/ravis-world.github.io/blob/main/Ravi's%20Band/Images/Ravi.png?raw=true"
     },
     {
         name: "Diamond Sparkles",
@@ -22,7 +22,7 @@ const bandMembers = [
         bio: "Epic singer and carer of Ravi's World.",
         theme: "pink",
         tag: "Diamond Sparkles",
-        image: "Images/Diamond.png"
+        image: "https://github.com/Ravis-World/ravis-world.github.io/blob/main/Ravi's%20Band/Images/Diamond.png?raw=true"
     }
 ];
 
