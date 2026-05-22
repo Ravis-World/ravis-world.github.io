@@ -14,7 +14,7 @@ const bandMembers = [
         bio: "The leader of the group. Works with Musescore and Soundtrap.",
         theme: "purple",
         tag: "Ravi's World",
-        image: "Images/Ravi&apos;s World In Plotagon.png"
+        image: "Images/Ravi.png"
     },
     {
         name: "Diamond Sparkles",
@@ -22,7 +22,7 @@ const bandMembers = [
         bio: "Epic singer and carer of Ravi's World.",
         theme: "pink",
         tag: "Diamond Sparkles",
-        image: "Images/Diamond Sparkles In Plotagon.png"
+        image: "Images/Diamond.png"
     }
 ];
 
@@ -34,7 +34,7 @@ const featuredArtists = [
         bio: "Appears in many songs with Japanese lyrics.",
         theme: "purple",
         tag: "Wave Tech",
-        image: "Images/Hitsune Kumi.webp"
+        image: "Images/Kumi.webp"
     },
     {
         name: "Anna Nyui",
