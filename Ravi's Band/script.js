@@ -14,7 +14,7 @@ const bandMembers = [
         bio: "The leader of the group. Works with Musescore and Soundtrap.",
         theme: "purple",
         tag: "Ravi's World",
-        image: "Images/Ravi's World In Plotagon.png"
+        image: "Images/Ravi&apos;s World In Plotagon.png"
     },
     {
         name: "Diamond Sparkles",
