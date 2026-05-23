@@ -1,0 +1,170 @@
+/* Import the Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f3f4f6;
+    /* Light gray background */
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+/* Container for better padding control on large screens */
+.container {
+    max-width: 1280px;
+    /* Maximum width for the main content area */
+    margin: 0 auto;
+    /* Center the container horizontally */
+}
+
+/* Header Styling */
+.main-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #1f2937;
+    margin-bottom: 2.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 4px solid #6366f1;
+}
+
+/* Responsive Grid Container */
+.game-list {
+    display: grid;
+    gap: 2rem;
+    /* Spacing between cards */
+    grid-template-columns: 1fr;
+    /* Default: single column for mobile */
+}
+
+/* Media queries for responsiveness (Tablet and Desktop) */
+@media (min-width: 768px) {
+
+    /* md: breakpoint */
+    .game-list {
+        grid-template-columns: repeat(2, 1fr);
+        /* Two columns */
+    }
+}
+
+@media (min-width: 1024px) {
+
+    /* lg: breakpoint */
+    .game-list {
+        grid-template-columns: repeat(3, 1fr);
+        /* Three columns */
+    }
+}
+
+/* Card Styling */
+.game-card {
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: all 300ms ease;
+}
+
+/* Card Hover Effect */
+.game-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+}
+
+.game-card .image-link {
+    display: block;
+    cursor: pointer;
+}
+
+.game-card img {
+    width: 100%;
+    height: 12rem;
+    object-fit: cover;
+    transition: opacity 300ms;
+}
+
+.game-card img:hover {
+    opacity: 0.9;
+}
+
+.card-content {
+    padding: 1.5rem;
+}
+
+.game-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.game-description {
+    font-size: 0.875rem;
+    color: #4b5563;
+}
+
+/* Button Group Styling (Flexbox for two buttons) */
+.button-group {
+    margin-top: 1.25rem;
+    display: flex;
+    gap: 0.5rem;
+    /* Space between the two buttons */
+}
+
+/* Base Button Styling (used for active links) */
+.cta-button {
+    flex-grow: 1;
+    /* Both buttons take equal width */
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+    transition: all 150ms ease;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+/* Primary Button Style */
+.cta-button.primary {
+    background-color: #4f46e5;
+    color: #ffffff;
+}
+
+.cta-button.primary:hover {
+    background-color: #4338ca;
+    transform: translateY(-1px);
+}
+
+/* Secondary (Outlined) Button Style */
+.cta-button.secondary {
+    background-color: transparent;
+    color: #4f46e5;
+    border: 2px solid #4f46e5;
+    box-shadow: none;
+}
+
+.cta-button.secondary:hover {
+    background-color: #eef2ff;
+    /* Very light background on hover */
+    transform: translateY(-1px);
+}
+
+/* New Style for Inactive Placeholder */
+.placeholder-label {
+    display: block;
+    margin-top: 1.25rem;
+    padding: 0.75rem 1rem;
+    background-color: #e5e7eb;
+    /* Light gray background */
+    color: #6b7280;
+    /* Dark gray text */
+    font-weight: 600;
+    border-radius: 0.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+}
