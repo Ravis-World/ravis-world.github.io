@@ -43,7 +43,15 @@ const customGames = {
         secondaryUrl: "https://gamejolt.com/games/button-of-rubies/1031924",
         secondaryLabel: "Game Jolt",
         image: "https://m.gjcdn.net/game-thumbnail/1000/1031924-effmwnjz-v4.webp",
-        description: "You play as a thief attempting to steal Team Toadette's vast fortune by hitting a single button during a crucial 1-second window that opens after a long wait. "
+        description: "You play as a thief attempting to steal Team Toadette's vast fortune by hitting a single button during a crucial 1-second window that opens after a long wait."
+    },
+    'W': {
+        title: "Button of Working",
+        primaryUrl: "https://ravis-world.itch.io/button-of-working",
+        secondaryUrl: "https://gamejolt.com/games/Button-of-Working/1073186",
+        secondaryLabel: "Game Jolt",
+        image: "https://m.gjcdn.net/game-thumbnail/1000/1073186-4ac3npgp-v4.webp",
+        description: "Built for the modern, efficient professional who values clean interfaces and direct results. There are no complicated movement systems, no complex inventory management screens, and absolutely no corporate overhead. Just you, a desk, and the Button of Working."
     },
     '&': {
         title: "Button of & (Ampersand)",
