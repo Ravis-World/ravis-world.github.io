@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Workshop Showcase - Ravi П</title>
+    <!-- Link to your external stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="container">
+
+    <!-- Top Navigation Bar -->
+    <header>
+        <div class="header-content">
+            <div class="logo-area">
+                <span class="logo-title">STEAM WORKSHOP SHOWCASE</span>
+            </div>
+            
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                <span class="status-text">Team Toadette</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Profile Header Section -->
+    <div class="profile-banner">
+        <div class="profile-layout">
+            <!-- Avatar -->
+            <div class="avatar-wrapper">
+                <img id="profile-avatar" src="https://avatars.fastly.steamstatic.com/0859ee145dbf104e6e4f8876608325c668c81ef1_medium.jpg" alt="Avatar" class="profile-avatar">
+            </div>
+
+            <!-- Profile Info -->
+            <div class="profile-info">
+                <div class="profile-header-row">
+                    <h1 class="profile-name">Ravi П</h1>
+                    <span class="profile-badge">Level Designer</span>
+                </div>
+                
+                <p class="profile-bio">
+                    Welcome to my Workshop collection! Here you'll find all the custom maps, levels, and biological anomaly simulations I've built and configured. Click a folder below to explore my designs.
+                </p>
+
+                <!-- Action Button Link to Live Workshop -->
+                <a id="profile-steam-link" href="https://steamcommunity.com/profiles/76561199099604364/myworkshopfiles/" target="_blank" class="profile-link-btn">
+                    <span>🌐</span> Visit Live Steam Workshop ↗
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main>
+
+        <!-- ================= LANDING STATE: THREE GAME BOXES ================= -->
+        <div id="landing-page">
+            <h2 class="section-title">
+                <span>📁</span> Select a Game Folder to View Uploads
+            </h2>
+            
+            <div class="folders-grid">
+                <!-- Portal 2 Box -->
+                <div onclick="openFolder('Portal 2')" class="folder-card">
+                    <div class="folder-banner">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/620/header.jpg" alt="Portal 2 Banner" class="folder-logo-img">
+                    </div>
+                    <div class="folder-body">
+                        <h3 class="folder-title">Portal 2</h3>
+                        <p class="folder-subtitle">Contains custom puzzle chambers</p>
+                        <span class="folder-action">Open Folder →</span>
+                    </div>
+                </div>
+
+                <!-- A Dance of Fire and Ice Box -->
+                <div onclick="openFolder('A Dance of Fire and Ice')" class="folder-card">
+                    <div class="folder-banner">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/977950/header.jpg" alt="A Dance of Fire and Ice Banner" class="folder-logo-img">
+                    </div>
+                    <div class="folder-body">
+                        <h3 class="folder-title">A Dance of Fire and Ice</h3>
+                        <p class="folder-subtitle">Contains customised rhythm tracks</p>
+                        <span class="folder-action">Open Folder →</span>
+                    </div>
+                </div>
+
+                <!-- Plague Inc Box -->
+                <div onclick="openFolder('Plague Inc: Evolved')" class="folder-card">
+                    <div class="folder-banner">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/246620/header.jpg" alt="Plague Inc: Evolved Banner" class="folder-logo-img">
+                    </div>
+                    <div class="folder-body">
+                        <h3 class="folder-title">Plague Inc: Evolved</h3>
+                        <p class="folder-subtitle">Contains biological simulation files</p>
+                        <span class="folder-action">Open Folder →</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ================= FOLDER VIEW STATE (HIDDEN BY DEFAULT) ================= -->
+        <div id="folder-view" class="hidden">
+            
+            <!-- Breadcrumb Navigation, Search, & Back Controls -->
+            <div class="controls-panel">
+                <div class="controls-header">
+                    <button onclick="goBackToLanding()" class="back-btn">
+                        <span>←</span> Back to Folders
+                    </button>
+                    
+                    <!-- Search Input inside current folder -->
+                    <div class="search-container">
+                        <input type="text" id="search-input" oninput="filterItems()" placeholder="Search in this folder..." class="search-input">
+                        <span class="search-icon">🔍</span>
+                    </div>
+
+                    <div class="breadcrumb-container">
+                        <span style="color: var(--text-muted)">Current Folder:</span>
+                        <span id="current-folder-header" class="active-folder-tag">Portal 2</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid container for the chosen game folder -->
+            <div id="workshop-grid" class="items-grid">
+                <!-- Dynamic Items injected here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Copyright -->
+    <footer style="text-align: center;">
+        <p>© Ravi П - Steam Workshop Collection. Created as an interactive portfolio.</p>
+        <p>All rights to respective game titles and resources belong to original publishers.</p>
+    </footer>
+
+    <!-- Link to your external JavaScript -->
+    <script src="script.js" defer></script>
+</body>
+</html>
