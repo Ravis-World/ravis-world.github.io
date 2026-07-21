@@ -70,15 +70,15 @@ const featuredArtists = [
     {
         name: "Hoshino Hanami",
         role: "Guest Voice",
-        bio: "Appears alongside Bennett, mostly.",
+        bio: "Cameoed in a war song.",
         theme: "purple",
         tag: "Wave Tech",
         image: "Images/Hanami.webp"
     },
     {
-        name: "SHIRA",
+        name: "LEONA",
         role: "Guest Voice",
-        bio: "Appears alongside Bennett, mostly.",
+        bio: "Cameoed in a war song.",
         theme: "pink",
         tag: "Wave Tech",
         image: "Images/LEONA.webp"
