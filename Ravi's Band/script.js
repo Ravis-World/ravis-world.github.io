@@ -67,6 +67,22 @@ const featuredArtists = [
         tag: "Wave Tech",
         image: "Images/SHIRA.png"
     },
+    {
+        name: "Hoshino Hanami",
+        role: "Guest Voice",
+        bio: "Appears alongside Bennett, mostly.",
+        theme: "purple",
+        tag: "Wave Tech",
+        image: "Images/Hanami.webp"
+    },
+    {
+        name: "SHIRA",
+        role: "Guest Voice",
+        bio: "Appears alongside Bennett, mostly.",
+        theme: "pink",
+        tag: "Wave Tech",
+        image: "Images/LEONA.webp"
+    }
 ];
 
 // Function to dynamically render any set of cards
