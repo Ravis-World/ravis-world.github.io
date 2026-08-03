@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>The Stomping Grounds</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+            margin: 0;
+            padding: 0;
+        }
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #0f172a;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #f3f4f6;
+        }
+        #app-container {
+            display: flex;
+            flex-direction: column;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        header {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+        header h1 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f472b6, #a855f7, #3b82f6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.05em;
+        }
+        .header-tag {
+            font-size: 0.8rem;
+            background: rgba(236, 72, 153, 0.15);
+            color: #f472b6;
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .workspace {
+            display: flex;
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #canvas-wrapper {
+            flex: 1;
+            position: relative;
+            background: radial-gradient(circle at center, #1e293b 0%, #090d16 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        canvas {
+            display: block;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            border-radius: 12px;
+        }
+
+        .control-panel {
+            width: 350px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+            border-left: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            padding: 20px;
+            overflow-y: auto;
+            z-index: 5;
+        }
+
+        .panel-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .panel-group label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #9ca3af;
+        }
+
+        select, button, input {
+            font-family: inherit;
+        }
+
+        .sim-select {
+            background: #1e293b;
+            color: #f3f4f6;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .sim-select:focus {
+            border-color: #ec4899;
+        }
+
+        .play-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 6px;
+        }
+        .btn-play {
+            flex: 2;
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.35);
+            transition: transform 0.1s, opacity 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-play:hover {
+            transform: translateY(-2px);
+        }
+        .btn-play:active {
+            transform: scale(0.97);
+        }
+        .btn-reset {
+            flex: 1;
+            background: #334155;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .btn-reset:hover {
+            background: #475569;
+        }
+
+        .technique-info {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            line-height: 1.4;
+            min-height: 85px;
+        }
+        .technique-info h4 {
+            color: #f472b6;
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+        }
+
+        .clean-feet-btn {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .clean-feet-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+        }
+
+        @media (max-width: 800px) {
+            .workspace {
+                flex-direction: column;
+            }
+            .control-panel {
+                width: 100%;
+                height: 42%;
+                border-left: none;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <header>
+            <h1>THE STOMPING GROUNDS</h1>
+        </header>
+
+        <div class="workspace">
+            <div id="canvas-wrapper">
+                <canvas id="canvas"></canvas>
+            </div>
+
+            <!-- Control Panel -->
+            <div class="control-panel">
+                <div class="panel-group">
+                    <label for="object-select">1. Select Stomping Ground Object</label>
+                    <select id="object-select" class="sim-select">
+                        <optgroup label="Fruit & Food Grounds">
+                            <option value="grapes">Crushed Grapes Cluster</option>
+                            <option value="banana">Banana Bunch / Pulp</option>
+                            <option value="plums">Ripe Plums Mound</option>
+                            <option value="tomatoes">Juicy Vine Tomatoes</option>
+                            <option value="cherries">Cherry Pile</option>
+                            <option value="pizza">Pepperoni Pizza Slice</option>
+                        </optgroup>
+                        <optgroup label="Special & Alien Compounds">
+                            <option value="alieneggs">Alien Egg Pods</option>
+                            <option value="bugs">Bio-Insect Swarm</option>
+                            <option value="manure">Rich Soil Compost</option>
+                            <option value="dragonpoop">Dragon Droppings</option>
+                        </optgroup>
+                        <optgroup label="Classic Soft Compounds">
+                            <option value="jelly">Pink Jelly Mold</option>
+                            <option value="foam">Blue Soft Foam Block</option>
+                            <option value="balloon">Mint Water Balloon</option>
+                            <option value="marshmallow">Fluffy Marshmallow</option>
+                            <option value="slime">Purple Slime Blob</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="panel-group">
+                    <label for="footwear-select">2. Select Footwear / Covering</label>
+                    <select id="footwear-select" class="sim-select">
+                        <option value="bare">Bare 3D Blob Feet</option>
+                        <option value="socks">Cozy Striped Socks</option>
+                        <option value="sandals">Summer Sandals</option>
+                        <option value="boots">Rubber Rain Boots</option>
+                        <option value="sneakers">Sport Sneakers</option>
+                        <option value="dinosaur">Dinosaur Feet (Green Costume)</option>
+                        <option value="monkey">Monkey Feet (Furry & Tan Soles)</option>
+                    </select>
+                </div>
+
+                <div class="panel-group">
+                    <label for="technique-select">3. Select Stomping Technique</label>
+                    <select id="technique-select" class="sim-select">
+                        <optgroup label="Controlled Techniques">
+                            <option value="progressiveSink">Progressive Sink</option>
+                            <option value="featherPress">Feather Press</option>
+                            <option value="anchorHold">Anchor Hold</option>
+                            <option value="staggeredSink">Staggered Sink</option>
+                        </optgroup>
+                        <optgroup label="Rotational Techniques">
+                            <option value="circularGrind">Circular Grind</option>
+                            <option value="heelPivot">Heel Pivot</option>
+                        </optgroup>
+                        <optgroup label="Alternating Techniques">
+                            <option value="alternatingHeels">Alternating Heels</option>
+                            <option value="pulseCompression">Pulse Compression</option>
+                            <option value="fullTransfer">Full Transfer</option>
+                        </optgroup>
+                        <optgroup label="Structural Techniques">
+                            <option value="rollingPress">Rolling Press</option>
+                            <option value="splitPressure">Split Pressure</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="panel-group">
+                    <label for="speed-select">4. Simulation Pace</label>
+                    <select id="speed-select" class="sim-select">
+                        <option value="0.008">Slow & Relaxed Pace</option>
+                        <option value="0.004">Ultra Slow Mo Pace</option>
+                        <option value="0.015">Medium Pace</option>
+                    </select>
+                </div>
+
+                <div class="technique-info" id="tech-info">
+                    <h4 id="tech-title">Progressive Sink</h4>
+                    <p id="tech-desc">Place foot lightly, then gradually increase pressure on one side allowing material to sink before leveling out.</p>
+                </div>
+
+                <button class="clean-feet-btn" id="clean-feet">🧼 Clean Feet Soles</button>
+
+                <div class="play-controls">
+                    <button class="btn-play" id="btn-play">▶ PLAY SIMULATION</button>
+                    <button class="btn-reset" id="btn-reset">RESET</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =====================================================================
+        // 🔊 LOOPING SQUISH AUDIO CONTROLLER 🔊
+        // =====================================================================
+        const squishLoopAudio = new Audio('thestoryrug-slippery-gooey-slime-413663.mp3');
+        squishLoopAudio.loop = true;
+        squishLoopAudio.volume = 1.0;
+
+        function startLoopingSound() {
+            squishLoopAudio.play().catch(e => {
+                // Handled if browser blocks autoplay before user interaction
+            });
+        }
+
+        function pauseLoopingSound() {
+            squishLoopAudio.pause();
+        }
+
+        function resetLoopingSound() {
+            squishLoopAudio.pause();
+            squishLoopAudio.currentTime = 0;
+        }
+        // =====================================================================
+
+        const TECHNIQUES_DATA = {
+            progressiveSink: { title: "Progressive Sink", desc: "1. Light contact. 2. Gradually increase pressure on one side. 3. Sinks unevenly at first. 4. Shift weight slowly across to level out." },
+            featherPress: { title: "Feather Press", desc: "1. Light contact. 2. Apply micro-increases in pressure with slight pauses. 3. Maintain steady balance until compressed." },
+            anchorHold: { title: "Anchor Hold", desc: "1. Place foot firmly in position. 2. Apply steady downward pressure. 3. Hold stationary for several seconds while material settles." },
+            staggeredSink: { title: "Staggered Sink", desc: "1. Both feet light contact. 2. One side presses down deeper first. 3. Delayed pressure on opposite side brings both into balance." },
+            circularGrind: { title: "Circular Grind", desc: "1. Steady downward pressure. 2. Move foot in small consistent circular motions. 3. Maintain continuous squishing contact." },
+            heelPivot: { title: "Heel Pivot", desc: "1. Plant heel firmly into surface. 2. Pivot front of foot smoothly back and forth under steady pressure." },
+            alternatingHeels: { title: "Alternating Heels", desc: "1. Position heels on contact points. 2. Shift pressure rhythmically back and forth between left and right heels." },
+            pulseCompression: { title: "Pulse Compression", desc: "1. Apply short controlled presses. 2. Release slightly without fully lifting. 3. Repeat in steady pulsing rhythm." },
+            fullTransfer: { title: "Full Transfer", desc: "1. Start with balanced stance. 2. Shift full weight onto one side, then transition smoothly to the opposite side." },
+            rollingPress: { title: "Rolling Press", desc: "1. Touch down with heel first. 2. Smoothly roll weight forward through the arch to the front sole." },
+            splitPressure: { title: "Split Pressure", desc: "1. Strong force on left foot, light force on right foot. 2. Creates asymmetrical squish deformation." }
+        };
+
+        class SoftObject {
+            constructor(type, x, y, width, height) {
+                this.type = type;
+                this.x = x;
+                this.y = y;
+                this.width = width;
+                this.height = height;
+                this.numCols = 18;
+                this.numRows = 8;
+                this.nodes = [];
+                this.subElements = [];
+                
+                this.isOrganicMound = ['grapes', 'cherries', 'tomatoes', 'plums', 'alieneggs', 'slime', 'manure', 'dragonpoop', 'bugs'].includes(type);
+                this.drawBaseHull = !['grapes', 'banana', 'plums', 'tomatoes', 'cherries', 'alieneggs', 'manure', 'dragonpoop', 'bugs'].includes(type);
+
+                this.configureType(type);
+                this.initNodes();
+                this.initSubElements();
+            }
+
+            configureType(type) {
+                switch(type) {
+                    case 'jelly':
+                        this.color = '#ec4899'; this.innerColor = '#f472b6'; this.pulpColor = '#f472b6'; this.stiffness = 0.15; this.damping = 0.85; break;
+                    case 'foam':
+                        this.color = '#3b82f6'; this.innerColor = '#60a5fa'; this.pulpColor = '#60a5fa'; this.stiffness = 0.08; this.damping = 0.80; break;
+                    case 'balloon':
+                        this.color = '#10b981'; this.innerColor = '#34d399'; this.pulpColor = '#34d399'; this.stiffness = 0.28; this.damping = 0.92; break;
+                    case 'marshmallow':
+                        this.color = '#fffcf2'; this.innerColor = '#fffcf2'; this.pulpColor = '#fffcf2'; this.stiffness = 0.10; this.damping = 0.82; break;
+                    case 'slime':
+                        this.color = '#7e22ce'; this.innerColor = '#a855f7'; this.pulpColor = '#c084fc'; this.stiffness = 0.05; this.damping = 0.75; break;
+                    case 'grapes':
+                        this.color = '#4c1d95'; this.innerColor = '#6b21a8'; this.pulpColor = '#9333ea'; this.stiffness = 0.16; this.damping = 0.85; break;
+                    case 'banana':
+                        this.color = '#ca8a04'; this.innerColor = '#eab308'; this.pulpColor = '#fef08a'; this.stiffness = 0.04; this.damping = 0.70; break;
+                    case 'plums':
+                        this.color = '#4c1d95'; this.innerColor = '#7e22ce'; this.pulpColor = '#c084fc'; this.stiffness = 0.15; this.damping = 0.84; break;
+                    case 'tomatoes':
+                        this.color = '#991b1b'; this.innerColor = '#dc2626'; this.pulpColor = '#ef4444'; this.stiffness = 0.12; this.damping = 0.82; break;
+                    case 'cherries':
+                        this.color = '#7f1d1d'; this.innerColor = '#b91c1c'; this.pulpColor = '#f87171'; this.stiffness = 0.22; this.damping = 0.90; break;
+                    case 'pizza':
+                        this.color = '#b45309'; this.innerColor = '#d97706'; this.pulpColor = '#fde047'; this.stiffness = 0.09; this.damping = 0.78; break;
+                    case 'manure':
+                        this.color = '#3b1d0c'; this.innerColor = '#5c2c16'; this.pulpColor = '#78350f'; this.stiffness = 0.08; this.damping = 0.75; break;
+                    case 'dragonpoop':
+                        this.color = '#1c1008'; this.innerColor = '#2d180c'; this.pulpColor = '#45200e'; this.stiffness = 0.14; this.damping = 0.82; break;
+                    case 'alieneggs':
+                        this.color = '#14532d'; this.innerColor = '#166534'; this.pulpColor = '#4ade80'; this.stiffness = 0.20; this.damping = 0.89; break;
+                    case 'bugs':
+                        this.color = '#18181b'; this.innerColor = '#27272a'; this.pulpColor = '#84cc16'; this.stiffness = 0.11; this.damping = 0.76; break;
+                    default:
+                        this.color = '#ec4899'; this.innerColor = '#f472b6'; this.pulpColor = '#f472b6'; this.stiffness = 0.15; this.damping = 0.85;
+                }
+            }
+
+            initNodes() {
+                this.nodes = [];
+                for (let r = 0; r <= this.numRows; r++) {
+                    const row = [];
+                    for (let c = 0; c <= this.numCols; c++) {
+                        let u = c / this.numCols;
+                        let v = r / this.numRows;
+                        
+                        let relX = (u - 0.5) * this.width;
+                        let relY = (v - 0.5) * this.height;
+
+                        if (this.isOrganicMound) {
+                            let domeProfile = Math.sin(u * Math.PI); 
+                            let domeHeight = domeProfile * this.height * 0.95; 
+                            relY = (this.height / 2) - (1 - v) * domeHeight; 
+                            let widthTaper = 0.35 + 0.65 * v;
+                            relX = (u - 0.5) * this.width * widthTaper;
+                        } else if (this.type === 'pizza') {
+                            let taperX = 1 - u; 
+                            relY = (this.height / 2) - (1 - v) * (this.height * taperX * 0.75 + 8);
+                            relX = (u - 0.5) * this.width;
+                        } else if (this.type === 'banana') {
+                            let curve = Math.sin(u * Math.PI) * this.height * 0.65;
+                            relY = (this.height / 2) - (1 - v) * 35 - curve; 
+                            let bend = (1 - Math.sin(u * Math.PI)) * 20;
+                            relY += bend;
+                            relX = (u - 0.5) * this.width * 0.85;
+                        } else if (this.type === 'jelly' || this.type === 'marshmallow') {
+                            let dome = Math.sin(u * Math.PI) * 15;
+                            relY = (this.height / 2) - (1 - v) * this.height - (v === 0 ? dome : 0);
+                            let widthTaper = 0.75 + 0.25 * v; 
+                            relX = (u - 0.5) * this.width * widthTaper;
+                        } else if (this.type === 'balloon') {
+                            let profile = Math.sin(u * Math.PI);
+                            relY = (this.height / 2) - (1 - v) * (profile * this.height * 0.85 + 15);
+                            if (u < 0.1) relY += (1 - v) * 12;
+                            relX = (u - 0.5) * this.width;
+                        }
+
+                        if (v === 1.0) relY = this.height / 2;
+
+                        row.push({ x: relX, y: relY, ox: relX, oy: relY, vx: 0, vy: 0 });
+                    }
+                    this.nodes.push(row);
+                }
+            }
+
+            getPosInDome(w, h) {
+                let u = 0.1 + Math.random() * 0.8; 
+                let v = Math.random();
+                let domeProfile = Math.sin(u * Math.PI);
+                let widthTaper = 0.35 + 0.65 * v;
+                let rx = (u - 0.5) * w * widthTaper;
+                let ry = (this.height / 2) - (1 - v) * (domeProfile * h);
+                return {x: rx, y: ry};
+            }
+
+            initSubElements() {
+                this.subElements = [];
+                if (this.type === 'grapes') {
+                    for (let i = 0; i < 35; i++) {
+                        let p = this.getPosInDome(this.width, this.height * 0.95);
+                        this.subElements.push({
+                            x: p.x, y: p.y - 10,
+                            r: Math.random() * 8 + 10,
+                            squished: 0,
+                            color: Math.random() > 0.5 ? '#7e22ce' : '#9333ea'
+                        });
+                    }
+                } else if (this.type === 'banana') {
+                    for (let i = 0; i < 4; i++) {
+                        let u = 0.2 + (i / 3) * 0.6; 
+                        let curve = Math.sin(u * Math.PI) * this.height * 0.65;
+                        let ry = (this.height / 2) - 18 - curve + (1 - Math.sin(u * Math.PI)) * 20;
+                        let rx = (u - 0.5) * this.width * 0.85;
+                        this.subElements.push({ x: rx, y: ry, rx: 28, ry: 14, angle: (u - 0.5) * 0.5, squished: 0 });
+                    }
+                } else if (this.type === 'tomatoes') {
+                    for (let i = 0; i < 8; i++) {
+                        let p = this.getPosInDome(this.width * 0.9, this.height * 0.9);
+                        this.subElements.push({ x: p.x, y: p.y - 12, r: Math.random() * 6 + 18, squished: 0 });
+                    }
+                } else if (this.type === 'cherries') {
+                    for (let i = 0; i < 28; i++) {
+                        let p = this.getPosInDome(this.width, this.height * 0.95);
+                        this.subElements.push({ x: p.x, y: p.y - 5, r: Math.random() * 4 + 7, squished: 0 });
+                    }
+                } else if (this.type === 'plums') {
+                    for (let i = 0; i < 12; i++) {
+                        let p = this.getPosInDome(this.width * 0.9, this.height * 0.9);
+                        this.subElements.push({ x: p.x, y: p.y - 10, r: Math.random() * 5 + 15, squished: 0 });
+                    }
+                } else if (this.type === 'alieneggs') {
+                    for (let i = 0; i < 10; i++) {
+                        let p = this.getPosInDome(this.width * 0.9, this.height * 0.95);
+                        this.subElements.push({ x: p.x, y: p.y - 12, r: Math.random() * 6 + 16, squished: 0 });
+                    }
+                } else if (this.type === 'bugs') {
+                    for (let i = 0; i < 30; i++) {
+                        let p = this.getPosInDome(this.width, this.height * 0.9);
+                        this.subElements.push({ x: p.x, y: p.y - 6, r: Math.random() * 3 + 6, angle: Math.random() * Math.PI * 2, squished: 0 });
+                    }
+                } else if (this.type === 'manure' || this.type === 'dragonpoop') {
+                    for (let i = 0; i < 16; i++) {
+                        let p = this.getPosInDome(this.width * 0.95, this.height * 0.9);
+                        this.subElements.push({
+                            x: p.x, y: p.y - 8,
+                            rx: Math.random() * 10 + 16,
+                            ry: Math.random() * 8 + 12,
+                            angle: (Math.random() - 0.5) * 0.8,
+                            squished: 0
+                        });
+                    }
+                } else if (this.type === 'pizza') {
+                    for (let i = 0; i < 7; i++) {
+                        let u = Math.random() * 0.75; 
+                        let v = Math.random();
+                        let taperX = 1 - u; 
+                        let ry = (this.height / 2) - (1 - v) * (this.height * taperX * 0.75 + 8);
+                        let rx = (u - 0.5) * this.width * 0.9;
+                        this.subElements.push({ x: rx, y: ry, r: Math.random() * 2 + 8, squished: 0 });
+                    }
+                }
+            }
+
+            deformFromFoot(footX, footY, footWidth, footAngle, pressForce, twistForce = 0, isLeft = false) {
+                const cosA = Math.cos(footAngle);
+                const sinA = Math.sin(footAngle);
+                
+                const normX = -sinA;
+                const normY = cosA;
+
+                let totalSquishApplied = 0;
+
+                for (let r = 0; r <= this.numRows; r++) {
+                    for (let c = 0; c <= this.numCols; c++) {
+                        const n = this.nodes[r][c];
+                        const dx = (this.x + n.x) - footX;
+                        const dy = (this.y + n.y) - footY;
+
+                        const sx = dx * cosA + dy * sinA;
+                        const localX = isLeft ? -sx : sx;
+                        const localY = -dx * sinA + dy * cosA;
+
+                        if (Math.abs(localX) < footWidth / 2 + 10 && localY > -22 && localY < 22) {
+                            const penetration = (22 - localY) * pressForce;
+                            if (penetration > 0) {
+                                n.vx += normX * penetration * 0.4;
+                                n.vy += normY * penetration * 0.4;
+                                totalSquishApplied += penetration;
+                            }
+                        }
+                    }
+                }
+
+                this.subElements.forEach(item => {
+                    const dx = (this.x + item.x) - footX;
+                    const dy = (this.y + item.y) - footY;
+                    
+                    const sx = dx * cosA + dy * sinA;
+                    const localX = isLeft ? -sx : sx;
+                    const localY = -dx * sinA + dy * cosA;
+
+                    const distToSole = 22 - localY;
+                    if (Math.abs(localX) < footWidth / 2 + (item.r || item.rx || 15) && distToSole > 0 && distToSole < 40 && pressForce > 0.2) {
+                        item.squished = Math.min(1.0, item.squished + pressForce * 0.25);
+                        item.x += normX * pressForce * 3;
+                        item.y += normY * pressForce * 3;
+                    }
+                });
+
+                return totalSquishApplied;
+            }
+
+            update() {
+                for (let r = 0; r <= this.numRows; r++) {
+                    for (let c = 0; c <= this.numCols; c++) {
+                        const n = this.nodes[r][c];
+                        if (r === this.numRows) {
+                            n.y = n.oy;
+                            n.x = n.ox;
+                            continue;
+                        }
+                        const fx = (n.ox - n.x) * this.stiffness;
+                        const fy = (n.oy - n.y) * this.stiffness;
+                        n.vx = (n.vx + fx) * this.damping;
+                        n.vy = (n.vy + fy) * this.damping;
+                        n.x += n.vx;
+                        n.y += n.vy;
+                    }
+                }
+
+                if (this.type === 'bugs') {
+                    this.subElements.forEach(b => {
+                        if (b.squished < 0.5) {
+                            b.x += (Math.random() - 0.5) * 0.8;
+                            b.y += (Math.random() - 0.5) * 0.8;
+                        }
+                    });
+                }
+            }
+
+            draw(ctx) {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+
+                ctx.beginPath();
+                ctx.ellipse(0, this.height / 2, this.width / 2, 8, 0, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+                ctx.shadowColor = 'rgba(0,0,0,0.8)';
+                ctx.shadowBlur = 15;
+                ctx.fill();
+                ctx.shadowBlur = 0; 
+
+                if (this.drawBaseHull) {
+                    ctx.beginPath();
+                    ctx.moveTo(this.nodes[0][0].x, this.nodes[0][0].y);
+                    for (let c = 1; c <= this.numCols; c++) {
+                        const curr = this.nodes[0][c];
+                        const prev = this.nodes[0][c-1];
+                        ctx.quadraticCurveTo(prev.x, prev.y, (curr.x + prev.x) / 2, (curr.y + prev.y) / 2);
+                    }
+                    ctx.lineTo(this.nodes[this.numRows][this.numCols].x, this.nodes[this.numRows][this.numCols].y);
+                    ctx.lineTo(this.nodes[this.numRows][0].x, this.nodes[this.numRows][0].y);
+                    ctx.closePath();
+
+                    const grad = ctx.createLinearGradient(0, -this.height / 2, 0, this.height / 2);
+                    grad.addColorStop(0, this.innerColor);
+                    grad.addColorStop(1, this.color);
+                    ctx.fillStyle = grad;
+                    ctx.fill();
+                }
+
+                if (this.type === 'pizza') {
+                    ctx.strokeStyle = '#d97706';
+                    ctx.lineWidth = 14;
+                    ctx.lineCap = 'round';
+                    ctx.beginPath();
+                    ctx.moveTo(this.nodes[0][0].x, this.nodes[0][0].y);
+                    ctx.lineTo(this.nodes[this.numRows][0].x, this.nodes[this.numRows][0].y);
+                    ctx.stroke();
+
+                    ctx.fillStyle = 'rgba(254, 240, 138, 0.7)';
+                    ctx.beginPath();
+                    ctx.moveTo(this.nodes[0][2].x, this.nodes[0][2].y + 4);
+                    for(let c=3; c<this.numCols; c++) ctx.lineTo(this.nodes[0][c].x, this.nodes[0][c].y + 4);
+                    ctx.lineTo(this.nodes[this.numRows][this.numCols-1].x, this.nodes[this.numRows][this.numCols-1].y - 4);
+                    ctx.lineTo(this.nodes[this.numRows][2].x, this.nodes[this.numRows][2].y - 4);
+                    ctx.fill();
+
+                    this.subElements.forEach(p => {
+                        const r = p.r * (1 + p.squished * 0.5);
+                        let pGrad = ctx.createRadialGradient(p.x - r*0.3, p.y - r*0.3, r*0.1, p.x, p.y, r);
+                        pGrad.addColorStop(0, '#ef4444');
+                        pGrad.addColorStop(1, '#7f1d1d');
+                        ctx.fillStyle = pGrad;
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+                        ctx.fill();
+                    });
+                } else if (this.type === 'banana') {
+                    this.subElements.forEach(b => {
+                        ctx.save();
+                        ctx.translate(b.x, b.y);
+                        ctx.rotate(b.angle);
+                        ctx.scale(1 + b.squished * 0.6, 1 - b.squished * 0.7);
+                        let bGrad = ctx.createRadialGradient(-10, -5, 5, 0, 0, b.rx);
+                        bGrad.addColorStop(0, '#fef08a');
+                        bGrad.addColorStop(0.7, '#eab308');
+                        bGrad.addColorStop(1, '#a16207');
+                        ctx.fillStyle = bGrad;
+                        ctx.beginPath();
+                        ctx.ellipse(0, 0, b.rx, b.ry, 0, 0, Math.PI * 2);
+                        ctx.fill();
+                        
+                        ctx.fillStyle = '#713f12';
+                        ctx.beginPath();
+                        ctx.arc(-b.rx*0.4, b.ry*0.2, 2, 0, Math.PI*2);
+                        ctx.arc(b.rx*0.2, -b.ry*0.3, 2.5, 0, Math.PI*2);
+                        ctx.fill();
+                        ctx.restore();
+                    });
+                } else if (this.type === 'manure' || this.type === 'dragonpoop') {
+                    this.subElements.forEach(item => {
+                        ctx.save();
+                        ctx.translate(item.x, item.y);
+                        ctx.rotate(item.angle);
+                        const sy = 1 - item.squished * 0.8;
+                        const sx = 1 + item.squished * 0.9;
+                        ctx.scale(sx, sy);
+
+                        let baseCol = this.type === 'dragonpoop' ? '#1c1008' : '#3b1d0c';
+                        let highCol = this.type === 'dragonpoop' ? '#45200e' : '#78350f';
+                        
+                        let mGrad = ctx.createRadialGradient(-item.rx*0.3, -item.ry*0.3, 2, 0, 0, item.rx);
+                        mGrad.addColorStop(0, highCol);
+                        mGrad.addColorStop(1, baseCol);
+
+                        ctx.fillStyle = mGrad;
+                        ctx.beginPath();
+                        ctx.ellipse(0, 0, item.rx, item.ry, 0, 0, Math.PI * 2);
+                        ctx.fill();
+
+                        if (item.squished > 0.4) {
+                            ctx.fillStyle = this.pulpColor;
+                            ctx.globalAlpha = 0.85;
+                            ctx.beginPath();
+                            ctx.ellipse(0, item.ry * 0.4, item.rx * 1.4, item.ry * 0.4, 0, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+                        ctx.restore();
+                    });
+                } else if (['grapes', 'cherries', 'tomatoes', 'plums', 'alieneggs'].includes(this.type)) {
+                    this.subElements.forEach(item => {
+                        ctx.save();
+                        ctx.translate(item.x, item.y);
+                        const sy = 1 - item.squished * 0.7;
+                        const sx = 1 + item.squished * 0.6;
+                        ctx.scale(sx, sy);
+
+                        let baseColor, highlightColor, shadowColor;
+                        if(this.type === 'grapes') { highlightColor = '#d8b4fe'; baseColor = item.color; shadowColor = '#3b0764'; }
+                        else if(this.type === 'cherries') { highlightColor = '#fca5a5'; baseColor = '#b91c1c'; shadowColor = '#450a0a'; }
+                        else if(this.type === 'tomatoes') { highlightColor = '#fca5a5'; baseColor = '#dc2626'; shadowColor = '#7f1d1d'; }
+                        else if(this.type === 'plums') { highlightColor = '#e9d5ff'; baseColor = '#7e22ce'; shadowColor = '#3b0764'; }
+                        else if(this.type === 'alieneggs') { highlightColor = '#86efac'; baseColor = (item.squished>0.5?'#166534':'#22c55e'); shadowColor = '#064e3b'; }
+
+                        let rGrad = ctx.createRadialGradient(-item.r*0.3, -item.r*0.3, item.r*0.1, 0, 0, item.r);
+                        rGrad.addColorStop(0, highlightColor);
+                        rGrad.addColorStop(0.4, baseColor);
+                        rGrad.addColorStop(1, shadowColor);
+                        
+                        ctx.fillStyle = rGrad;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, item.r, 0, Math.PI * 2);
+                        ctx.fill();
+
+                        if (this.type === 'tomatoes' && item.squished < 0.4) {
+                            ctx.fillStyle = '#16a34a';
+                            ctx.beginPath();
+                            ctx.moveTo(-3, -item.r); ctx.lineTo(3, -item.r); ctx.lineTo(0, -item.r-4); ctx.fill();
+                        }
+
+                        if (item.squished > 0.4) {
+                            ctx.fillStyle = this.pulpColor;
+                            ctx.globalAlpha = 0.8;
+                            ctx.beginPath();
+                            ctx.ellipse(0, item.r*0.4, item.r * 1.5, item.r * 0.5, 0, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+                        ctx.restore();
+                    });
+                } else if (this.type === 'bugs') {
+                    this.subElements.forEach(b => {
+                        ctx.save();
+                        ctx.translate(b.x, b.y);
+                        if (b.squished > 0.3) {
+                            ctx.fillStyle = '#84cc16';
+                            ctx.beginPath();
+                            ctx.ellipse(0, 0, b.r * 1.8, b.r * 0.6, b.angle, 0, Math.PI * 2);
+                            ctx.fill();
+                        } else {
+                            ctx.fillStyle = '#27272a';
+                            ctx.strokeStyle = '#000000';
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.ellipse(0, 0, b.r, b.r * 0.6, b.angle, 0, Math.PI * 2);
+                            ctx.fill();
+                            ctx.stroke();
+                        }
+                        ctx.restore();
+                    });
+                }
+
+                ctx.restore();
+            }
+        }
+
+        // --- Simulator Engine ---
+        class Simulator {
+            constructor() {
+                this.canvas = document.getElementById('canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.width = 750;
+                this.height = 450;
+                
+                this.canvas.width = this.width;
+                this.canvas.height = this.height;
+
+                this.floorY = 360;
+                this.softObj = new SoftObject('grapes', this.width / 2, this.floorY - 45, 280, 90);
+
+                this.isPlaying = false;
+                this.simTime = 0;
+                this.simPace = 0.008;
+
+                this.currentTechnique = 'progressiveSink';
+                this.currentFootwear = 'bare';
+
+                this.leftLeg = { x: this.width / 2 - 50, y: 160, angle: 0, press: 0, twist: 0, isLeft: true, pulpAmount: 0, pulpColor: '#a855f7' };
+                this.rightLeg = { x: this.width / 2 + 50, y: 160, angle: 0, press: 0, twist: 0, isLeft: false, pulpAmount: 0, pulpColor: '#a855f7' };
+
+                this.setupUI();
+                this.updateTechniqueInfo();
+                this.loop();
+            }
+
+            setupUI() {
+                document.getElementById('object-select').addEventListener('change', (e) => {
+                    const type = e.target.value;
+                    this.softObj = new SoftObject(type, this.width / 2, this.floorY - 45, 280, 90);
+                });
+
+                document.getElementById('footwear-select').addEventListener('change', (e) => {
+                    this.currentFootwear = e.target.value;
+                });
+
+                document.getElementById('technique-select').addEventListener('change', (e) => {
+                    this.currentTechnique = e.target.value;
+                    this.updateTechniqueInfo();
+                    this.resetSim();
+                });
+
+                document.getElementById('speed-select').addEventListener('change', (e) => {
+                    this.simPace = parseFloat(e.target.value);
+                });
+
+                document.getElementById('clean-feet').addEventListener('click', () => {
+                    this.leftLeg.pulpAmount = 0;
+                    this.rightLeg.pulpAmount = 0;
+                });
+
+                document.getElementById('btn-play').addEventListener('click', () => {
+                    this.isPlaying = !this.isPlaying;
+                    document.getElementById('btn-play').innerText = this.isPlaying ? '⏸ PAUSE SIMULATION' : '▶ PLAY SIMULATION';
+                    
+                    if (this.isPlaying) {
+                        startLoopingSound();
+                    } else {
+                        pauseLoopingSound();
+                    }
+                });
+
+                document.getElementById('btn-reset').addEventListener('click', () => {
+                    this.resetSim();
+                    resetLoopingSound();
+                    if (this.isPlaying) {
+                        startLoopingSound();
+                    }
+                });
+            }
+
+            updateTechniqueInfo() {
+                const info = TECHNIQUES_DATA[this.currentTechnique];
+                if (info) {
+                    document.getElementById('tech-title').innerText = info.title;
+                    document.getElementById('tech-desc').innerText = info.desc;
+                }
+            }
+
+            resetSim() {
+                this.simTime = 0;
+                this.softObj.initNodes();
+                this.softObj.initSubElements();
+                this.leftLeg = { x: this.width / 2 - 50, y: 160, angle: 0, press: 0, twist: 0, isLeft: true, pulpAmount: 0, pulpColor: this.softObj.pulpColor };
+                this.rightLeg = { x: this.width / 2 + 50, y: 160, angle: 0, press: 0, twist: 0, isLeft: false, pulpAmount: 0, pulpColor: this.softObj.pulpColor };
+            }
+
+            animateTechnique() {
+                if (!this.isPlaying) return;
+                this.simTime += this.simPace;
+
+                const loop = this.simTime % 6; 
+                const baselineY = 190;
+                const contactY = this.floorY - 80;
+
+                this.leftLeg.twist = 0;
+                this.rightLeg.twist = 0;
+                this.leftLeg.x = this.width / 2 - 45;
+                this.rightLeg.x = this.width / 2 + 45;
+
+                switch (this.currentTechnique) {
+                    case 'progressiveSink':
+                        this.leftLeg.x = this.width / 2;
+                        this.rightLeg.y = 100; 
+                        if (loop < 1.5) {
+                            this.leftLeg.y = contactY + loop * 5; 
+                            this.leftLeg.angle = 0.35 * (loop / 1.5); 
+                            this.leftLeg.press = 0.2 + loop * 0.2;
+                        } else if (loop < 4) {
+                            let prog = (loop - 1.5) / 2.5;
+                            this.leftLeg.y = contactY + 7 + prog * 18; 
+                            this.leftLeg.angle = 0.35 * (1 - prog); 
+                            this.leftLeg.press = 0.5 + prog * 0.9;
+                        } else {
+                            this.leftLeg.y = contactY + 25;
+                            this.leftLeg.angle = 0; 
+                            this.leftLeg.press = 1.4;
+                        }
+                        break;
+
+                    case 'featherPress':
+                        this.leftLeg.x = this.width / 2;
+                        this.rightLeg.y = 100;
+                        let step = Math.min(5, Math.floor(loop)); 
+                        this.leftLeg.y = contactY - 10 + step * 6;
+                        this.leftLeg.angle = 0;
+                        this.leftLeg.press = step * 0.3;
+                        break;
+
+                    case 'anchorHold':
+                        let anchorDepth = Math.min(1.0, loop * 2); 
+                        if (loop > 5.5) anchorDepth = (6 - loop) * 2; 
+                        this.leftLeg.y = contactY + anchorDepth * 20;
+                        this.rightLeg.y = contactY + anchorDepth * 20;
+                        this.leftLeg.angle = 0; this.rightLeg.angle = 0;
+                        this.leftLeg.press = anchorDepth * 1.4;
+                        this.rightLeg.press = anchorDepth * 1.4;
+                        break;
+
+                    case 'staggeredSink':
+                        const leftStagger = Math.min(1, Math.max(0, loop * 1.5)); 
+                        const rightStagger = Math.min(1, Math.max(0, (loop - 2) * 1.5)); 
+                        this.leftLeg.y = contactY + leftStagger * 22;
+                        this.rightLeg.y = contactY + rightStagger * 22;
+                        this.leftLeg.angle = 0; this.rightLeg.angle = 0;
+                        this.leftLeg.press = leftStagger * 1.3;
+                        this.rightLeg.press = rightStagger * 1.3;
+                        break;
+
+                    case 'circularGrind':
+                        this.leftLeg.x = this.width / 2 + Math.cos(this.simTime * 4) * 20;
+                        this.rightLeg.y = 100;
+                        this.leftLeg.y = contactY + 15 + Math.sin(this.simTime * 4) * 5; 
+                        this.leftLeg.angle = 0;
+                        this.leftLeg.press = 1.3;
+                        this.leftLeg.twist = Math.cos(this.simTime * 4) * 0.8; 
+                        break;
+
+                    case 'heelPivot':
+                        this.leftLeg.x = this.width / 2;
+                        this.rightLeg.y = 100;
+                        this.leftLeg.y = contactY + 15;
+                        this.leftLeg.angle = Math.sin(this.simTime * 3) * 0.5; 
+                        this.leftLeg.press = 1.35;
+                        break;
+
+                    case 'alternatingHeels':
+                        const altH = Math.sin(this.simTime * 3);
+                        this.leftLeg.y = contactY + 10 + (altH > 0 ? altH * 15 : 0);
+                        this.rightLeg.y = contactY + 10 + (altH < 0 ? -altH * 15 : 0);
+                        this.leftLeg.angle = -0.3;
+                        this.rightLeg.angle = -0.3;
+                        this.leftLeg.press = 0.4 + (altH > 0 ? altH * 1.2 : 0);
+                        this.rightLeg.press = 0.4 + (altH < 0 ? -altH * 1.2 : 0);
+                        break;
+
+                    case 'pulseCompression':
+                        this.leftLeg.x = this.width / 2;
+                        this.rightLeg.y = 100;
+                        const pulse = Math.abs(Math.sin(this.simTime * 4)); 
+                        this.leftLeg.y = contactY + 10 + pulse * 14; 
+                        this.leftLeg.angle = 0;
+                        this.leftLeg.press = 0.6 + pulse * 1.0;
+                        break;
+
+                    case 'fullTransfer':
+                        const transfer = Math.sin(this.simTime * 1.5);
+                        this.leftLeg.y = contactY + 10 + Math.max(0, transfer * 18);
+                        this.rightLeg.y = contactY + 10 + Math.max(0, -transfer * 18);
+                        this.leftLeg.angle = 0; this.rightLeg.angle = 0;
+                        this.leftLeg.press = 0.2 + Math.max(0, transfer * 1.5);
+                        this.rightLeg.press = 0.2 + Math.max(0, -transfer * 1.5);
+                        break;
+
+                    case 'rollingPress':
+                        this.leftLeg.x = this.width / 2;
+                        this.rightLeg.y = 100;
+                        let rollPhase = loop / 6; 
+                        this.leftLeg.angle = -0.5 + rollPhase * 1.0;
+                        this.leftLeg.y = contactY + 10 + Math.sin(rollPhase * Math.PI) * 15;
+                        this.leftLeg.press = 0.4 + Math.sin(rollPhase * Math.PI) * 1.2;
+                        break;
+
+                    case 'splitPressure':
+                        this.leftLeg.y = contactY + 24; 
+                        this.rightLeg.y = contactY - 5;  
+                        this.leftLeg.angle = 0; this.rightLeg.angle = 0;
+                        this.leftLeg.press = 1.6; 
+                        this.rightLeg.press = 0.2; 
+                        break;
+                }
+
+                const leftSquish = this.softObj.deformFromFoot(
+                    this.leftLeg.x, this.leftLeg.y, 85, this.leftLeg.angle, this.leftLeg.press, this.leftLeg.twist, this.leftLeg.isLeft
+                );
+                const rightSquish = this.softObj.deformFromFoot(
+                    this.rightLeg.x, this.rightLeg.y, 85, this.rightLeg.angle, this.rightLeg.press, this.rightLeg.twist, this.rightLeg.isLeft
+                );
+
+                if (leftSquish > 5) {
+                    this.leftLeg.pulpAmount = Math.min(1.0, this.leftLeg.pulpAmount + 0.04);
+                    this.leftLeg.pulpColor = this.softObj.pulpColor;
+                }
+                if (rightSquish > 5) {
+                    this.rightLeg.pulpAmount = Math.min(1.0, this.rightLeg.pulpAmount + 0.04);
+                    this.rightLeg.pulpColor = this.softObj.pulpColor;
+                }
+            }
+
+            buildFootSilhouette(ctx, legRadius, legHeight, footLength, footHeight, squishAmount) {
+                ctx.beginPath();
+                ctx.arc(-legRadius + 4, 0, footHeight / 2, Math.PI / 2, -Math.PI / 2, false);
+                ctx.quadraticCurveTo(8, -legRadius * 0.85, footLength - footHeight * 0.55, -footHeight / 2);
+                ctx.arc(footLength - footHeight * 0.55, 0, (footHeight / 2 + squishAmount), -Math.PI / 2, Math.PI / 2, false);
+                ctx.lineTo(-legRadius + 4, footHeight / 2 + squishAmount);
+                ctx.closePath();
+            }
+
+            draw3DStickmanFoot(leg) {
+                const legRadius = 24;
+                const legHeight = 160;
+                const footLength = 76;
+                const footHeight = 46;
+                const squishAmount = leg.press * 6;
+
+                this.ctx.save();
+                this.ctx.translate(leg.x, leg.y);
+                this.ctx.rotate(leg.angle);
+
+                if (leg.isLeft) {
+                    this.ctx.scale(-1, 1);
+                }
+
+                if (['bare', 'sandals', 'sneakers', 'monkey'].includes(this.currentFootwear)) {
+                    const legGrad = this.ctx.createLinearGradient(-legRadius, 0, legRadius, 0);
+                    legGrad.addColorStop(0, '#94a3b8');
+                    legGrad.addColorStop(0.3, '#f1f5f9');
+                    legGrad.addColorStop(0.7, '#cbd5e1');
+                    legGrad.addColorStop(1, '#64748b');
+
+                    this.ctx.fillStyle = legGrad;
+                    this.ctx.beginPath();
+                    this.ctx.roundRect(-legRadius, -legHeight, legRadius * 2, legHeight - 8, [12, 12, 4, 4]);
+                    this.ctx.fill();
+                }
+
+                if (this.currentFootwear === 'bare' || this.currentFootwear === 'sandals') {
+                    const footGrad = this.ctx.createRadialGradient(22, -12, 4, 18, 0, footLength * 0.95);
+                    footGrad.addColorStop(0, '#ffffff');
+                    footGrad.addColorStop(0.35, '#f8fafc');
+                    footGrad.addColorStop(0.75, '#cbd5e1');
+                    footGrad.addColorStop(1, '#64748b');
+
+                    this.ctx.fillStyle = footGrad;
+                    this.ctx.shadowColor = 'rgba(0, 0, 0, 0.35)';
+                    this.ctx.shadowBlur = 12;
+                    this.ctx.shadowOffsetY = 6;
+                    this.buildFootSilhouette(this.ctx, legRadius, legHeight, footLength, footHeight, squishAmount);
+                    this.ctx.fill();
+                    this.ctx.shadowBlur = 0;
+
+                    if (this.currentFootwear === 'sandals') {
+                        this.ctx.fillStyle = '#92400e'; 
+                        this.ctx.beginPath();
+                        this.ctx.ellipse(footLength * 0.45, -4, 12, footHeight / 2 + 4, 0, -Math.PI/2, Math.PI/2);
+                        this.ctx.fill();
+                        
+                        this.ctx.fillRect(-legRadius - 2, -16, legRadius * 2 + 4, 10);
+                        
+                        this.ctx.beginPath();
+                        this.ctx.moveTo(-legRadius + 8, -6);
+                        this.ctx.lineTo(footLength * 0.4, -4);
+                        this.ctx.lineTo(footLength * 0.4, 4);
+                        this.ctx.lineTo(-legRadius + 8, 6);
+                        this.ctx.fill();
+
+                        this.ctx.fillStyle = '#451a03';
+                        this.ctx.beginPath();
+                        this.ctx.roundRect(-legRadius - 6, footHeight / 2 - 2 + squishAmount, footLength + 14, 10, 4);
+                        this.ctx.fill();
+                    }
+
+                } else if (this.currentFootwear === 'socks') {
+                    const sockGrad = this.ctx.createLinearGradient(-legRadius, 0, legRadius, 0);
+                    sockGrad.addColorStop(0, '#be185d');
+                    sockGrad.addColorStop(0.3, '#f472b6');
+                    sockGrad.addColorStop(1, '#831843');
+
+                    this.ctx.fillStyle = sockGrad;
+                    this.ctx.beginPath();
+                    this.ctx.roundRect(-legRadius - 2, -legHeight, legRadius * 2 + 4, legHeight - 10, [10, 10, 0, 0]);
+                    this.ctx.fill();
+                    
+                    this.buildFootSilhouette(this.ctx, legRadius, legHeight, footLength, footHeight, squishAmount);
+                    this.ctx.fill();
+
+                    this.ctx.strokeStyle = '#ffffff';
+                    this.ctx.lineWidth = 5;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(-legRadius, -75); this.ctx.lineTo(legRadius, -75);
+                    this.ctx.moveTo(-legRadius, -55); this.ctx.lineTo(legRadius, -55);
+                    this.ctx.stroke();
+
+                } else if (this.currentFootwear === 'boots') {
+                    const bootGrad = this.ctx.createLinearGradient(-legRadius, 0, legRadius, 0);
+                    bootGrad.addColorStop(0, '#d97706');
+                    bootGrad.addColorStop(0.3, '#f59e0b');
+                    bootGrad.addColorStop(1, '#b45309');
+
+                    this.ctx.fillStyle = bootGrad;
+                    this.ctx.beginPath();
+                    this.ctx.roundRect(-legRadius - 6, -legHeight + 10, legRadius * 2 + 12, legHeight - 10, [14, 14, 0, 0]);
+                    this.ctx.fill();
+
+                    this.ctx.save();
+                    this.buildFootSilhouette(this.ctx, legRadius + 6, legHeight, footLength + 6, footHeight + 4, squishAmount);
+                    this.ctx.fill();
+                    this.ctx.restore();
+
+                    this.ctx.fillStyle = '#0f172a';
+                    this.ctx.beginPath();
+                    this.ctx.roundRect(-legRadius - 8, footHeight / 2 - 2 + squishAmount, footLength + 16, 16, [4, 6, 6, 4]);
+                    this.ctx.fill();
+
+                } else if (this.currentFootwear === 'sneakers') {
+                    const snkGrad = this.ctx.createLinearGradient(0, -20, 0, 25);
+                    snkGrad.addColorStop(0, '#2563eb');
+                    snkGrad.addColorStop(1, '#1d4ed8');
+                    this.ctx.fillStyle = snkGrad;
+                    
+                    this.ctx.save();
+                    this.buildFootSilhouette(this.ctx, legRadius + 2, legHeight, footLength, footHeight, squishAmount);
+                    this.ctx.fill();
+                    
+                    this.ctx.fillRect(-legRadius - 2, -25, legRadius * 2 + 4, 30);
+                    this.ctx.restore();
+
+                    this.ctx.fillStyle = '#f8fafc';
+                    this.ctx.beginPath();
+                    this.ctx.arc(footLength - footHeight * 0.55, 0, (footHeight / 2 + squishAmount + 1), -Math.PI/2.5, Math.PI/2, false);
+                    this.ctx.lineTo(footLength * 0.5, footHeight / 2 + squishAmount);
+                    this.ctx.lineTo(footLength * 0.5, -footHeight / 2);
+                    this.ctx.closePath();
+                    this.ctx.fill();
+
+                    this.ctx.fillRect(-legRadius - 4, footHeight / 2 - 8 + squishAmount, footLength + 8, 14);
+
+                } else if (this.currentFootwear === 'dinosaur') {
+                    const dinoGrad = this.ctx.createLinearGradient(-legRadius - 8, 0, footLength, 0);
+                    dinoGrad.addColorStop(0, '#15803d');
+                    dinoGrad.addColorStop(0.5, '#22c55e');
+                    dinoGrad.addColorStop(1, '#166534');
+
+                    this.ctx.fillStyle = dinoGrad;
+                    this.ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+                    this.ctx.shadowBlur = 10;
+                    this.ctx.shadowOffsetY = 4;
+
+                    this.ctx.beginPath();
+                    this.ctx.roundRect(-legRadius - 8, -legHeight + 15, legRadius * 2 + 16, legHeight - 15, [14, 14, 4, 4]);
+                    this.ctx.fill();
+
+                    this.ctx.beginPath();
+                    this.ctx.arc(-legRadius, 0, (footHeight / 2 + 10), Math.PI / 2, -Math.PI / 2, false);
+                    this.ctx.lineTo(footLength + 15, -footHeight / 2 - 8);
+                    this.ctx.arc(footLength + 15, 0, (footHeight / 2 + 12 + squishAmount), -Math.PI / 2, Math.PI / 2, false);
+                    this.ctx.lineTo(-legRadius, footHeight / 2 + 12 + squishAmount);
+                    this.ctx.closePath();
+                    this.ctx.fill();
+                    this.ctx.shadowBlur = 0;
+
+                    this.ctx.strokeStyle = '#052e16';
+                    this.ctx.lineWidth = 3;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(footLength * 0.3, -footHeight / 2 - 5);
+                    this.ctx.lineTo(footLength * 0.3, footHeight / 2 + 5);
+                    this.ctx.moveTo(footLength * 0.7, -footHeight / 2 - 5);
+                    this.ctx.lineTo(footLength * 0.7, footHeight / 2 + 5);
+                    this.ctx.stroke();
+
+                } else if (this.currentFootwear === 'monkey') {
+                    const furGrad = this.ctx.createLinearGradient(-legRadius, 0, legRadius, 0);
+                    furGrad.addColorStop(0, '#78350f');
+                    furGrad.addColorStop(0.4, '#b45309');
+                    furGrad.addColorStop(1, '#451a03');
+
+                    this.ctx.fillStyle = furGrad;
+                    this.ctx.beginPath();
+                    this.ctx.roundRect(-legRadius - 4, -legHeight, legRadius * 2 + 8, legHeight - 10, [12, 12, 4, 4]);
+                    this.ctx.fill();
+
+                    const skinGrad = this.ctx.createRadialGradient(22, -12, 4, 18, 0, footLength * 0.95);
+                    skinGrad.addColorStop(0, '#fde68a');
+                    skinGrad.addColorStop(0.4, '#f6ad55');
+                    skinGrad.addColorStop(1, '#dd6b20');
+
+                    this.ctx.fillStyle = skinGrad;
+                    this.ctx.shadowColor = 'rgba(0, 0, 0, 0.35)';
+                    this.ctx.shadowBlur = 10;
+                    this.ctx.shadowOffsetY = 4;
+                    this.buildFootSilhouette(this.ctx, legRadius, legHeight, footLength, footHeight + 4, squishAmount);
+                    this.ctx.fill();
+                    this.ctx.shadowBlur = 0;
+                }
+
+                if (leg.pulpAmount > 0.05) {
+                    const pulpH = (footHeight / 2) * leg.pulpAmount + squishAmount;
+
+                    this.ctx.save();
+                    this.ctx.fillStyle = leg.pulpColor;
+                    this.ctx.globalAlpha = 0.88;
+
+                    this.ctx.beginPath();
+                    this.ctx.ellipse(footLength * 0.35, footHeight / 4 + 4, footLength * 0.58, pulpH, 0, 0, Math.PI * 2);
+                    this.ctx.fill();
+
+                    for (let d = -legRadius; d < footLength - 10; d += 16) {
+                        this.ctx.beginPath();
+                        this.ctx.arc(d, footHeight / 2 + pulpH * 0.6, 3.5, 0, Math.PI * 2);
+                        this.ctx.fill();
+                    }
+                    this.ctx.restore();
+                }
+
+                this.ctx.restore();
+            }
+
+            drawStage() {
+                this.ctx.fillStyle = '#0f172a';
+                this.ctx.fillRect(0, this.floorY, this.width, this.height - this.floorY);
+
+                this.ctx.strokeStyle = '#334155';
+                this.ctx.lineWidth = 4;
+                this.ctx.beginPath();
+                this.ctx.moveTo(0, this.floorY);
+                this.ctx.lineTo(this.width, this.floorY);
+                this.ctx.stroke();
+
+                this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+                this.ctx.lineWidth = 1;
+                for (let x = 0; x < this.width; x += 30) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(x, this.floorY);
+                    this.ctx.lineTo(x, this.height);
+                    this.ctx.stroke();
+                }
+            }
+
+            loop() {
+                this.animateTechnique();
+                this.softObj.update();
+
+                this.ctx.fillStyle = '#1e293b';
+                this.ctx.fillRect(0, 0, this.width, this.height);
+
+                this.drawStage();
+                this.softObj.draw(this.ctx);
+
+                this.draw3DStickmanFoot(this.leftLeg);
+                this.draw3DStickmanFoot(this.rightLeg);
+
+                requestAnimationFrame(() => this.loop());
+            }
+        }
+
+        window.onload = () => {
+            new Simulator();
+        };
+    </script>
+</body>
+</html>
