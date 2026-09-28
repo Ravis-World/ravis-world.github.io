@@ -53,6 +53,14 @@ const customGames = {
         image: "https://m.gjcdn.net/game-thumbnail/1000/1073186-4ac3npgp-v4.webp",
         description: "Built for the modern, efficient professional who values clean interfaces and direct results. There are no complicated movement systems, no complex inventory management screens, and absolutely no corporate overhead. Just you, a desk, and the Button of Working."
     },
+    'Z': {
+        title: "Button of Zero",
+        primaryUrl: "https://ravis-world.itch.io/button-of-zero",
+        secondaryUrl: "https://gamejolt.com/games/button-of-zero/1102990",
+        secondaryLabel: "Game Jolt",
+        image: "https://m.gjcdn.net/game-thumbnail/1000/1102990-zh3b67bh-v4.webp",
+        description: "Button of Zero is a high-pressure puzzle-defusal game where every second counts. Step up to the console, analyze your randomized modules, and solve them all before the countdown hits zero!"
+    },
     '&': {
         title: "Button of & (Ampersand)",
         primaryUrl: "",
