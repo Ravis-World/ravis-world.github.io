@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button of TOBY - Interactive Strategy Guide & Facility Manager</title>
+    <style>
+        :root {
+            --bg-dark: #0e1117;
+            --bg-panel: #161b22;
+            --bg-card: #21262d;
+            --border-color: #30363d;
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+            --text-heading: #f0f6fc;
+            --accent-green: #238636;
+            --accent-red: #da3633;
+            --accent-blue: #1f6beb;
+            --accent-yellow: #d29922;
+            --accent-purple: #8957e5;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Top Header Navigation */
+        header {
+            background-color: var(--bg-panel);
+            border-bottom: 1px solid var(--border-color);
+            padding: 14px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .brand-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badge {
+            background: rgba(137, 87, 229, 0.2);
+            color: var(--accent-purple);
+            border: 1px solid rgba(137, 87, 229, 0.4);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Main Container & Spoiler Protection System */
+        .main-wrapper {
+            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .spoiler-container {
+            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .spoiler-blur {
+            filter: blur(14px);
+            pointer-events: none;
+            user-select: none;
+            transition: filter 0.4s ease;
+        }
+
+        .spoiler-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(14, 17, 23, 0.92);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            backdrop-filter: blur(10px);
+            padding: 24px;
+            text-align: center;
+        }
+
+        .spoiler-card {
+            background-color: var(--bg-panel);
+            border: 2px solid var(--accent-red);
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 540px;
+            box-shadow: 0 12px 32px rgba(218, 54, 51, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .spoiler-icon {
+            font-size: 3rem;
+            line-height: 1;
+        }
+
+        .spoiler-card h2 {
+            color: #f85149;
+            font-size: 1.5rem;
+        }
+
+        .spoiler-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .spoiler-btn {
+            background-color: var(--accent-red);
+            color: #ffffff;
+            border: none;
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.1s ease;
+            margin-top: 8px;
+        }
+
+        .spoiler-btn:hover {
+            background-color: #b62324;
+            transform: translateY(-2px);
+        }
+
+        /* Layout Columns */
+        .content-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr 380px;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+        }
+
+        @media (max-width: 1280px) {
+            .content-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Card Container Styles */
+        .panel-card {
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .panel-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        /* Interactive Facility Map Grid */
+        .map-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            background-color: #0d1117;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .map-cell {
+            aspect-ratio: 1;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .map-cell.empty {
+            background: transparent;
+            border: none;
+            cursor: default;
+        }
+
+        .map-cell.start-room {
+            background-color: rgba(35, 134, 54, 0.25);
+            border-color: var(--accent-green);
+            color: #3fb950;
+            box-shadow: 0 0 10px rgba(35, 134, 54, 0.3);
+        }
+
+        .map-cell.locked-room {
+            background-color: rgba(218, 54, 51, 0.25);
+            border-color: var(--accent-red);
+            color: #f85149;
+        }
+
+        .map-cell.path-highlight {
+            border-color: var(--accent-yellow);
+            box-shadow: 0 0 8px rgba(210, 153, 34, 0.4);
+        }
+
+        .map-cell:hover:not(.empty) {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        .map-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            padding: 4px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        /* Inventory 20-Item Matrix */
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            max-height: 480px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .item-card {
+            background-color: var(--bg-card);
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            padding: 8px 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            position: relative;
+        }
+
+        .item-card:hover {
+            border-color: #58a6ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .item-card.selected {
+            border-color: var(--accent-yellow);
+            background-color: rgba(210, 153, 34, 0.15);
+            box-shadow: 0 0 10px rgba(210, 153, 34, 0.3);
+        }
+
+        .item-card.disabled {
+            opacity: 0.2;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .item-card svg {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 4px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+        }
+
+        .item-title {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-align: center;
+            font-weight: 600;
+            line-height: 1.1;
+        }
+
+        /* Gate Podiums Section */
+        .gates-container {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .gate-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .gate-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .gate-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .gate-req {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background-color: rgba(255, 255, 255, 0.04);
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .status-pill {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .status-pill.locked {
+            background-color: rgba(218, 54, 51, 0.15);
+            color: #f85149;
+            border: 1px solid rgba(218, 54, 51, 0.3);
+        }
+
+        .status-pill.unlocked {
+            background-color: rgba(35, 134, 54, 0.15);
+            color: #3fb950;
+            border: 1px solid rgba(35, 134, 54, 0.3);
+        }
+
+        .podium-slots {
+            display: flex;
+            gap: 10px;
+        }
+
+        .slot {
+            width: 58px;
+            height: 58px;
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.25);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .slot:hover {
+            border-color: #58a6ff;
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .slot.filled {
+            border-style: solid;
+            border-color: var(--border-color);
+            background-color: var(--bg-panel);
+        }
+
+        .slot.filled:hover {
+            border-color: var(--accent-red);
+        }
+
+        .slot-index {
+            position: absolute;
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            bottom: 2px;
+            opacity: 0.5;
+        }
+
+        /* Action Buttons & Terminal Log */
+        .btn {
+            background-color: var(--bg-card);
+            color: var(--text-heading);
+            border: 1px solid var(--border-color);
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background-color: #30363d;
+            border-color: #8b949e;
+        }
+
+        .btn-purple {
+            background-color: var(--accent-purple);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+
+        .btn-purple:hover {
+            background-color: #6e40c9;
+        }
+
+        .solver-console {
+            background-color: #090d11;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, monospace;
+            font-size: 0.75rem;
+            color: #3fb950;
+            height: 180px;
+            overflow-y: auto;
+            line-height: 1.4;
+        }
+
+        /* Written Strategy Walkthrough Tabs */
+        .tutorial-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            gap: 4px;
+        }
+
+        .tab-btn {
+            padding: 8px 14px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn.active {
+            color: var(--accent-yellow);
+            border-bottom-color: var(--accent-yellow);
+        }
+
+        .tab-content {
+            display: none;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--text-main);
+        }
+
+        .tab-content.active {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .strategy-step {
+            background-color: var(--bg-card);
+            padding: 10px 12px;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent-blue);
+        }
+
+        .strategy-step h4 {
+            color: var(--text-heading);
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-title">
+            <span>🔘</span> Button of TOBY Walkthrough
+        </div>
+        <div class="badge">Matrix Manager v2.4</div>
+    </header>
+
+    <div class="main-wrapper">
+        <div class="spoiler-container">
+            <!-- SPOILER WARNING OVERLAY -->
+            <div class="spoiler-overlay" id="spoilerOverlay">
+                <div class="spoiler-card">
+                    <div class="spoiler-icon">⚠️</div>
+                    <h2>SPOILER WARNING</h2>
+                    <p>
+                        This strategy manager reveals complete item distribution constraints, podium combinations, and room mechanics required to solve the 5 major gates and reach <strong>Room 24</strong>.
+                    </p>
+                    <button class="spoiler-btn" onclick="revealSolutions()">Reveal Solutions</button>
+                </div>
+            </div>
+
+            <!-- MAIN APPS CONTENT (BLURRED UNTIL REVEALED) -->
+            <div class="spoiler-blur content-layout" id="spoilerContent">
+                
+                <!-- COLUMN 1: Facility Explorer & Solver Console -->
+                <div class="panel-card">
+                    <div class="panel-title">
+                        <span>⚙️ Backtracking Solver</span>
+                        <span style="font-size: 0.75rem; color: var(--accent-yellow);">Maze Mode</span>
+                    </div>
+
+                    <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
+                        Rooms and items are discovered by navigating through connected maze doors. Collect matrix items throughout the maze to open all 5 security gates.
+                    </p>
+
+                    <button class="btn btn-purple" onclick="runAutoSolver()">
+                        ⚡ Run Constraint Solver Test
+                    </button>
+                    <button class="btn" onclick="resetAll()">
+                        🔄 Reset All Podiums
+                    </button>
+
+                    <div class="solver-console" id="solverLog">
+                        [MAZE EXPLORATION ACTIVE]<br>
+                        > Map disabled: Explore facility via connected rooms.<br>
+                        > Click items to select & place on room podiums.<br>
+                        > Execute solver test to check soft-lock conditions.
+                    </div>
+                </div>
+
+                <!-- COLUMN 2: Room Gate Podiums & Strategy Guide -->
+                <div class="panel-card">
+                    <div class="panel-title">
+                        <span>🚪 Major Gate Podiums</span>
+                        <span style="font-size: 0.75rem; color: var(--text-muted);" id="unlockedCount">0/5 Unlocked</span>
+                    </div>
+
+                    <div class="gates-container">
+                        <!-- Gate 5 -->
+                        <div class="gate-card">
+                            <div class="gate-header">
+                                <div class="gate-title">
+                                    <span>🔒 Room 5</span>
+                                </div>
+                                <div class="status-pill locked" id="pill-5">LOCKED</div>
+                            </div>
+                            <div class="gate-req">Requires at least 2 RED items</div>
+                            <div class="podium-slots">
+                                <div class="slot" onclick="handleSlotClick(5, 0)" data-room="5" data-slot="0"></div>
+                                <div class="slot" onclick="handleSlotClick(5, 1)" data-room="5" data-slot="1"></div>
+                            </div>
+                        </div>
+
+                        <!-- Gate 8 -->
+                        <div class="gate-card">
+                            <div class="gate-header">
+                                <div class="gate-title">
+                                    <span>🔒 Room 8</span>
+                                </div>
+                                <div class="status-pill locked" id="pill-8">LOCKED</div>
+                            </div>
+                            <div class="gate-req">Requires 3 items of DISTINCT SHAPES</div>
+                            <div class="podium-slots">
+                                <div class="slot" onclick="handleSlotClick(8, 0)" data-room="8" data-slot="0"></div>
+                                <div class="slot" onclick="handleSlotClick(8, 1)" data-room="8" data-slot="1"></div>
+                                <div class="slot" onclick="handleSlotClick(8, 2)" data-room="8" data-slot="2"></div>
+                            </div>
+                        </div>
+
+                        <!-- Gate 12 -->
+                        <div class="gate-card">
+                            <div class="gate-header">
+                                <div class="gate-title">
+                                    <span>🔒 Room 12</span>
+                                </div>
+                                <div class="status-pill locked" id="pill-12">LOCKED</div>
+                            </div>
+                            <div class="gate-req">Requires 3 items SAME SHAPE, DIFFERENT COLOURS</div>
+                            <div class="podium-slots">
+                                <div class="slot" onclick="handleSlotClick(12, 0)" data-room="12" data-slot="0"></div>
+                                <div class="slot" onclick="handleSlotClick(12, 1)" data-room="12" data-slot="1"></div>
+                                <div class="slot" onclick="handleSlotClick(12, 2)" data-room="12" data-slot="2"></div>
+                            </div>
+                        </div>
+
+                        <!-- Gate 18 -->
+                        <div class="gate-card">
+                            <div class="gate-header">
+                                <div class="gate-title">
+                                    <span>🔒 Room 18</span>
+                                </div>
+                                <div class="status-pill locked" id="pill-18">LOCKED</div>
+                            </div>
+                            <div class="gate-req">Requires ALL 4 COLOURS (Red, Blue, Green, Yellow)</div>
+                            <div class="podium-slots">
+                                <div class="slot" onclick="handleSlotClick(18, 0)" data-room="18" data-slot="0"></div>
+                                <div class="slot" onclick="handleSlotClick(18, 1)" data-room="18" data-slot="1"></div>
+                                <div class="slot" onclick="handleSlotClick(18, 2)" data-room="18" data-slot="2"></div>
+                                <div class="slot" onclick="handleSlotClick(18, 3)" data-room="18" data-slot="3"></div>
+                            </div>
+                        </div>
+
+                        <!-- Gate 24 -->
+                        <div class="gate-card" style="border-color: rgba(210, 153, 34, 0.4);">
+                            <div class="gate-header">
+                                <div class="gate-title">
+                                    <span>🚨 Room 24: Button of TOBY Gate</span>
+                                </div>
+                                <div class="status-pill locked" id="pill-24">LOCKED</div>
+                            </div>
+                            <div class="gate-req">Requires 4 DISTINCT SHAPES & 4 DISTINCT COLOURS</div>
+                            <div class="podium-slots">
+                                <div class="slot" onclick="handleSlotClick(24, 0)" data-room="24" data-slot="0"></div>
+                                <div class="slot" onclick="handleSlotClick(24, 1)" data-room="24" data-slot="1"></div>
+                                <div class="slot" onclick="handleSlotClick(24, 2)" data-room="24" data-slot="2"></div>
+                                <div class="slot" onclick="handleSlotClick(24, 3)" data-room="24" data-slot="3"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Strategy Walkthrough Tabs -->
+                    <div class="panel-title" style="margin-top: 10px;">
+                        <span>📖 Walkthrough Guide</span>
+                    </div>
+
+                    <div class="tutorial-tabs">
+                        <button class="tab-btn active" onclick="switchTab('tab-alloc')">1. Backwards Allocation</button>
+                        <button class="tab-btn" onclick="switchTab('tab-route')">2. Pathing Route</button>
+                    </div>
+
+                    <div class="tab-content active" id="tab-alloc">
+                        <div class="strategy-step">
+                            <h4>Step 1: Reserve Gate 24 First</h4>
+                            Set aside 4 items that share no common shape OR colour (e.g., Red Circle, Blue Triangle, Green Square, Yellow Star).
+                        </div>
+                        <div class="strategy-step">
+                            <h4>Step 2: Reserve Gate 12</h4>
+                            Pick 3 items of the exact same shape in 3 different colours (e.g., Red Hexagon, Blue Hexagon, Green Hexagon).
+                        </div>
+                        <div class="strategy-step">
+                            <h4>Step 3: Reserve Gate 18 & 8</h4>
+                            Allocate 4 items covering Red, Blue, Green, Yellow for Gate 18, and 3 distinct shapes for Gate 8.
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="tab-route">
+                        <div class="strategy-step" style="border-left-color: var(--accent-green);">
+                            <h4>Spawn Point (Room 7)</h4>
+                            Begin at bottom-center Room 7. Traverse through open doors into unsealed rooms to gather all items before placing them on gate podiums.
+                        </div>
+                        <div class="strategy-step" style="border-left-color: var(--accent-yellow);">
+                            <h4>Central Spine Ascent</h4>
+                            Advance north through the central maze corridor: <code>7 ➔ 2 ➔ 13 ➔ 21 ➔ 12 ➔ 24</code>.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUMN 3: 20-Item Matrix Inventory -->
+                <div class="panel-card">
+                    <div class="panel-title">
+                        <span>🎒 Facility Item Pool</span>
+                        <span style="font-size: 0.75rem; color: var(--accent-purple);">20 Matrix Items</span>
+                    </div>
+                    <p style="font-size: 0.75rem; color: var(--text-muted);">
+                        5 Shapes (Circle, Triangle, Square, Star, Hexagon) across 4 Colours (Red, Blue, Green, Yellow).
+                    </p>
+
+                    <div class="inventory-grid" id="inventoryGrid">
+                        <!-- Javascript will inject 20 SVG item cards here -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const COLORS = {
+            red: '#da3633',
+            blue: '#1f6beb',
+            green: '#238636',
+            yellow: '#d29922'
+        };
+
+        const SHAPES = ['circle', 'triangle', 'square', 'star', 'hexagon'];
+        const COLOR_KEYS = ['red', 'blue', 'green', 'yellow'];
+
+        let inventory = [];
+        let selectedItemId = null;
+
+        const roomState = {
+            5: [null, null],
+            8: [null, null, null],
+            12: [null, null, null],
+            18: [null, null, null, null],
+            24: [null, null, null, null]
+        };
+
+        function initInventory() {
+            inventory = [];
+            let id = 1;
+            COLOR_KEYS.forEach(color => {
+                SHAPES.forEach(shape => {
+                    inventory.push({
+                        id: id++,
+                        shape: shape,
+                        color: color,
+                        placed: false
+                    });
+                });
+            });
+        }
+
+        function renderSVG(shape, colorKey) {
+            const hex = COLORS[colorKey];
+            switch (shape) {
+                case 'circle':
+                    return `<svg viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="38" fill="${hex}" />
+                        <circle cx="38" cy="38" r="10" fill="#ffffff" opacity="0.3" />
+                    </svg>`;
+                case 'triangle':
+                    return `<svg viewBox="0 0 100 100">
+                        <polygon points="50,15 88,82 12,82" fill="${hex}" />
+                        <polygon points="50,15 50,82 12,82" fill="#ffffff" opacity="0.2" />
+                    </svg>`;
+                case 'square':
+                    return `<svg viewBox="0 0 100 100">
+                        <rect x="18" y="18" width="64" height="64" rx="8" fill="${hex}" />
+                        <rect x="25" y="25" width="24" height="24" rx="3" fill="#ffffff" opacity="0.25" />
+                    </svg>`;
+                case 'star':
+                    return `<svg viewBox="0 0 100 100">
+                        <polygon points="50,10 63,36 92,40 71,60 76,89 50,75 24,89 29,60 8,40 37,36" fill="${hex}" />
+                        <polygon points="50,10 50,75 24,89 29,60 8,40 37,36" fill="#ffffff" opacity="0.2" />
+                    </svg>`;
+                case 'hexagon':
+                    return `<svg viewBox="0 0 100 100">
+                        <polygon points="50,12 85,31 85,69 50,88 15,69 15,31" fill="${hex}" />
+                        <polygon points="50,22 75,36 75,64 50,78 25,64 25,36" fill="#ffffff" opacity="0.18" />
+                    </svg>`;
+            }
+        }
+
+        function renderMap() {
+            const mapGrid = document.getElementById('mapGrid');
+            mapGrid.innerHTML = '';
+
+            const lockedRooms = [5, 8, 12, 18, 24];
+            const spinePath = [7, 2, 13, 21, 12, 24];
+
+            GRID_LAYOUT.forEach(row => {
+                row.forEach(roomId => {
+                    const cell = document.createElement('div');
+                    if (roomId === -1) {
+                        cell.className = 'map-cell empty';
+                    } else {
+                        cell.className = 'map-cell';
+                        cell.innerText = roomId;
+
+                        if (roomId === 7) {
+                            cell.classList.add('start-room');
+                            cell.innerHTML = `★ 7`;
+                        } else if (lockedRooms.includes(roomId)) {
+                            cell.classList.add('locked-room');
+                            cell.innerHTML = `🔒 ${roomId}`;
+                        }
+
+                        if (spinePath.includes(roomId)) {
+                            cell.classList.add('path-highlight');
+                        }
+                    }
+                    mapGrid.appendChild(cell);
+                });
+            });
+        }
+
+        function renderInventory() {
+            const grid = document.getElementById('inventoryGrid');
+            grid.innerHTML = '';
+
+            inventory.forEach(item => {
+                const card = document.createElement('div');
+                card.className = `item-card ${item.placed ? 'disabled' : ''} ${selectedItemId === item.id ? 'selected' : ''}`;
+                card.onclick = () => selectItem(item.id);
+
+                card.innerHTML = `
+                    ${renderSVG(item.shape, item.color)}
+                    <span class="item-title">${item.color.toUpperCase()}<br>${item.shape}</span>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function renderPodiums() {
+            let unlockedTotal = 0;
+
+            Object.keys(roomState).forEach(roomId => {
+                const slots = roomState[roomId];
+                slots.forEach((item, index) => {
+                    const slotElem = document.querySelector(`.slot[data-room="${roomId}"][data-slot="${index}"]`);
+                    if (item) {
+                        slotElem.classList.add('filled');
+                        slotElem.innerHTML = renderSVG(item.shape, item.color);
+                    } else {
+                        slotElem.classList.remove('filled');
+                        slotElem.innerHTML = `<span class="slot-index">S${index + 1}</span>`;
+                    }
+                });
+
+                if (validateGate(roomId)) {
+                    unlockedTotal++;
+                }
+            });
+
+            document.getElementById('unlockedCount').innerText = `${unlockedTotal}/5 Unlocked`;
+        }
+
+        function selectItem(id) {
+            const item = inventory.find(i => i.id === id);
+            if (item && !item.placed) {
+                selectedItemId = (selectedItemId === id) ? null : id;
+                renderInventory();
+            }
+        }
+
+        function handleSlotClick(roomId, slotIndex) {
+            const currentItem = roomState[roomId][slotIndex];
+
+            if (currentItem) {
+                currentItem.placed = false;
+                roomState[roomId][slotIndex] = null;
+                renderInventory();
+                renderPodiums();
+                return;
+            }
+
+            if (selectedItemId) {
+                const item = inventory.find(i => i.id === selectedItemId);
+                if (item && !item.placed) {
+                    item.placed = true;
+                    roomState[roomId][slotIndex] = item;
+                    selectedItemId = null;
+                    renderInventory();
+                    renderPodiums();
+                }
+            }
+        }
+
+        function validateGate(roomId) {
+            const items = roomState[roomId].filter(i => i !== null);
+            const pill = document.getElementById(`pill-${roomId}`);
+            let isUnlocked = false;
+
+            if (roomId == 5) {
+                const redCount = items.filter(i => i.color === 'red').length;
+                isUnlocked = items.length === 2 && redCount === 2;
+            } else if (roomId == 8) {
+                const shapes = new Set(items.map(i => i.shape));
+                isUnlocked = items.length === 3 && shapes.size === 3;
+            } else if (roomId == 12) {
+                const shapes = new Set(items.map(i => i.shape));
+                const colors = new Set(items.map(i => i.color));
+                isUnlocked = items.length === 3 && shapes.size === 1 && colors.size === 3;
+            } else if (roomId == 18) {
+                const colors = new Set(items.map(i => i.color));
+                isUnlocked = items.length === 4 && colors.size === 4;
+            } else if (roomId == 24) {
+                const shapes = new Set(items.map(i => i.shape));
+                const colors = new Set(items.map(i => i.color));
+                isUnlocked = items.length === 4 && shapes.size === 4 && colors.size === 4;
+            }
+
+            if (pill) {
+                if (isUnlocked) {
+                    pill.className = 'status-pill unlocked';
+                    pill.innerText = 'UNLOCKED';
+                } else {
+                    pill.className = 'status-pill locked';
+                    pill.innerText = 'LOCKED';
+                }
+            }
+            return isUnlocked;
+        }
+
+        function runAutoSolver() {
+            resetAll();
+            logConsole('Starting Backtracking Constraint Solver...');
+
+            const available = [...inventory];
+            const solution = {};
+
+            function checkRule(roomId, subset) {
+                if (roomId == 5) {
+                    return subset.length === 2 && subset.every(i => i.color === 'red');
+                }
+                if (roomId == 8) {
+                    const shapes = new Set(subset.map(i => i.shape));
+                    return subset.length === 3 && shapes.size === 3;
+                }
+                if (roomId == 12) {
+                    const shapes = new Set(subset.map(i => i.shape));
+                    const colors = new Set(subset.map(i => i.color));
+                    return subset.length === 3 && shapes.size === 1 && colors.size === 3;
+                }
+                if (roomId == 18) {
+                    const colors = new Set(subset.map(i => i.color));
+                    return subset.length === 4 && colors.size === 4;
+                }
+                if (roomId == 24) {
+                    const shapes = new Set(subset.map(i => i.shape));
+                    const colors = new Set(subset.map(i => i.color));
+                    return subset.length === 4 && shapes.size === 4 && colors.size === 4;
+                }
+                return false;
+            }
+
+            function getCombinations(arr, k) {
+                if (k === 0) return [[]];
+                if (arr.length === 0) return [];
+                const head = arr[0];
+                const tail = arr.slice(1);
+                const withHead = getCombinations(tail, k - 1).map(c => [head, ...c]);
+                const withoutHead = getCombinations(tail, k);
+                return [...withHead, ...withoutHead];
+            }
+
+            const gates = [24, 12, 18, 8, 5];
+            const sizes = { 5: 2, 8: 3, 12: 3, 18: 4, 24: 4 };
+
+            function solveStep(idx, remaining) {
+                if (idx >= gates.length) return true;
+                const rId = gates[idx];
+                const combos = getCombinations(remaining, sizes[rId]);
+
+                for (let combo of combos) {
+                    if (checkRule(rId, combo)) {
+                        solution[rId] = combo;
+                        const nextRemaining = remaining.filter(i => !combo.includes(i));
+                        if (solveStep(idx + 1, nextRemaining)) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+
+            const success = solveStep(0, available);
+
+            if (success) {
+                logConsole('> VERDICT: ALL GATES SOLVABLE!');
+                Object.keys(solution).forEach(rId => {
+                    solution[rId].forEach((item, slotIdx) => {
+                        item.placed = true;
+                        roomState[rId][slotIdx] = item;
+                    });
+                    logConsole(`> Gate ${rId}: Unlocked`);
+                });
+                renderInventory();
+                renderPodiums();
+            } else {
+                logConsole('> VERDICT: SOFT-LOCK DETECTED!');
+            }
+        }
+
+        function resetAll() {
+            selectedItemId = null;
+            initInventory();
+            Object.keys(roomState).forEach(r => {
+                roomState[r] = roomState[r].map(() => null);
+            });
+            renderInventory();
+            renderPodiums();
+            logConsole('> All podiums reset to empty.');
+        }
+
+        function revealSolutions() {
+            document.getElementById('spoilerOverlay').style.display = 'none';
+            const content = document.getElementById('spoilerContent');
+            content.classList.remove('spoiler-blur');
+            content.style.pointerEvents = 'auto';
+            content.style.userSelect = 'auto';
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function logConsole(text) {
+            const logBox = document.getElementById('solverLog');
+            logBox.innerHTML += `<br>${text}`;
+            logBox.scrollTop = logBox.scrollHeight;
+        }
+
+        window.onload = function() {
+            initInventory();
+            renderInventory();
+            renderPodiums();
+        };
+    </script>
+</body>
+</html>
