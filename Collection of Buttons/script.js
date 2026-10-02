@@ -45,6 +45,14 @@ const customGames = {
         image: "https://m.gjcdn.net/game-thumbnail/1000/1031924-effmwnjz-v4.webp",
         description: "You play as a thief attempting to steal Team Toadette's vast fortune by hitting a single button during a crucial 1-second window that opens after a long wait."
     },
+    'T': {
+        title: "Button of TOBY",
+        primaryUrl: "https://ravis-world.itch.io/button-of-toby",
+        secondaryUrl: "https://gamejolt.com/games/button-of-toby/1103700",
+        secondaryLabel: "Game Jolt",
+        image: "https://m.gjcdn.net/game-thumbnail/1000/1103700-2g9wtwr2-v4.webp",
+        description: "Your mission is simple. Go through the maze, and unlock the locks to release TOBY."
+    },
     'W': {
         title: "Button of Working",
         primaryUrl: "https://ravis-world.itch.io/button-of-working",
